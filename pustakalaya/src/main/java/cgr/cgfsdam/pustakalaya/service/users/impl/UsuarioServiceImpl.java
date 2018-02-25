@@ -15,15 +15,27 @@ import cgr.cgfsdam.pustakalaya.repository.users.RoleRepository;
 import cgr.cgfsdam.pustakalaya.repository.users.UsuarioRepository;
 import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 
+/**
+ * Implementación del servicio de Usuarios.
+ *
+ * @author CGR-Casa
+ */
 @Service("usuarioService")
 public class UsuarioServiceImpl implements UsuarioService {
 
+	/**
+	 * Repositorio de usuarios.
+	 */
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+	/**
+	 * Repositorio de roles.
+	 */
 	@Autowired
 	private RoleRepository roleRepository;
-	
+	/**
+	 * Encriptador de passwords.
+	 */
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	

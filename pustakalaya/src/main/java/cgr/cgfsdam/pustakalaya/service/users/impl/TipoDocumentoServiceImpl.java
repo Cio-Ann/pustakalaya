@@ -10,9 +10,17 @@ import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
 import cgr.cgfsdam.pustakalaya.repository.users.TipoDocumentoRepository;
 import cgr.cgfsdam.pustakalaya.service.users.TipoDocumentoService;
 
+/**
+ * Implementación del servicio de TipoDocumento.
+ *
+ * @author CGR-Casa
+ */
 @Service("tipoDocumentoService")
 public class TipoDocumentoServiceImpl implements TipoDocumentoService {
-
+	
+	/**
+	 * Repositorio de TipoDocumento.
+	 */
 	@Autowired
 	private TipoDocumentoRepository tipoDocumentoRepository;
 
@@ -34,5 +42,4 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService {
 
 		return allNames;
 	}
-
 }

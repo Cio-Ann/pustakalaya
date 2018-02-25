@@ -1,15 +1,26 @@
 package cgr.cgfsdam.pustakalaya.model.utility;
 
 /**
- * Class representing a simple email.
+ * Entidad que representa un email sencillo.
  *
  * @author CGR-Casa
  */
 public class Mail {
-
+	/**
+	 * Remitente.
+	 */
 	private String from;
+	/**
+	 * Destinatario.
+	 */
 	private String to;
+	/**
+	 * Asunto.
+	 */
 	private String subject;
+	/**
+	 * Cuerpo del mensaje.
+	 */
 	private String body;
 
 	public String getFrom() {
@@ -44,9 +55,20 @@ public class Mail {
 		this.body = body;
 	}
 
+	/**
+	 * Constructor por defecto.
+	 */
 	public Mail() {
 	}
 
+	/**
+	 * Constructor por parámetros.
+	 * 
+	 * @param from String remitente
+	 * @param to String destinatario
+	 * @param subject String asunto
+	 * @param body String cuerpo
+	 */
 	public Mail(String from, String to, String subject, String body) {
 		super();
 		this.from = from;

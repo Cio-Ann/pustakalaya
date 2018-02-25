@@ -19,52 +19,90 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.Transient;
 
+/**
+ * Entidad que representa a un usuario.
+ * Se almacena en la tabla usuario
+ *
+ * @author CGR-Casa
+ */
 @Entity
 public class Usuario {
+	/**
+	 * Identificador del usuario.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
 	@Column(name = "user_id")
 	private long id;
-	
+	/**
+	 * Nombre del usuario.
+	 */
 	@Column(nullable = false)
 	private String nombre;
-	
+	/**
+	 * Primer apellido.
+	 */
 	@Column(nullable = false)
 	private String apellido1;
-	
+	/**
+	 * Segundo apellido.
+	 */
 	@Column(nullable = true)
 	private String apellido2;
-	
+	/**
+	 * Tipo de documento con el que se identifica el usuario.
+	 */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "id_tipo_documento")
 	private TipoDocumento tipoDocumento;
-
+	/**
+	 * Valor del documento con el que se identifica el usuario.
+	 */
 	@Column(nullable = false)
 	private String documento;
-
+	/**
+	 * Nick del usuario en el sistema.
+	 */
 	@Column(nullable = false, unique = true)
 	private String username;
-	
+	/**
+	 * Contraseña de acceso del usuario.
+	 */
 	@Transient
 	private String password;
-	
+	/**
+	 * Valor que indica si el usuario está o no activo en el sistema.
+	 */
 	private int active;
-	
+	/**
+	 * Listado de roles a los que pertenece el usuario.
+	 */
 	@ManyToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
 	@JoinTable(name = "permisos", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
-	
+	/**
+	 * Dirección del usuario.
+	 */
 	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_direccion")
 	private Direccion direccion;
-	
+	/**
+	 * Número de teléfono del usuario.
+	 */
 	private String telefono;
-	
+	/**
+	 * Email del usuario.
+	 */
 	private String email;
-	
+	/**
+	 * Fecha de alta en el sistema.
+	 * Se establece en el momento de creación del usuario en base de datos.
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaAlta;
-
+	/**
+	 * Fecha de vigencia de los permisos del usuario.
+	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaVigor;
 
@@ -188,8 +226,29 @@ public class Usuario {
 		this.fechaVigor = fechaVigor;
 	}
 
+	/**
+	 * Constructor por defecto.
+	 */
 	public Usuario() { }
 
+	/**
+	 * Constructor por parámetros.
+	 * 
+	 * @param nombre String nombre
+	 * @param apellido1 String primer apellido
+	 * @param apellido2 String segundo apellido
+	 * @param tipoDocumento TipoDocumento tipo de documento
+	 * @param documento String documento
+	 * @param username String nick de usuario
+	 * @param password String clave de acceso
+	 * @param active boolean indicador de validez
+	 * @param roles	Set<Role> roles del usuario
+	 * @param direccion Direccion direccion del usuario
+	 * @param telefono String telefono
+	 * @param email String email
+	 * @param fechaAlta Date fecha de alta en el sistema
+	 * @param fechaVigor Date fecha de vigencia en el sistema.
+	 */
 	public Usuario(String nombre, String apellido1, String apellido2, TipoDocumento tipoDocumento, String documento,
 			String username, String password, int active, Set<Role> roles, Direccion direccion, String telefono,
 			String email, Date fechaAlta, Date fechaVigor) {

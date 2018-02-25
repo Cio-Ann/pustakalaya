@@ -4,27 +4,32 @@ import java.util.List;
 
 import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
 
+/**
+ * Interfaz del servicio de TipoDocumento.
+ *
+ * @author CGR-Casa
+ */
 public interface TipoDocumentoService {
 
 	/**
-	 * Finds a TipoDocumento by its name.
+	 * Encuentra un TipoDocumento por su nombre
 	 * 
-	 * @param nombre String name to search.
-	 * @return TipoDocumento object.
+	 * @param nombre String nombre que buscar.
+	 * @return TipoDocumento objeto.
 	 */
 	public TipoDocumento findByNombre(String nombre);
 	
 	/**
-	 * Returns a list with all TipoDocumento stored on DB.
+	 * Devuelve un listado con todos los TipoDocumento del repositorio.
 	 * 
-	 * @return List<TipoDocumento> all TipoDocumento
+	 * @return List<TipoDocumento> todos los TipoDocumento
 	 */
 	public List<TipoDocumento> findAll();
 	
 	/**
-	 * Returns a List<String> with all TipoDocumento names.
+	 * Devuelve una lista con los nombres de todos los TipoDocumento.
 	 * 
-	 * @return List<String> all names.
+	 * @return List<String> todos los nombres.
 	 */
 	public List<String> findAllNombres();
 }

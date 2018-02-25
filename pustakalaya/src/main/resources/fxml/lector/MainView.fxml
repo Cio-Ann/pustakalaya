@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="105.0" layoutY="14.0" prefHeight="600.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="213.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/templo.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="222.0" layoutY="164.0" text="Pustakalaya 1.0">
+               <styleClass>
+                  <String fx:value="bigText" />
+                  <String fx:value="light" />
+               </styleClass>
+            </Label>
+            <Label layoutX="105.0" layoutY="266.0" styleClass="light" text="Aplicación de gestión de Bibliotecas." />
+            <Label layoutX="115.0" layoutY="276.0" styleClass="light" text="Ciclo formativo: Ciclo formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma" />
+            <Label layoutX="125.0" layoutY="286.0" styleClass="light" text="Autor: Carlos Gonzalez Ruiz" />
+            <Label layoutX="135.0" layoutY="296.0" styleClass="light" text="Curso: 2017 / 2018" />
+            <Label layoutX="145.0" layoutY="306.0" styleClass="light" text="web: https://github.com/Cio-Ann/pustakalaya" />
+         </children>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

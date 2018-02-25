@@ -25,12 +25,28 @@ import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Clase inicial de la aplicación.
+ *
+ * @author CGR-Casa
+ */
 @SpringBootApplication
 public class PustakalayaApplication extends Application {
 
+	/**
+	 * Contexto Spring
+	 */
 	protected ConfigurableApplicationContext springContext;
+	/**
+	 * Gestor de Stages
+	 */
 	protected StageManager stageManager;
 
+	/**
+	 * Método de inicio.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -51,15 +67,24 @@ public class PustakalayaApplication extends Application {
 		springContext.close();
 	}
 
+	/**
+	 * Establece la pantalla inicial.
+	 */
 	protected void displayInitialScene() {
 		stageManager.switchScene(FxmlView.LOGIN);
 	}
 
+	/**
+	 * Método para crear un contexto de aplicación que se utilizará para mantener un gestor común de depentencias.
+	 * 
+	 * @return ConfigurableApplicationContext contexto de aplicación
+	 */
 	private ConfigurableApplicationContext springBootApplicationContext() {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(PustakalayaApplication.class);
 		String[] args = getParameters().getRaw().stream().toArray(String[]::new);
 		return builder.run(args);
 	}
+	
 	/*
 	@Autowired
 	RoleRepository roleRepository;

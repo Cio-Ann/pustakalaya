@@ -7,18 +7,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Entidad que representa un rol de usuario.
+ * Se almacena en la tabla role.
+ *
+ * @author CGR-Casa
+ */
 @Entity
 @Table(name="role")
 public class Role {
 	
+	/**
+	 * Identificador del rol.
+	 */
 	@Id
 	@Column(name="role_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	/**
+	 * Nombre del rol.
+	 */
 	@Column(name="role", unique=true)
 	private String role;
 	
+	/**
+	 * Descripción del rol.
+	 */
 	private String description;
 
 	public long getId() {

@@ -6,16 +6,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Entidad que representa un tipo de documento.
+ * Se almacena en la tabla tipo_documento
+ *
+ * @author CGR-Casa
+ */
 @Entity
 public class TipoDocumento {
+	
+	/**
+	 * Identificador del tipo de documento.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_tipo_documento")
 	private long idTipoDocumento;
 
+	/**
+	 * Nombre del tipo de documento.
+	 */
 	@Column(nullable = false)
 	private String nombre;
 	
+	/**
+	 * Descripción del tipo de documento.
+	 */
 	private String descripcion;
 
 	/**

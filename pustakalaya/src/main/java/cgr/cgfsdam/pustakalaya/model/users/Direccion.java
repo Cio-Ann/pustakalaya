@@ -6,6 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Entidad que representa una dirección.
+ * Se almacena en la tabla direccion de la base de datos.
+ *
+ * @author CGR-Casa
+ */
 @Entity
 public class Direccion {
 	/**

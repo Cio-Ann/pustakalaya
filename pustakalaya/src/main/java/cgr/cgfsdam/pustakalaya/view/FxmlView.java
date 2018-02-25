@@ -38,11 +38,11 @@ public enum FxmlView {
 	/* Vistas de lector */
 	
 	/**
-	 * Vista principal del lector.
+	 * Pantalla principal del lector.
 	 */
 	L_MAIN("lector.main.title", "/fxml/lector/Main.fxml"),
 	/**
-	 * Vista principal del lector.
+	 * Vista hija inicial del lector.
 	 */
 	L_MAIN_VIEW("lector.main.title", "/fxml/lector/MainView.fxml"),
 	/**
@@ -50,8 +50,8 @@ public enum FxmlView {
 	 */
 	L_PROFILE("lector.profile.title", "/fxml/lector/ProfileView.fxml"),
 	/**
-	 * Vista de estado actual del lector. Muestra los prestamos, reservar o
-	 * sanciones vigentes.
+	 * Vista de estado actual del lector. 
+	 * Muestra los prestamos, reservar o sanciones vigentes.
 	 */
 	L_STATUS("lector.status.title", "/fxml/lector/Status.fxml"),
 	/**
