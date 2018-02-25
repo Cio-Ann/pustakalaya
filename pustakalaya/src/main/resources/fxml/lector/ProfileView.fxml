@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.lector.ProfileController">
+   <children>
+      <Label fx:id="lblUserData" prefHeight="50.0" prefWidth="600.0" styleClass="titleText" text="\%lblUserData" />
+      <Label fx:id="lblUserAddress" layoutY="269.0" prefWidth="600.0" styleClass="titleText" text="\%lblUserAddress" />
+      <TextField fx:id="tNombre" layoutX="100.0" layoutY="70.0" prefHeight="25.0" prefWidth="490.0" />
+      <TextField fx:id="tApellido2" layoutX="395.0" layoutY="105.0" prefHeight="25.0" prefWidth="195.0" />
+      <TextField fx:id="tApellido1" layoutX="100.0" layoutY="105.0" prefHeight="25.0" prefWidth="195.0" />
+      <Label fx:id="lblApellido1" layoutX="10.0" layoutY="105.0" prefWidth="80.0" text="\%lblApellido1" />
+      <Label fx:id="lblNombre" layoutX="10.0" layoutY="70.0" prefHeight="17.0" prefWidth="80.0" text="\%lblNombre" />
+      <Label fx:id="lblApellido2" layoutX="305.0" layoutY="105.0" prefWidth="80.0" text="\%lblApellido2" />
+      <Label fx:id="lblTipoDocumento" layoutX="10.0" layoutY="140.0" prefHeight="17.0" prefWidth="125.0" text="\%lblTipoDoc" />
+      <ComboBox fx:id="cmbTipoDocumento" layoutX="145.0" layoutY="140.0" prefWidth="150.0" />
+      <Label fx:id="lblDocumento" layoutX="305.0" layoutY="140.0" prefWidth="80.0" text="\%lblDocumento" />
+      <TextField fx:id="tDocumento" layoutX="395.0" layoutY="140.0" prefHeight="25.0" prefWidth="195.0" />
+      <Label fx:id="lblUserName" layoutX="10.0" layoutY="175.0" prefHeight="17.0" prefWidth="210.0" text="\%lblUsername" />
+      <TextField fx:id="tUserName" layoutX="230.0" layoutY="175.0" prefHeight="25.0" prefWidth="360.0" />
+      <PasswordField fx:id="pPassword" layoutX="101.0" layoutY="210.0" prefWidth="195.0" />
+      <PasswordField fx:id="pConfirmPassword" layoutX="395.0" layoutY="210.0" onKeyTyped="#handleCheckPassword" prefWidth="195.0" />
+      <Label fx:id="lblPassword" layoutX="10.0" layoutY="210.0" prefWidth="80.0" text="\%lblPassword" />
+      <Label fx:id="lblConfirmPassword" layoutX="305.0" layoutY="210.0" prefWidth="80.0" text="\%lblConfirmP" />
+      <Label fx:id="lblPswError" layoutX="10.0" layoutY="245.0" prefWidth="580.0" styleClass="errorText" text="\%lblErrorPassword" />
+      <Label fx:id="lblTipoVia" layoutX="10.0" layoutY="339.0" prefWidth="80.0" text="\%lblTipoVia" />
+      <Label fx:id="lblVia" layoutX="210.0" layoutY="339.0" prefWidth="80.0" text="\%lblVia" />
+      <TextField fx:id="tTipoVia" layoutX="100.0" layoutY="339.0" prefWidth="100.0" />
+      <TextField fx:id="tVia" layoutX="300.0" layoutY="339.0" prefWidth="290.0" />
+      <Label fx:id="lblNumero" layoutX="10.0" layoutY="374.0" prefWidth="80.0" text="\%lblNumero" />
+      <Label fx:id="lblPortal" layoutX="210.0" layoutY="374.0" prefWidth="80.0" text="\%lblPortal" />
+      <Label fx:id="lblEscalera" layoutX="410.0" layoutY="374.0" prefWidth="80.0" text="\%lblEscalera" />
+      <TextField fx:id="tNumero" layoutX="100.0" layoutY="374.0" prefWidth="100.0" />
+      <TextField fx:id="tPortal" layoutX="300.0" layoutY="374.0" prefWidth="100.0" />
+      <TextField fx:id="tEscalera" layoutX="500.0" layoutY="374.0" prefWidth="90.0" />
+      <TextField fx:id="tCP" layoutX="500.0" layoutY="409.0" prefWidth="90.0" />
+      <TextField fx:id="tPuerta" layoutX="300.0" layoutY="409.0" prefWidth="100.0" />
+      <TextField fx:id="tPlanta" layoutX="100.0" layoutY="409.0" prefWidth="100.0" />
+      <Label fx:id="lblCP" layoutX="410.0" layoutY="409.0" prefWidth="80.0" text="\%lblCP" />
+      <Label fx:id="lblPuerta" layoutX="210.0" layoutY="409.0" prefWidth="80.0" text="\%lblPuerta" />
+      <Label fx:id="lblPlanta" layoutX="10.0" layoutY="409.0" prefWidth="80.0" text="\%lblPlanta" />
+      <Label fx:id="lblProvincia" layoutX="305.0" layoutY="444.0" prefWidth="80.0" text="\%lblProvincia" />
+      <Label fx:id="lblPoblacion" layoutX="10.0" layoutY="444.0" prefWidth="80.0" text="\%lblPoblacion" />
+      <TextField fx:id="tPoblacion" layoutX="100.0" layoutY="444.0" prefHeight="25.0" prefWidth="195.0" />
+      <TextField fx:id="tProvincia" layoutX="395.0" layoutY="444.0" prefHeight="25.0" prefWidth="195.0" />
+      <Label fx:id="lblEmail" layoutX="305.0" layoutY="479.0" prefWidth="80.0" text="\%lblEmail" />
+      <Label fx:id="lblTelefono" layoutX="10.0" layoutY="479.0" prefWidth="80.0" text="\%lblTelefono" />
+      <TextField fx:id="tTelefono" layoutX="100.0" layoutY="479.0" prefHeight="25.0" prefWidth="195.0" />
+      <TextField fx:id="tEmail" layoutX="395.0" layoutY="479.0" prefHeight="25.0" prefWidth="195.0" />
+      <HBox alignment="BOTTOM_RIGHT" layoutX="290.0" layoutY="565.0" prefHeight="25.0" prefWidth="300.0" spacing="6.0">
+         <children>
+            <Button fx:id="btnRestore" mnemonicParsing="false" onAction="#handleRestore" text="\%restore">
+               <styleClass>
+                  <String fx:value="btnGreen" />
+                  <String fx:value="btn" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnUpdate" layoutX="681.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleUpdate" text="\%update">
+               <styleClass>
+                  <String fx:value="btnBlue" />
+                  <String fx:value="btn" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="lblValidationError" alignment="TOP_LEFT" layoutX="10.0" layoutY="525.0" prefHeight="65.0" prefWidth="320.0" styleClass="errorText" text="lblValidationErrors" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,89 @@
+/* CSS for app */
+.btn {
+	-fx-min-width: 100px;
+	-fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+.btnGreen{
+	-fx-background-color:  #3cbc53;
+}
+
+.btnBlue{
+	-fx-background-color: #007bff;
+}
+
+.btnRed{
+	-fx-background-color: #d9534f;
+}
+
+
+.background{
+	-fx-background-color: #94736b;
+}
+
+.background-black{
+	-fx-background-color: #000000;
+}
+
+.background-white{
+	-fx-background-color: #ffffff;
+}
+
+.dark {
+	-fx-text-fill: #000000;
+}
+.light {
+	-fx-text-fill: #ffffff;
+}
+
+.errorText {
+	-fx-text-fill: #ff0000;
+}
+
+.titleText {
+    -fx-font-weight: bold;
+   	-fx-font-size: 24.0;
+   	-fx-padding: 12px; 
+}
+
+.bigText {
+    -fx-font-weight: bold;
+   	-fx-font-size: 18.0;
+   	-fx-padding: 12px;
+}
+
+.split-pane-divider {
+   -fx-padding: 0 ;
+}
+
+/*botones de menu */
+.menu-button-off {
+	-fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+	-fx-background-radius: 0;
+   	-fx-font-size: 18.0;
+}
+.menu-button-off:hover {
+	-fx-background-color: #333333;
+    -fx-font-weight: bold;
+}
+
+.menu-button-on {
+	-fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+	-fx-background-radius: 0;
+   	-fx-font-size: 18.0;
+}
+
+.menu-button-on:hover {
+	-fx-background-color: #333333;
+    -fx-font-weight: bold;
+}
+
+
+
+
+
+
+
+

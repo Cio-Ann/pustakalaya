@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.security.LoginController">
+   <children>
+      <Rectangle fill="#94736b" height="250.0" stroke="#ffffff8b" strokeType="INSIDE" width="400.0" />
+      <Label fx:id="lblLogin" layoutX="97.0" layoutY="46.0" text="\%login" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="username" layoutX="98.0" layoutY="92.0" prefHeight="36.0" prefWidth="204.0" promptText="\%username" />
+      <PasswordField fx:id="password" layoutX="98.0" layoutY="141.0" prefHeight="36.0" prefWidth="204.0" promptText="\%password" />
+      <HBox layoutX="98.0" layoutY="187.0" prefHeight="31.0" prefWidth="204.0" spacing="10.0">
+         <children>
+            <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#register" prefHeight="31.0" prefWidth="108.0" styleClass="btnBlue" text="\%register" textFill="WHITE">
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" />
+               </effect>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnLogin" layoutX="215.0" layoutY="193.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="86.0" styleClass="btnGreen" text="\%signin" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" />
+               </effect>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>
