@@ -29,11 +29,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Paint;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
+/**
+ * Controlador de la vista correspondiente a la pantalla de registro.
+ *
+ * @author CGR-Casa
+ */
 @Controller
 public class RegisterController implements Initializable {
 
@@ -83,7 +92,7 @@ public class RegisterController implements Initializable {
 	private Label lblTipoDocumento;
 
 	@FXML
-	private ComboBox<String> cbTipoDocumento;
+	private ComboBox<TipoDocumento> cbTipoDocumento;
 
 	@FXML
 	private Label lblDocumento;
@@ -196,14 +205,14 @@ public class RegisterController implements Initializable {
 	@FXML
 	private Button btnExit;
 
-	private ObservableList<String> tiposDocumento = FXCollections.observableArrayList();
+	private ObservableList<TipoDocumento> tiposDocumento = FXCollections.observableArrayList();
 
 	/**
-	 * Method called on event type from pConfirmPassword field to check if password
-	 * and confirmation are equals.
+	 * Método para evaluar si la contraseña y la confirmación son iguales. Se
+	 * ejecuta cada vez ue se escribe en el campo de confirmación de contraseña.
 	 * 
 	 * @param event
-	 *            KeyEvent handled.
+	 *            KeyEvent evento que origino la ejecución.
 	 */
 	@FXML
 	void handleCheckPass(KeyEvent event) {
@@ -211,18 +220,18 @@ public class RegisterController implements Initializable {
 		String pass2 = pConfirmPassword.getText() + event.getCharacter();
 		if (!pass2.equals(pass)) {
 			lblPswError.setText(resourceBundle.getString("register.label.passwordError"));
-//			lblPswError.setTextFill(Paint.valueOf("red"));
+			// lblPswError.setTextFill(Paint.valueOf("red"));
 		} else {
 			lblPswError.setText("");
 		}
 	}
 
 	/**
-	 * Method called on register button click event to save user if is valid. Shows
-	 * errors otherwise.
+	 * Método que registra al usuario en la base de datos, si todos los datos son
+	 * válidos. Se desencadena al pulsar el botón registrar.
 	 * 
 	 * @param event
-	 *            ActionEvent handled.
+	 *            ActionEvent evento que desencadena la acción.
 	 */
 	@FXML
 	void handleRegister(ActionEvent event) {
@@ -233,26 +242,21 @@ public class RegisterController implements Initializable {
 		if (validationErrors.isEmpty()) {
 			lblValidationErrors.setText("");
 			saveUser();
-			
-			sendAlert(AlertType.INFORMATION, 
-					resourceBundle.getString("register.save.title"), 
-					resourceBundle.getString("register.save.header"), 
-					resourceBundle.getString("register.save.text"));
-			
+
+			sendAlert(AlertType.INFORMATION, resourceBundle.getString("register.save.title"),
+					resourceBundle.getString("register.save.header"), resourceBundle.getString("register.save.text"));
+
 			stageManager.switchScene(FxmlView.LOGIN);
 		} else {
 			lblValidationErrors.setText(validationErrors);
-//			lblValidationErrors.setTextFill(Paint.valueOf("red"));
 		}
-
-		// sendAlert(AlertType.WARNING, "Debug Info", "handleRegister", "Pulsaste el
-		// boton registrarse");
 	}
 
 	/**
-	 * Method called when exit button is clicked to exit application on click
+	 * Método que finaliza la aplicación. Se desencadena al pulsar el botón salir.
 	 * 
 	 * @param event
+	 *            ActionEvent evento que desencadena la acción.
 	 */
 	@FXML
 	void handleExit(ActionEvent event) {
@@ -263,12 +267,22 @@ public class RegisterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Método que devuelve a la pantalla de login. Se desencadena al pulsar el botón
+	 * volver.
+	 * 
+	 * @param event
+	 *            ActionEvent evento que desencadena la acción.
+	 */
 	@FXML
 	void handleBack(ActionEvent event) {
 		log.info("se pulsó el botón volver");
 		stageManager.switchScene(FxmlView.LOGIN);
 	}
 
+	/**
+	 * Carga inicial de los valores de las etiquetas y campos de la vista.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		lblTitle.setText(resources.getString("register.label.title"));
@@ -279,7 +293,9 @@ public class RegisterController implements Initializable {
 		lblApellido1.setText(resources.getString("register.label.apellido1"));
 		lblApellido2.setText(resources.getString("register.label.apellido2"));
 		lblTipoDocumento.setText(resources.getString("register.label.tipoDocumento"));
-		cbTipoDocumento.setPromptText(resources.getString("register.comboBox.tipoDocumento"));
+
+		initializeComboTipoDocumento(resources);
+
 		lblDocumento.setText(resources.getString("register.label.documento"));
 		lblUsername.setText(resources.getString("register.label.userName"));
 		lblPassword.setText(resources.getString("register.label.password"));
@@ -311,13 +327,82 @@ public class RegisterController implements Initializable {
 		loadTipoDocumento();
 	}
 
+	/**
+	 * Método privado para inicializar correctamente el combo del tipo de documento.
+	 * 
+	 * @param resources
+	 */
+	private void initializeComboTipoDocumento(ResourceBundle resources) {
+		// establece el texto cuando no hay selección
+		cbTipoDocumento.setPromptText(resources.getString("register.comboBox.tipoDocumento"));
+
+		// establece la conversión entre el tipo TipoDocumento y el String mostrado en
+		// el combo desplegable
+		cbTipoDocumento.setCellFactory(new Callback<ListView<TipoDocumento>, ListCell<TipoDocumento>>() {
+			@Override
+			public ListCell<TipoDocumento> call(ListView<TipoDocumento> param) {
+
+				ListCell<TipoDocumento> cell = new ListCell<TipoDocumento>() {
+					@Override
+					protected void updateItem(TipoDocumento item, boolean empty) {
+						super.updateItem(item, empty);
+
+						if (item != null) {
+							setText(item.getNombre());
+						} else {
+							setText(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
+
+		// establece la conversión entre el Tipo documento y el String mostrado en el
+		// combo seleccionado.
+		cbTipoDocumento.setConverter(new StringConverter<TipoDocumento>() {
+			@Override
+			public String toString(TipoDocumento td) {
+				if (td == null) {
+					return "";
+				} else {
+					return td.getNombre();
+				}
+			}
+
+			@Override
+			public TipoDocumento fromString(String nombre) {
+				return tipoDocumentoService.findByNombre(nombre);
+			}
+		});
+
+		// carga los datos de base de datos
+		loadTipoDocumento();
+	}
+
+	/**
+	 * Método para cargar los valores del combo de TipoDocumento.
+	 */
 	private void loadTipoDocumento() {
 		tiposDocumento.clear();
-		tiposDocumento.addAll(tipoDocumentoService.findAllNombres());
+		tiposDocumento.addAll(tipoDocumentoService.findAll());
 
 		cbTipoDocumento.setItems(tiposDocumento);
 	}
 
+	/**
+	 * Método que envia un popup de alerta al usuario.
+	 * 
+	 * @param tipo
+	 *            AlertType tipo de alerta a mostrar.
+	 * @param title
+	 *            String titulo del popup de alerta.
+	 * @param header
+	 *            String encabezado del popup de alerta.
+	 * @param contextText
+	 *            String mensaje a mostrar en la alerta.
+	 */
 	private void sendAlert(AlertType tipo, String title, String header, String contextText) {
 		Alert alert = new Alert(tipo);
 		alert.setTitle(title);
@@ -327,6 +412,18 @@ public class RegisterController implements Initializable {
 		alert.showAndWait();
 	}
 
+	/**
+	 * Método que envia un mensaje de confirmación al usuario y recoge su respuesta.
+	 * 
+	 * @param Title
+	 *            String título del popup.
+	 * @param header
+	 *            String encabezado del popup.
+	 * @param contextText
+	 *            String texto del mensaje a mostrar en el popup.
+	 * @return boolean <code>true</code> si el usuario acepta, o <code>false</code>
+	 *         en caso contrario.
+	 */
 	private boolean showConfirmation(String Title, String header, String contextText) {
 		boolean ret = false;
 
@@ -343,10 +440,10 @@ public class RegisterController implements Initializable {
 	}
 
 	/**
-	 * Method to validate all mandatory fields
+	 * Valida que todos los campos obligatorios sean correctos.
 	 * 
-	 * @return <code>true</code> if all mandatory fields are correctly filled,
-	 *         <code>false</code> otherwhise.
+	 * @return boolean <code>true</code> si todos los campos obligatorios estan
+	 *         correctamente completados, <code>false</code> en caso contrario.
 	 */
 	private String validateFields() {
 		String ret = "";
@@ -363,6 +460,10 @@ public class RegisterController implements Initializable {
 		return ret;
 	}
 
+	/**
+	 * Valida el campo de nombre
+	 * @return String mensaje de error si no se ha rellenado.
+	 */
 	private String validateNombre() {
 		String nombre = tNombre.getText().trim();
 
@@ -373,6 +474,10 @@ public class RegisterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Valida el campo de primer apellido
+	 * @return String mensaje de error si no se ha rellenado.
+	 */
 	private String validateApellido1() {
 		String apellido = tApellido1.getText().trim();
 
@@ -383,14 +488,22 @@ public class RegisterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Valida el tipo de documento.
+	 * @return String mensaje de error si no se ha seleccionado.
+	 */
 	private String validateTipoDocumento() {
-		if (cbTipoDocumento.getValue() == null || cbTipoDocumento.getValue().trim().isEmpty()) {
+		if (cbTipoDocumento.getValue() == null || cbTipoDocumento.getValue().getNombre().isEmpty()) {
 			return resourceBundle.getString("user.validation.tipoDocumentoError");
 		} else {
 			return "";
 		}
 	}
 
+	/**
+	 * Valida el documento.
+	 * @return String mensaje de error si no se ha rellenado.
+	 */
 	private String validateDocumento() {
 		String doc = tDocumento.getText().trim();
 
@@ -401,6 +514,10 @@ public class RegisterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Valida en username.
+	 * @return String mensaje de error si no se ha rellenado o ya existe en el sistema.
+	 */
 	private String validateUsername() {
 		String username = tUsername.getText().trim();
 
@@ -416,6 +533,10 @@ public class RegisterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Valida la contraseña.
+	 * @return String mensaje de error si no se ha rellenado o no coinciden los campos de contraseña y confirmación.
+	 */
 	private String validatePassword() {
 		String p = pPassword.getText().trim();
 
@@ -432,6 +553,10 @@ public class RegisterController implements Initializable {
 		return "";
 	}
 
+	/**
+	 * Valida el campo email.
+	 * @return String mensaje de error si no se ha rellenado o ya está registrado en el sistema.
+	 */
 	private String validateEmail() {
 		String email = tEmail.getText().trim();
 
@@ -447,6 +572,9 @@ public class RegisterController implements Initializable {
 		return "";
 	}
 
+	/**
+	 * Almacena el usuario en base de datos	
+	 */
 	private void saveUser() {
 		Usuario user = new Usuario();
 
@@ -456,12 +584,9 @@ public class RegisterController implements Initializable {
 		if (!tApellido2.getText().trim().isEmpty()) {
 			user.setApellido2(tApellido2.getText().trim());
 		}
-		
-		
-//		TipoDocumento tipoDocumento = tipoDocumentoService.findByNombre(cbTipoDocumento.getValue());
-		user.setTipoDocumento(tipoDocumentoService.findByNombre(cbTipoDocumento.getValue()));
-//		log.info(tipoDocumento.toString());
-		
+
+		user.setTipoDocumento(cbTipoDocumento.getValue());
+
 		user.setDocumento(tDocumento.getText().trim());
 		user.setUsername(tUsername.getText().trim());
 		user.setPassword(pPassword.getText().trim());
@@ -489,7 +614,7 @@ public class RegisterController implements Initializable {
 		}
 
 		user.setDireccion(address);
-		
+
 		usuarioService.saveUsuario(user);
 	}
 

@@ -28,6 +28,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+/**
+ * Controlador de la vista de perfil para usuarios con rol lector.
+ *
+ * @author CGR-Casa
+ */
 @Controller
 public class ProfileController extends BaseController {
 
@@ -180,6 +185,12 @@ public class ProfileController extends BaseController {
 
 	private ObservableList<TipoDocumento> tiposDocumento = FXCollections.observableArrayList();
 
+	/**
+	 * Método para evaluar si la contraseña y la confirmación son iguales.
+	 * Se ejecuta cada vez ue se escribe en el campo de confirmación de contraseña.
+	 * 
+	 * @param event KeyEvent evento que origino la ejecución.
+	 */
 	@FXML
 	void handleCheckPassword(KeyEvent event) {
 		String pass = pPassword.getText();
@@ -192,13 +203,23 @@ public class ProfileController extends BaseController {
 		}
 	}
 
+	/**
+	 * Método para restaurar los valores del usuario.
+	 * Se ejecuta al pulsar el botón restore.
+	 * 
+	 * @param event ActionEvent evento que provoca la ejecución.
+	 */
 	@FXML
 	void handleRestore(ActionEvent event) {
-		log.info("Se pulsó el boton restaurar");
 		loadUsuarioToView();
 		clearErrors();
 	}
 
+	/**
+	 * Método para actualizar el usuario, tanto en memoria como en base de datos.
+	 * 
+	 * @param event ActionEvent evento que provoca la ejecución.
+	 */
 	@FXML
 	void handleUpdate(ActionEvent event) {
 		loadViewToUsuario();
@@ -207,6 +228,9 @@ public class ProfileController extends BaseController {
 		
 	}
 
+	/**
+	 * Carga inicial de los valores de las etiquetas y campos de la vista.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// carga etiquetas
@@ -256,6 +280,10 @@ public class ProfileController extends BaseController {
 		loadUsuarioToView();
 	}
 
+	/**
+	 * Método privado para inicializar correctamente el combo del tipo de documento.
+	 * @param resources
+	 */
 	private void initializeComboTipoDocumento(ResourceBundle resources) {
 		// establece el texto cuando no hay selección
 		cmbTipoDocumento.setPromptText(resources.getString("register.comboBox.tipoDocumento"));
@@ -305,6 +333,9 @@ public class ProfileController extends BaseController {
 		loadTipoDocumento();
 	}
 
+	/**
+	 * Método privado para cargar los tipos de documento de la base de datos en el combo.
+	 */
 	private void loadTipoDocumento() {
 		tiposDocumento.clear();
 		tiposDocumento.addAll(tipoDocumentoService.findAll());
@@ -312,13 +343,9 @@ public class ProfileController extends BaseController {
 	}
 
 	/**
-	 * Method to load Usuario instance values to form view.
-	 * 
-	 * Gets user from security context if usuario is null.
+	 * Carga los valores del usuario en memoria(autenticado) en los campos de la vista.
 	 */
 	private void loadUsuarioToView() {
-
-		// establece los valores del usuario en
 		if (!isEmptyString(getUsuario().getNombre())) {
 			tNombre.clear();
 			tNombre.setText(getUsuario().getNombre());
@@ -360,6 +387,9 @@ public class ProfileController extends BaseController {
 		}
 	}
 
+	/**
+	 * Carga los valores actuales de la vista al usuario en memoria y lo almacena en base de datos.
+	 */
 	private void loadViewToUsuario() {
 		log.info("usuario antes de la actualización ->\n" + getUsuario().toString());
 		// recorro todos los campos
@@ -439,6 +469,9 @@ public class ProfileController extends BaseController {
 		log.info("usuario despues de la actualización ->\n" + getUsuario().toString());
 	}
 
+	/**
+	 * Carga el usuario del contexto de seguridad de Spring.
+	 */
 	private void loadUsuarioFromSecurity() {
 		if (getUsuario() == null) {
 			log.info("No existe usuario en el controller");
@@ -449,6 +482,9 @@ public class ProfileController extends BaseController {
 		}
 	}
 
+	/**
+	 * Carga la dirección almacenada en el usuario en los campos de la vista destinados a la dirección.
+	 */
 	private void loadDireccionToView() {
 		Direccion currentAddress = getUsuario().getDireccion();
 
@@ -495,15 +531,28 @@ public class ProfileController extends BaseController {
 
 	}
 
+	/**
+	 * Elimina los mensajes de error de la vista.
+	 */
 	private void clearErrors() {
 		lblPswError.setText("");
 		lblValidationError.setText("");
 	}
 
+	/**
+	 * Util para comprobar si un String es nulo o vacio.
+	 * 
+	 * @param value String a evaluar.
+	 * @return boolean <code>true</code> si la cadena esta vacio, o <code>false</code> en caso contrario.
+	 */
 	private boolean isEmptyString(String value) {
 		return value == null || value.isEmpty();
 	}
 
+	/**
+	 * Util para evaluar si el tipo de documento del usuario en memoria es núlo o está vacio.
+	 * @return boolean <code>true</code> si el TipoDocumento está vacio, o <code>false</code> en caso contrario.
+	 */
 	private boolean isEmptyTipoDocumento() {
 		return getUsuario().getTipoDocumento() == null || isEmptyString(getUsuario().getTipoDocumento().getNombre());
 	}

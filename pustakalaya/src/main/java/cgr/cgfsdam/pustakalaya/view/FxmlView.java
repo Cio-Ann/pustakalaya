@@ -42,6 +42,10 @@ public enum FxmlView {
 	 */
 	L_MAIN("lector.main.title", "/fxml/lector/Main.fxml"),
 	/**
+	 * Vista principal del lector.
+	 */
+	L_MAIN_VIEW("lector.main.title", "/fxml/lector/MainView.fxml"),
+	/**
 	 * Vista hija para cargar en el panel principal en al vista profile.
 	 */
 	L_PROFILE("lector.profile.title", "/fxml/lector/ProfileView.fxml"),

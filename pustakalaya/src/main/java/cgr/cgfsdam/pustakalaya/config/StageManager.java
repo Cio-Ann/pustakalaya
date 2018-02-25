@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Manages switching Scenes on the Primary Stage
+ * Maneja los cambios de Stage en la vista principal.
  */
 public class StageManager {
 
@@ -34,9 +34,7 @@ public class StageManager {
     
     private void show(final Parent rootnode, String title) {
         Scene scene = prepareScene(rootnode);
-        //scene.getStylesheets().add("/styles/Styles.css");
         
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
@@ -45,7 +43,7 @@ public class StageManager {
         try {
             primaryStage.show();
         } catch (Exception exception) {
-            logAndExit ("Unable to show scene for title" + title,  exception);
+            logAndExit ("Imposible mostrar la escena con el titulo " + title,  exception);
         }
     }
     
@@ -60,10 +58,9 @@ public class StageManager {
     }
 
     /**
-     * Loads the object hierarchy from a FXML document and returns to root node
-     * of that hierarchy.
+     * Carga la vista a partir de un fichero fxml y la devuelve al root node.
      *
-     * @return Parent root node of the FXML document hierarchy
+     * @return Parent root node del fichero FXML
      */
     private Parent loadViewNodeHierarchy(String fxmlFilePath) {
         Parent rootNode = null;

@@ -17,9 +17,15 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 
+/**
+ * Clase abstracta para los controladores de vistas una vez autenticado el usuario.
+ * 
+ * Establece algúnos campos y métodos comunes a todos los controladores de este tipo.
+ *
+ * @author CGR-Casa
+ */
 public abstract class BaseController implements Initializable {
 
-	//establece el logeer apropiado para todas las subclases
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private Usuario usuario;
@@ -30,24 +36,31 @@ public abstract class BaseController implements Initializable {
 	@Autowired
 	ResourceBundle resourceBundle;
 
-
+	/**
+	 * getter del campo usuario.
+	 * 
+	 * @return Usuario usuario almacenado en el controlador.
+	 */
 	public Usuario getUsuario() {
 		return usuario;
 	}
 
+	/**
+	 * setter del campo usuario.
+	 * 
+	 * @param usuario Usuario a almacenar en el controlador.
+	 */
 	public void setUsuario(Usuario usuario) {
 		log.info("Se establece el usuario en la clase " + this.getClass().getSimpleName());
 		this.usuario = usuario;
 	}
 
 	/**
-	 * Method to get a child pane from path to its fxml file.
+	 * Metodo para obtener un Pane a partir del fichero fxml que lo define.
 	 * 
-	 * @param path
-	 *            String path to child fxml file.
-	 * @return Pane
-	 * @throws IOException
-	 *             if file is not found or access is not allowed.
+	 * @param path String ruta al fichero fxml.
+	 * @return Pane objeto cargado a partir del fichero.
+	 * @throws IOException si no se encuentra o no se tiene acceso al fichero indicado.
 	 */
 	public Pane getChildPane(String path) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
@@ -58,31 +71,12 @@ public abstract class BaseController implements Initializable {
 	}
 
 	/**
-	 * Method to get a child controller form its path
+	 * Método para mostrar un popup de confirmación y recoger la respuesta del usuario.
 	 * 
-	 * @param path
-	 * @param clazz
-	 * @return
-	 * @throws IOException 
-	 */
-	public <T extends BaseController> BaseController getChildController(String path,
-			Class<? extends BaseController> clazz) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		loader.setControllerFactory(appContext::getBean); 
-		loader.setLocation(clazz.getResource(path));
-//		loader.load();
-		T controller = loader.getController();
-		
-		return controller;
-	}
-
-	/**
-	 * Method to show a confirmation dialog.
-	 * 
-	 * @param title String title of dialog window
-	 * @param header String header of dialog window
-	 * @param contextText String message shown in dialog window
-	 * @return boolean <code>true</code> if user accept dialog, <code>false</code> otherwise
+	 * @param title String título del popup.
+	 * @param header String cabecera del popup.
+	 * @param contextText String mensaje a mostrar.
+	 * @return boolean <code>true</code> si el usuario acepta, <code>false</code> en caso contrario.
 	 */
 	protected boolean showConfirmation(String title, String header, String contextText) {
 		boolean ret = false;
@@ -100,12 +94,12 @@ public abstract class BaseController implements Initializable {
 	}
 
 	/**
-	 * Method to show an alert dialog box.
+	 * Método para mostrar un mensaje de alerta al usuario.
 	 * 
-	 * @param tipo AlertType type of alert to show.
-	 * @param title String title of dialog window
-	 * @param header String header of dialog window
-	 * @param contextText String message shown in dialog window
+	 * @param tipo AlertType tipo de alerta a mostrar.
+	 * @param title String  título del popup.
+	 * @param header String cabecera del popup.
+	 * @param contextText String mensaje a mostrar.
 	 */
 	protected void sendAlert(AlertType tipo, String title, String header, String contextText) {
 		Alert alert = new Alert(tipo);

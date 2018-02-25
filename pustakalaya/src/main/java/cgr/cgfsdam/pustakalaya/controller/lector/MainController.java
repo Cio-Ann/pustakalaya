@@ -2,7 +2,6 @@ package cgr.cgfsdam.pustakalaya.controller.lector;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,8 @@ import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
@@ -33,9 +29,6 @@ import javafx.scene.layout.AnchorPane;
  */
 @Controller
 public class MainController extends BaseController {
-//
-//	Logger log = LoggerFactory.getLogger(RegisterController.class);
-//	
 	
 	@Autowired
 	SpringFXMLLoader fxmlLoader;
@@ -45,8 +38,6 @@ public class MainController extends BaseController {
 
 	@Autowired
 	UsuarioService usuarioService;
-
-	// private Usuario usuario;
 
 	@Lazy
 	@Autowired
@@ -78,35 +69,11 @@ public class MainController extends BaseController {
 
 	@FXML
 	void handleProfile(ActionEvent event) {
-//		sendAlert(AlertType.INFORMATION, "Boton profile", "Boton profile", "Boton profile");
-
 		clearAllSelectedBtn();
 		setSelectedBtn(btnProfile);
 
-		AnchorPane newLoadedPane;
-		try {
-			newLoadedPane = (AnchorPane) getChildPane(FxmlView.L_PROFILE.getFxmlFile());
-			
-//			FXMLLoader loader = new FXMLLoader();
-//	        loader.setLocation(ProfileController.class.getResource(FxmlView.L_PROFILE.getFxmlFile()));
-//	        newLoadedPane = (AnchorPane) loader.load();
-//	        
-//	        ProfileController childController = loader.getController();
-//	        childController.setUsuario(this.getUsuario());
-			
-			
-//			ProfileController childController = (ProfileController) getChildController(FxmlView.L_PROFILE.getFxmlFile(),
-//					ProfileController.class);
-//			childController.setUsuario(this.getUsuario());
-
-			mainPanel.getChildren().clear();
-			mainPanel.getChildren().add(newLoadedPane);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		// carga el panel correspondiente
+		loadChildPanel(FxmlView.L_PROFILE.getFxmlFile());
 	}
 
 	@FXML
@@ -148,7 +115,7 @@ public class MainController extends BaseController {
 
 	@FXML
 	void handleExit(ActionEvent event) {
-		log.info("se puls� el bot�n salir");
+		log.info("se pulsó el botón salir");
 		if (showConfirmation(resourceBundle.getString("app.exit.title"), resourceBundle.getString("app.exit.header"),
 				resourceBundle.getString("app.exit.text"))) {
 			Platform.exit();
@@ -171,12 +138,37 @@ public class MainController extends BaseController {
 			btnSearch.setText(resources.getString("lector.btn.search"));
 			btnChangeAccount.setText(resources.getString("lector.btn.change.account"));
 			btnExit.setText(resources.getString("lector.btn.exit"));
+
+			loadChildPanel(FxmlView.L_MAIN_VIEW.getFxmlFile());
+
 		} else {
-			log.info("El usuario no est� autenticado");
+			log.info("El usuario no está autenticado");
 			stageManager.switchScene(FxmlView.LOGIN);
 		}
 	}
 
+	/**
+	 * Carga un AnchorPane a partir de un fichero fxml en el campo mainPanel.
+	 * 
+	 * @param path
+	 *            String ruta al archivo fxml a cargar.
+	 */
+	private void loadChildPanel(String path) {
+		AnchorPane newLoadedPane;
+		try {
+			newLoadedPane = (AnchorPane) getChildPane(path);
+
+			mainPanel.getChildren().clear();
+			mainPanel.getChildren().add(newLoadedPane);
+
+		} catch (IOException e) {
+			log.error("Error al cargar el fichero " + path, e, e.getCause());
+		}
+	}
+
+	/**
+	 * Elimina la clase de boton seleccionado de los botones de navegación.
+	 */
 	private void clearAllSelectedBtn() {
 		btnProfile.getStyleClass().remove("menu-button-on");
 		btnProfile.getStyleClass().add("menu-button-off");
@@ -197,8 +189,13 @@ public class MainController extends BaseController {
 		btnExit.getStyleClass().add("menu-button-off");
 	}
 
+	/**
+	 * Establece la clase de botón seleccionado en el botón pulsado.
+	 * 
+	 * @param button Button to apply new style;
+	 */
 	private void setSelectedBtn(Button button) {
-		button.getStyleClass().add("menu-button-on");		
+		button.getStyleClass().add("menu-button-on");
 	}
 
 }

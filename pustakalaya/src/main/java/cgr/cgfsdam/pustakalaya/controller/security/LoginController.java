@@ -65,6 +65,13 @@ public class LoginController implements Initializable {
 		btnRegister.setText(resources.getString("login.btn.register"));
 	}
 
+	/**
+	 * Autentica al usuario contra el sistema de autenticación de Spring.
+	 * 
+	 * @param event
+	 *            ActionEvent evento que desenlaza la acción
+	 * @throws IOException excepción si hay algún problema al cargar el fxml correspondiente a la siguiente vista.
+	 */
 	@FXML
 	private void login(ActionEvent event) throws IOException {
 		// recupera los valores introducidos
@@ -86,19 +93,46 @@ public class LoginController implements Initializable {
 		}
 	}
 
+	/**
+	 * Cambia a la pantalla de registro.
+	 * 
+	 * @param event ActionEvent evento que desenlaza la acción.
+	 * @throws IOException excepción si hay algún problema al cargar el fxml correspondiente a la pantalla de registro.
+	 */
 	@FXML
 	private void register(ActionEvent event) throws IOException {
 		stageManager.switchScene(FxmlView.REGISTER);
 	}
 
+	/**
+	 * Verifica si el usuario autenticado es del tipo Administrador.
+	 * 
+	 * @return boolean <code>true</code> si el usuario es de tipo administrador, o
+	 *         <code>false</code> en caso contrario.
+	 */
 	private boolean isRoleAdmin() {
 		return isRole("ROLE_ADMIN");
 	}
 
+	/**
+	 * Verifica si el usuario es de tipo lector.
+	 * 
+	 * @return boolean <code>true</code> si el usuario es de tipo lector, o
+	 *         <code>false</code> en caso contrario.
+	 */
 	private boolean isRoleLector() {
 		return isRole("ROLE_LECTOR");
 	}
 
+	/**
+	 * Valida si el usuario que se ha autenticado pertenece al rol pasado como
+	 * parámetro.
+	 * 
+	 * @param role
+	 *            String nombre del rol a comprobar.
+	 * @return boolean <code>true</code> si el usuario cumple con el rol recibido, o
+	 *         <code>false</code> en caso contrario.
+	 */
 	private boolean isRole(String role) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -107,6 +141,13 @@ public class LoginController implements Initializable {
 		return hasUserRole;
 	}
 
+	/**
+	 * Añade el mensaje de error en la vista para que el usuario sepa que el login
+	 * ha fallado.
+	 * 
+	 * @param e
+	 *            Exception excepción que ha producido el error de autenticación.
+	 */
 	private void showNotAllowedMessage(Exception e) {
 		log.info("Intento fallido de login, user = " + getUsername() + ", password= " + getPassword());
 		log.error(e.getLocalizedMessage());
@@ -114,10 +155,20 @@ public class LoginController implements Initializable {
 		lblLogin.setText("Login Failed.");
 	}
 
+	/**
+	 * Recupera la contrasña introducida por el usuario en la vista.
+	 * 
+	 * @return String password introducido por el usuario.
+	 */
 	public String getPassword() {
 		return password.getText().trim();
 	}
 
+	/**
+	 * Recupera el nombre de usuario de la vista.
+	 * 
+	 * @return String nombre de usuario.
+	 */
 	public String getUsername() {
 		return username.getText().trim();
 	}
