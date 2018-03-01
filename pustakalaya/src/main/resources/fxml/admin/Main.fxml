@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -18,11 +19,45 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.admin.MainController">
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
    <children>
-      <Label layoutX="76.0" layoutY="60.0" text="Pantalla principal administracion" />
+      <SplitPane dividerPositions="0.25" layoutX="10.0" layoutY="10.0" prefHeight="610.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background-black">
+               <children>
+                  <VBox layoutX="49.0" layoutY="99.0" prefHeight="598.0" prefWidth="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="50.0" prefWidth="200.0" styleClass="background">
+                           <children>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/user_white_48.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="username" layoutX="47.0" layoutY="-1.0" prefHeight="50.0" prefWidth="150.0" text="\%username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <styleClass>
+                                    <String fx:value="light" />
+                                    <String fx:value="bigText" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="btnUsers" mnemonicParsing="false" onAction="#handleUsers" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%users" />
+                        <Button fx:id="btnFunds" mnemonicParsing="false" onAction="#handleFunds" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%funds" />
+                        <Button fx:id="btnBookings" mnemonicParsing="false" onAction="#handleBookings" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%bookings" />
+                        <Button fx:id="btnLoans" mnemonicParsing="false" onAction="#handleLoans" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%loans" />
+                        <Button fx:id="btnNotications" mnemonicParsing="false" onAction="#handleNotifications" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%notifications" />
+                        <Button fx:id="btnChangeAccount" mnemonicParsing="false" onAction="#handleChangeAccount" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%changeAccount" />
+                        <Button fx:id="btnExit" mnemonicParsing="false" onAction="#handleExit" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%exit" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="mainPanel" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="background-white" />
+         </items>
+      </SplitPane>
    </children>
 </AnchorPane>

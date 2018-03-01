@@ -28,7 +28,7 @@
             <Label layoutX="125.0" layoutY="286.0" styleClass="light" text="Autor: Carlos Gonzalez Ruiz" />
             <Label layoutX="135.0" layoutY="296.0" styleClass="light" text="Curso: 2017 / 2018" />
             <Label layoutX="145.0" layoutY="306.0" styleClass="light" text="web: https://github.com/Cio-Ann/pustakalaya" />
-            <Label text="Vista: Lector">
+            <Label text="Vista: Administrador">
                <padding>
                   <Insets top="50.0" />
                </padding>

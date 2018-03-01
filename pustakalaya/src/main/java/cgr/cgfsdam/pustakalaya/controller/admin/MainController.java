@@ -1,4 +1,4 @@
-package cgr.cgfsdam.pustakalaya.controller.lector;
+package cgr.cgfsdam.pustakalaya.controller.admin;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,13 +22,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Controlador de la pantalla principal del usuario lector.
+ * Controlador de la pantalla principal de administrador.
  *
  * @author CGR-Casa
  */
-@Controller
-public class MainController extends BaseController {
-	
+@Controller("AdminMainController")
+public class MainController  extends BaseController{
+
 	@Autowired
 	SpringFXMLLoader fxmlLoader;
 
@@ -42,83 +42,75 @@ public class MainController extends BaseController {
 	@Autowired
 	private StageManager stageManager;
 
-	@FXML
-	private Button btnSearch;
+    @FXML
+    private Button btnUsers;
 
-	@FXML
-	private Button btnProfile;
+    @FXML
+    private Button btnFunds;
 
-	@FXML
-	private Button btnStatus;
+    @FXML
+    private Button btnBookings;
 
-	@FXML
-	private Button btnChangeAccount;
+    @FXML
+    private Button btnLoans;
 
-	@FXML
-	private AnchorPane mainPanel;
+    @FXML
+    private Button btnNotications;
 
-	@FXML
-	private Button btnRecord;
+    @FXML
+    private Button btnChangeAccount;
 
-	@FXML
-	private Button btnExit;
+    @FXML
+    private Button btnExit;
 
-	@FXML
-	private Label username;
+    @FXML
+    private AnchorPane mainPanel;
 
-	@FXML
-	void handleProfile(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnProfile);
+    @FXML
+    private Label username;
 
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_PROFILE.getFxmlFile());
-	}
+    @FXML
+    void handleUsers(ActionEvent event) {
 
-	@FXML
-	void handleStatus(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnProfile);
+    }
 
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_STATUS.getFxmlFile());
-	}
+    @FXML
+    void handleFunds(ActionEvent event) {
 
-	@FXML
-	void handleRecord(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnProfile);
+    }
 
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_RECORD.getFxmlFile());
-	}
+    @FXML
+    void handleBookings(ActionEvent event) {
 
-	@FXML
-	void handleSearch(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnProfile);
+    }
 
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_SEARCH.getFxmlFile());
-	}
+    @FXML
+    void handleLoans(ActionEvent event) {
 
-	@FXML
-	void handleChangeAccount(ActionEvent event) {
+    }
+
+    @FXML
+    void handleNotifications(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleChangeAccount(ActionEvent event) {
 		log.info("se pulsó el botón Cambiar de cuenta");
 		// vacia el contexto de seguridad
 		SecurityContextHolder.clearContext();
 		// redirige a la pantalla de login
 		stageManager.switchScene(FxmlView.LOGIN);
-	}
+    }
 
-	@FXML
-	void handleExit(ActionEvent event) {
+    @FXML
+    void handleExit(ActionEvent event) {
 		log.info("se pulsó el botón salir");
 		if (showConfirmation(resourceBundle.getString("app.exit.title"), resourceBundle.getString("app.exit.header"),
 				resourceBundle.getString("app.exit.text"))) {
 			Platform.exit();
 		}
-	}
+    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -130,19 +122,21 @@ public class MainController extends BaseController {
 			setUsuario(usuarioService.findByUsername(securityUser));
 
 			username.setText(getUsuario().getUsername());
-			btnProfile.setText(resources.getString("lector.btn.profile"));
-			btnStatus.setText(resources.getString("lector.btn.status"));
-			btnRecord.setText(resources.getString("lector.btn.record"));
-			btnSearch.setText(resources.getString("lector.btn.search"));
-			btnChangeAccount.setText(resources.getString("lector.btn.change.account"));
-			btnExit.setText(resources.getString("lector.btn.exit"));
+			btnUsers.setText(resources.getString("admin.btn.users"));
+			btnFunds.setText(resources.getString("admin.btn.funds"));
+			btnBookings.setText(resources.getString("admin.btn.bookings"));
+			btnLoans.setText(resources.getString("admin.btn.loans"));
+			btnNotications.setText(resources.getString("admin.btn.notifications"));
+			btnChangeAccount.setText(resources.getString("admin.btn.change.account"));
+			btnExit.setText(resources.getString("admin.btn.exit"));
 
-			loadChildPanel(FxmlView.L_MAIN_VIEW.getFxmlFile());
+			loadChildPanel(FxmlView.A_MAIN_VIEW.getFxmlFile());
 
 		} else {
 			log.info("El usuario no está autenticado");
 			stageManager.switchScene(FxmlView.LOGIN);
 		}
+		
 	}
 
 	/**
@@ -168,17 +162,20 @@ public class MainController extends BaseController {
 	 * Elimina la clase de boton seleccionado de los botones de navegación.
 	 */
 	private void clearAllSelectedBtn() {
-		btnProfile.getStyleClass().remove("menu-button-on");
-		btnProfile.getStyleClass().add("menu-button-off");
+		btnUsers.getStyleClass().remove("menu-button-on");
+		btnUsers.getStyleClass().add("menu-button-off");
 
-		btnStatus.getStyleClass().remove("menu-button-on");
-		btnStatus.getStyleClass().add("menu-button-off");
+		btnFunds.getStyleClass().remove("menu-button-on");
+		btnFunds.getStyleClass().add("menu-button-off");
 
-		btnRecord.getStyleClass().remove("menu-button-on");
-		btnRecord.getStyleClass().add("menu-button-off");
+		btnBookings.getStyleClass().remove("menu-button-on");
+		btnBookings.getStyleClass().add("menu-button-off");
 
-		btnSearch.getStyleClass().remove("menu-button-on");
-		btnSearch.getStyleClass().add("menu-button-off");
+		btnLoans.getStyleClass().remove("menu-button-on");
+		btnLoans.getStyleClass().add("menu-button-off");
+
+		btnNotications.getStyleClass().remove("menu-button-on");
+		btnNotications.getStyleClass().add("menu-button-off");
 
 		btnChangeAccount.getStyleClass().remove("menu-button-on");
 		btnChangeAccount.getStyleClass().add("menu-button-off");
@@ -195,5 +192,4 @@ public class MainController extends BaseController {
 	private void setSelectedBtn(Button button) {
 		button.getStyleClass().add("menu-button-on");
 	}
-
 }

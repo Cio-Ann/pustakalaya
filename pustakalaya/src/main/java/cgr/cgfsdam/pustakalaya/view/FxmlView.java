@@ -53,17 +53,17 @@ public enum FxmlView {
 	 * Vista de estado actual del lector. 
 	 * Muestra los prestamos, reservar o sanciones vigentes.
 	 */
-	L_STATUS("lector.status.title", "/fxml/lector/Status.fxml"),
+	L_STATUS("lector.status.title", "/fxml/lector/StatusView.fxml"),
 	/**
 	 * Vista de histórico del lector. 
 	 * Muestra un listado con todos los prestamos, reservas y sanciones que ha 
 	 * tenido el lector desde que se dió de alta.
 	 */
-	L_RECORD("lector.record.title", "/fxml/lector/Record.fxml"), 
+	L_RECORD("lector.record.title", "/fxml/lector/RecordView.fxml"), 
 	/**
 	 * Vista de busqueda de recursos del lector.
 	 */
-	L_SEARCH("lector.search.title",	"/fxml/lector/Search.fxml"), 
+	L_SEARCH("lector.search.title",	"/fxml/lector/SearchView.fxml"), 
 	/**
 	 * Vista de detalles de un recurso para un lector.
 	 * Aqui puede puntuar o comentar un recurso siempre que lo haya retirado 
@@ -72,11 +72,15 @@ public enum FxmlView {
 	L_DETAIL("lector.detail.title", "/fxml/lector/Detail.fxml"),
 
 	/* Vistas de Administrador */
-	
+
 	/**
 	 * Vista principal del administrador.
 	 */
 	A_MAIN("admin.main.title", "/fxml/admin/Main.fxml"),
+	/**
+	 * Vista principal del administrador.
+	 */
+	A_MAIN_VIEW("admin.main.title", "/fxml/admin/MainView.fxml"),
 	/**
 	 * Vista de gestión de usuarios del administrador.
 	 * Se puede crear, editar, o eliminar usuarios.
