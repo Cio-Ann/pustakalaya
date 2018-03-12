@@ -1,5 +1,7 @@
 package cgr.cgfsdam.pustakalaya.service.users;
 
+import java.util.List;
+
 import cgr.cgfsdam.pustakalaya.model.users.Usuario;
 
 /**
@@ -24,10 +26,17 @@ public interface UsuarioService {
 	 */
 	public Usuario findByEmail(String email);
 	/**
-	 * Saves a user on repository.
+	 * Guarda un usuario en base de datos.
 	 * 
 	 * @param usuario Usuario instance to save.
 	 */
 	public void saveUsuario(Usuario usuario);
+	
+	/**
+	 * Recupera todos los usuarios de base de datos.
+	 * 
+	 * @return List<Usuario> todos los usuarios.
+	 */
+	public List<Usuario> findAll();
 
 }

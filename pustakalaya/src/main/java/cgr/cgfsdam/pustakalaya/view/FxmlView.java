@@ -85,7 +85,7 @@ public enum FxmlView {
 	 * Vista de gestión de usuarios del administrador.
 	 * Se puede crear, editar, o eliminar usuarios.
 	 */
-	A_USERS("admin.users.title", "/fxml/admin/Users.fxml"), 
+	A_USERS("admin.users.title", "/fxml/admin/UsersView.fxml"), 
 	/**
 	 * Vista de gestión de roles del administrador.
 	 * Se puede crear, editar o modificar roles.

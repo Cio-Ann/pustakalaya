@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -69,6 +70,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 
 		usuarioRepository.save(usuario);
+	}
+
+	@Override
+	public List<Usuario> findAll() {
+		return usuarioRepository.findAll();
 	}
 
 }

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background-black" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.admin.UsersController">
+   <children>
+      <HBox prefHeight="600.0" prefWidth="600.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="590.0" prefWidth="155.0" spacing="5.0">
+               <children>
+                  <Label fx:id="lblSearch" prefHeight="50.0" prefWidth="150.0" text="\%search">
+                     <styleClass>
+                        <String fx:value="background" />
+                        <String fx:value="light" />
+                        <String fx:value="bigText" />
+                     </styleClass>
+                  </Label>
+                  <TextField fx:id="txtNombre" prefHeight="25.0" prefWidth="150.0" promptText="\%Nombre" />
+                  <TextField fx:id="txtAp1" prefHeight="25.0" prefWidth="150.0" promptText="\%PrimerApellido" />
+                  <TextField fx:id="txtAp2" prefHeight="25.0" prefWidth="150.0" promptText="\%SegundoApellido" />
+                  <ListView fx:id="UsersList" layoutY="146.0" prefHeight="355.0" prefWidth="150.0" />
+                  <Button fx:id="btnClearSearch" mnemonicParsing="false" onAction="#handleClearSearch" prefHeight="25.0" prefWidth="150.0" text="\%Clear">
+                     <styleClass>
+                        <String fx:value="btnRed" />
+                        <String fx:value="btn" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#handleEdit" prefHeight="25.0" prefWidth="150.0" text="\%Edit">
+                     <styleClass>
+                        <String fx:value="btnBlue" />
+                        <String fx:value="btn" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnNew" mnemonicParsing="false" onAction="#handleNew" prefHeight="25.0" prefWidth="150.0" text="\%New">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btnGreen" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox layoutX="160.0" prefHeight="590.0" prefWidth="430.0" spacing="5.0">
+               <children>
+                  <TabPane layoutX="160.0" prefHeight="565.0" prefWidth="430.0" styleClass="background-white" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="\%UserData">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="143.0" layoutY="150.0" text="Datos de usuario" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="\%UserAddres">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="192.0" layoutY="259.0" text="User Address" />
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="\%UserStatus">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="181.0" layoutY="231.0" text="User Status" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSave" prefHeight="25.0" prefWidth="435.0" text="\%Save" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -71,6 +71,11 @@ public class MainController  extends BaseController{
 
     @FXML
     void handleUsers(ActionEvent event) {
+		clearAllSelectedBtn();
+		setSelectedBtn(btnUsers);
+
+		// carga el panel correspondiente
+		loadChildPanel(FxmlView.A_USERS.getFxmlFile());
 
     }
 
