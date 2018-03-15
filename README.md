@@ -14,6 +14,7 @@ Como framework se utiliza Spring, tanto para la injeccion de dependencias como c
 * Spring Security - Autenticación y autorización de usuarios
 * Spring Mail - Envío de notificaciones vía eMail
 * Spring Batch -  ejecución de tareas programadas
+* ...
 
 
 
