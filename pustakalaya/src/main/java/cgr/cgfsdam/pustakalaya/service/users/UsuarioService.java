@@ -27,10 +27,19 @@ public interface UsuarioService {
 	public Usuario findByEmail(String email);
 	/**
 	 * Guarda un usuario en base de datos.
+	 * Valida si todos los campos están completados correctamente y rellena los campos obligatorios que falten.
 	 * 
-	 * @param usuario Usuario instance to save.
+	 * @param usuario Usuario instancia a guardar.
 	 */
 	public void saveUsuario(Usuario usuario);
+	
+	/**
+	 * Guarda un usuario en base de datos.
+	 * Almacena el usuario en base de datos tal y como lo recibe del controlador.
+	 * 
+	 * @param usuario Usuario instancia a guardar.
+	 */
+	public void saveRawUsuario(Usuario usuario);
 	
 	/**
 	 * Recupera todos los usuarios de base de datos.

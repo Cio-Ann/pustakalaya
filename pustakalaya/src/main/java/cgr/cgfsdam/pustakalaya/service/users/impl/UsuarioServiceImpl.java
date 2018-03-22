@@ -77,4 +77,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarioRepository.findAll();
 	}
 
+	@Override
+	public void saveRawUsuario(Usuario usuario) {
+		usuarioRepository.save(usuario);
+	}
+
 }

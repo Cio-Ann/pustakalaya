@@ -19,9 +19,9 @@
                         <String fx:value="bigText" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="txtNombre" prefHeight="25.0" prefWidth="150.0" promptText="\%Nombre" />
-                  <TextField fx:id="txtAp1" prefHeight="25.0" prefWidth="150.0" promptText="\%PrimerApellido" />
-                  <TextField fx:id="txtAp2" prefHeight="25.0" prefWidth="150.0" promptText="\%SegundoApellido" />
+                  <TextField fx:id="txtSearchNombre" prefHeight="25.0" prefWidth="150.0" promptText="\%Nombre" />
+                  <TextField fx:id="txtSearchApellido1" prefHeight="25.0" prefWidth="150.0" promptText="\%PrimerApellido" />
+                  <TextField fx:id="txtSearchApellido2" prefHeight="25.0" prefWidth="150.0" promptText="\%SegundoApellido" />
                   <ListView fx:id="UsersList" layoutY="146.0" prefHeight="355.0" prefWidth="150.0" />
                   <Button fx:id="btnClearSearch" mnemonicParsing="false" onAction="#handleClearSearch" prefHeight="25.0" prefWidth="150.0" text="\%Clear">
                      <styleClass>
@@ -47,16 +47,57 @@
                <children>
                   <TabPane layoutX="160.0" prefHeight="565.0" prefWidth="430.0" styleClass="background-white" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab text="\%UserData">
+                      <Tab fx:id="tabData" text="\%UserData">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="143.0" layoutY="150.0" text="Datos de usuario" />
+                                    <GridPane hgap="5.0" layoutX="14.0" layoutY="64.0" prefHeight="240.0" prefWidth="403.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="179.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="231.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label fx:id="lblNombre" text="\%lblNombre" />
+                                          <Label fx:id="lblApellido1" text="\%lblApellido1" GridPane.rowIndex="1" />
+                                          <Label fx:id="lblApellido2" text="\%lblApellido2" GridPane.rowIndex="2" />
+                                          <Label fx:id="lblTipoDocumento" text="\%lblTipoDocumento" GridPane.rowIndex="3" />
+                                          <Label fx:id="lblDocumento" text="\%lblDocumento" GridPane.rowIndex="4" />
+                                          <Label fx:id="lblUserName" text="\%lblUserName" GridPane.rowIndex="5" />
+                                          <Label fx:id="lblPassword" text="\%lblPassword" GridPane.rowIndex="6" />
+                                          <Label fx:id="lblConfirmPassword" text="\%lblConfirmPassword" GridPane.rowIndex="7" />
+                                          <TextField fx:id="txtNombre" GridPane.columnIndex="1" />
+                                          <TextField fx:id="txtApellido1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="txtApellido2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <ComboBox fx:id="cmbTipoDocumento" prefHeight="25.0" prefWidth="279.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="txtDocumento" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="txtUserName" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <PasswordField fx:id="pPassword" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <PasswordField fx:id="pConfirmPassword" onKeyTyped="#handleCheckPassword" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                       </children>
+                                    </GridPane>
+                                    <Label fx:id="lblUserData" text="\%lblUserData">
+                                       <styleClass>
+                                          <String fx:value="titleText" />
+                                          <String fx:value="dark" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="lblPwdError" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="320.0" prefHeight="17.0" prefWidth="406.0" styleClass="errorText" text="\%lblPwdError" />
+                                    <Label fx:id="lblUserDataErrors" alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="350.0" prefHeight="170.0" prefWidth="410.0" styleClass="errorText" text="\%lblUserDataErrors" />
                                  </children>
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab text="\%UserAddres">
+                      <Tab fx:id="tabAddress" text="\%UserAddres">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -65,7 +106,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="\%UserStatus">
+                        <Tab fx:id="tabStatus" text="\%UserStatus">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
