@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -69,18 +68,14 @@ public class Recurso {
 	private Set<Autor> autores;
 
 	/**
-	 * Conjunto de etiquetas que encajan con el recurso.
+	 * Número de páginas.
 	 */
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "recurso_etiqueta", joinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_etiqueta", referencedColumnName = "id_etiqueta"))
-	private Set<Etiqueta> etiquetas;
+	private int numPaginas;
 
 	/**
-	 * Conjunto de comentarios del recurso.
+	 * ISBN Número internacional normalizado de libro.
 	 */
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "recurso_comentario", joinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_comentario", referencedColumnName = "id_comentario"))
-	private Set<Comentario> comentarios;
+	private String ISBN;
 
 	/**
 	 * @return the idRecurso
@@ -90,7 +85,8 @@ public class Recurso {
 	}
 
 	/**
-	 * @param idRecurso the idRecurso to set
+	 * @param idRecurso
+	 *            the idRecurso to set
 	 */
 	public void setIdRecurso(Long idRecurso) {
 		this.idRecurso = idRecurso;
@@ -104,7 +100,8 @@ public class Recurso {
 	}
 
 	/**
-	 * @param titulo the titulo to set
+	 * @param titulo
+	 *            the titulo to set
 	 */
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
@@ -118,7 +115,8 @@ public class Recurso {
 	}
 
 	/**
-	 * @param genero the genero to set
+	 * @param genero
+	 *            the genero to set
 	 */
 	public void setGenero(Genero genero) {
 		this.genero = genero;
@@ -132,7 +130,8 @@ public class Recurso {
 	}
 
 	/**
-	 * @param fechaPublicacion the fechaPublicacion to set
+	 * @param fechaPublicacion
+	 *            the fechaPublicacion to set
 	 */
 	public void setFechaPublicacion(Date fechaPublicacion) {
 		this.fechaPublicacion = fechaPublicacion;
@@ -146,7 +145,8 @@ public class Recurso {
 	}
 
 	/**
-	 * @param idioma the idioma to set
+	 * @param idioma
+	 *            the idioma to set
 	 */
 	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
@@ -160,12 +160,13 @@ public class Recurso {
 	}
 
 	/**
-	 * @param autores the autores to set
+	 * @param autores
+	 *            the autores to set
 	 */
 	public void setAutores(Set<Autor> autores) {
 		this.autores = autores;
 	}
-	
+
 	/**
 	 * Adds autor to autores set.
 	 * 
@@ -176,55 +177,40 @@ public class Recurso {
 	}
 
 	/**
-	 * @return the etiquetas
+	 * @return the iSBN
 	 */
-	public Set<Etiqueta> getEtiquetas() {
-		return etiquetas;
+	public String getISBN() {
+		return ISBN;
 	}
 
 	/**
-	 * @param etiquetas the etiquetas to set
+	 * @param iSBN
+	 *            the iSBN to set
 	 */
-	public void setEtiquetas(Set<Etiqueta> etiquetas) {
-		this.etiquetas = etiquetas;
-	}
-	
-	/**
-	 * Adds etiqueta to etiquetas set.
-	 * 
-	 * @param etiqueta
-	 */
-	public void addEtiquetas(Etiqueta etiqueta) {
-		this.etiquetas.add(etiqueta);
+	public void setISBN(String iSBN) {
+		ISBN = iSBN;
 	}
 
 	/**
-	 * @return the comentarios
+	 * @return the numPaginas
 	 */
-	public Set<Comentario> getComentarios() {
-		return comentarios;
+	public int getNumPaginas() {
+		return numPaginas;
 	}
 
 	/**
-	 * @param comentarios the comentarios to set
+	 * @param numPaginas
+	 *            the numPaginas to set
 	 */
-	public void setComentarios(Set<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
-	
-	/**
-	 * Adds a comentario in comentarios set
-	 * 
-	 * @param comentario
-	 */
-	public void addComentarios(Comentario comentario) {
-		this.comentarios.add(comentario);
+	public void setNumPaginas(int numPaginas) {
+		this.numPaginas = numPaginas;
 	}
 
 	/**
 	 * Constructor por defecto.
 	 */
-	public Recurso() { }
+	public Recurso() {
+	}
 
 	/**
 	 * Constructor por parámetros.
@@ -234,25 +220,25 @@ public class Recurso {
 	 * @param fechaPublicacion
 	 * @param idioma
 	 * @param autores
-	 * @param etiquetas
-	 * @param comentarios
+	 * @param numPaginas
+	 * @param iSBN
 	 */
 	public Recurso(String titulo, Genero genero, Date fechaPublicacion, Idioma idioma, Set<Autor> autores,
-			Set<Etiqueta> etiquetas, Set<Comentario> comentarios) {
+			int numPaginas, String iSBN) {
+		super();
 		this.titulo = titulo;
 		this.genero = genero;
 		this.fechaPublicacion = fechaPublicacion;
 		this.idioma = idioma;
 		this.autores = autores;
-		this.etiquetas = etiquetas;
-		this.comentarios = comentarios;
+		this.numPaginas = numPaginas;
+		ISBN = iSBN;
 	}
 
 	@Override
 	public String toString() {
 		return "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", genero=" + genero + ", fechaPublicacion="
-				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", etiquetas=" + etiquetas
-				+ ", comentarios=" + comentarios + "]";
+				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", numPaginas=" + numPaginas
+				+ ", ISBN=" + ISBN + "]";
 	}
-
 }
