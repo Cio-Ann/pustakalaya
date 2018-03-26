@@ -456,7 +456,6 @@ public class RegisterController implements Initializable {
 		ret += validatePassword();
 		ret += validateEmail();
 
-		// TODO Auto-generated method stub
 		return ret;
 	}
 

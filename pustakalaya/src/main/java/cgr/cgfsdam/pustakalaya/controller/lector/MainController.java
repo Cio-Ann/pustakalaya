@@ -78,7 +78,7 @@ public class MainController extends BaseController {
 	@FXML
 	void handleStatus(ActionEvent event) {
 		clearAllSelectedBtn();
-		setSelectedBtn(btnProfile);
+		setSelectedBtn(btnStatus);
 
 		// carga el panel correspondiente
 		loadChildPanel(FxmlView.L_STATUS.getFxmlFile());
@@ -87,7 +87,7 @@ public class MainController extends BaseController {
 	@FXML
 	void handleRecord(ActionEvent event) {
 		clearAllSelectedBtn();
-		setSelectedBtn(btnProfile);
+		setSelectedBtn(btnRecord);
 
 		// carga el panel correspondiente
 		loadChildPanel(FxmlView.L_RECORD.getFxmlFile());
@@ -96,7 +96,7 @@ public class MainController extends BaseController {
 	@FXML
 	void handleSearch(ActionEvent event) {
 		clearAllSelectedBtn();
-		setSelectedBtn(btnProfile);
+		setSelectedBtn(btnSearch);
 
 		// carga el panel correspondiente
 		loadChildPanel(FxmlView.L_SEARCH.getFxmlFile());
@@ -170,21 +170,27 @@ public class MainController extends BaseController {
 	private void clearAllSelectedBtn() {
 		btnProfile.getStyleClass().remove("menu-button-on");
 		btnProfile.getStyleClass().add("menu-button-off");
+		btnProfile.setDisable(false);
 
 		btnStatus.getStyleClass().remove("menu-button-on");
 		btnStatus.getStyleClass().add("menu-button-off");
+		btnStatus.setDisable(false);
 
 		btnRecord.getStyleClass().remove("menu-button-on");
 		btnRecord.getStyleClass().add("menu-button-off");
+		btnRecord.setDisable(false);
 
 		btnSearch.getStyleClass().remove("menu-button-on");
 		btnSearch.getStyleClass().add("menu-button-off");
+		btnSearch.setDisable(false);
 
 		btnChangeAccount.getStyleClass().remove("menu-button-on");
 		btnChangeAccount.getStyleClass().add("menu-button-off");
+		btnChangeAccount.setDisable(false);
 
 		btnExit.getStyleClass().remove("menu-button-on");
 		btnExit.getStyleClass().add("menu-button-off");
+		btnExit.setDisable(false);
 	}
 
 	/**
@@ -194,6 +200,7 @@ public class MainController extends BaseController {
 	 */
 	private void setSelectedBtn(Button button) {
 		button.getStyleClass().add("menu-button-on");
+		button.setDisable(true);
 	}
 
 }

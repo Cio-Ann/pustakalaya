@@ -87,16 +87,10 @@ public enum FxmlView {
 	 */
 	A_USERS("admin.users.title", "/fxml/admin/UsersView.fxml"), 
 	/**
-	 * Vista de gestión de roles del administrador.
-	 * Se puede crear, editar o modificar roles.
-	 * @see ver si es necesaria o no.
-	 */
-	A_ROLES("admin.roles.title", "/fxml/admin/Roles.fxml"), 
-	/**
 	 * Vista de gestión de recursos de la biblioteca.
 	 * Se puede crear, editar o dar de baja recursos.
 	 */
-	A_RESOURCES("admin.resources.title", "/fxml/admin/Resources.fxml"), 
+	A_RESOURCES("admin.resources.title", "/fxml/admin/ResourcesView.fxml"), 
 	/**
 	 * Vista de reservas.
 	 * El administrador puede ver las reservas actuales o notificar de recursos 

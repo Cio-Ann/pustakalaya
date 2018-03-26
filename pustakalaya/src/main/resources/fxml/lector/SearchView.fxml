@@ -1,13 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.lector.SearchController">
    <children>
-      <Label layoutX="226.0" layoutY="292.0" text="Pantalla inicial de busqueda" />
+      <Label fx:id="lblFechaPub" layoutX="270.0" layoutY="100.0" text="\%lblFechaPub" />
+      <HBox layoutX="510.0" layoutY="95.0">
+         <children>
+            <ToggleButton fx:id="tbFPAntes" layoutX="110.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleSwitchFP" prefWidth="40.0" styleClass="switcherLeft" text="\%tbAntes" />
+            <ToggleButton fx:id="tbFPDespues" layoutX="199.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleSwitchFP" prefWidth="40.0" styleClass="switcherRight" text="\%tbDespues" />
+         </children>
+      </HBox>
+      <Label fx:id="lblTitleSearch" text="\%lblTitleSearch" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <styleClass>
+            <String fx:value="titleText" />
+            <String fx:value="background" />
+            <String fx:value="light" />
+         </styleClass>
+      </Label>
+      <DatePicker fx:id="dpFechaPub" layoutX="370.0" layoutY="96.0" prefWidth="130.0" />
+      <Label fx:id="lblTitulo" layoutX="10.0" layoutY="70.0" text="\%lblTitulo" />
+      <TextField fx:id="txtTitulo" layoutX="110.0" layoutY="66.0" prefWidth="180.0" />
+      <Label fx:id="lblAutor" layoutX="310.0" layoutY="70.0" text="\%lblAutor" />
+      <TextField fx:id="txtAutor" layoutX="410.0" layoutY="66.0" prefWidth="180.0" />
+      <Label fx:id="lblGenero" layoutX="10.0" layoutY="100.0" text="\%lblGenero" />
+      <ComboBox fx:id="cmbGenero" layoutX="110.0" layoutY="96.0" prefWidth="150.0" />
+      <HBox layoutX="10.0" layoutY="130.0">
+         <children>
+            <ToggleButton fx:id="tbRecursosLibro" layoutX="10.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleSwitchRecurso" prefWidth="75.0" styleClass="switcherLeft" text="\%tbLibros" />
+            <ToggleButton fx:id="tbRecursosMultimedia" layoutX="99.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleSwitchRecurso" prefWidth="75.0" styleClass="switcherRight" text="\%tbMultimedia" />
+         </children>
+      </HBox>
+      <Label fx:id="lblISBN" layoutX="170.0" layoutY="135.0" text="\%lblISBN" />
+      <TextField fx:id="txtISBN" layoutX="250.0" layoutY="131.0" />
+      <Label fx:id="lblNumPag" layoutX="410.0" layoutY="135.0" text="\%lblNumPags" />
+      <TextField fx:id="txtNumPag" layoutX="510.0" layoutY="131.0" prefHeight="25.0" prefWidth="80.0" />
+      <Label fx:id="lblISAN" layoutX="170.0" layoutY="135.0" text="\%lblISAN" />
+      <TextField fx:id="txtISAN" layoutX="250.0" layoutY="131.0" />
+      <Label fx:id="lblDuracion" layoutX="410.0" layoutY="135.0" text="\%lblDuracion" />
+      <TextField fx:id="txtDuracion" layoutX="510.0" layoutY="131.0" prefHeight="25.0" prefWidth="80.0" />
+      <Label layoutX="10.0" layoutY="170.0" text="\%lblEtiquetas" />
+      <TextField layoutX="110.0" layoutY="166.0" prefHeight="25.0" prefWidth="480.0" />
+      <HBox layoutX="376.0" layoutY="200.0" spacing="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button fx:id="btnClearForm" layoutX="363.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleClearForm" text="\%btnClear">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btnBlue" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnSearch" layoutX="481.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleSearch" text="\%btnSearch">
+               <styleClass>
+                  <String fx:value="btnGreen" />
+                  <String fx:value="btn" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+      <TableView fx:id="tvRecursos" layoutX="10.0" layoutY="240.0" prefHeight="350.0" prefWidth="580.0">
+        <columns>
+          <TableColumn fx:id="tcTitulo" prefWidth="200.0" text="\$colTitulo" />
+          <TableColumn fx:id="tcAutor" prefWidth="155.0" text="\%colAutor" />
+            <TableColumn fx:id="tcAnnoPub" prefWidth="75.0" text="\%colAño" />
+            <TableColumn fx:id="tcDisponible" prefWidth="75.0" text="\%colDisp" />
+            <TableColumn fx:id="tcActions" prefWidth="75.0" text="\%colAcc" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

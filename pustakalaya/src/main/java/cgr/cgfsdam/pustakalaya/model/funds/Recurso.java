@@ -65,20 +65,20 @@ public class Recurso {
 	/**
 	 * Conjunto de autores participantes en la creación del recurso.
 	 */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "recursos")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "recursos")
 	private Set<Autor> autores;
 
 	/**
 	 * Conjunto de etiquetas que encajan con el recurso.
 	 */
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "recurso_etiqueta", joinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_etiqueta", referencedColumnName = "id_etiqueta"))
 	private Set<Etiqueta> etiquetas;
 
 	/**
 	 * Conjunto de comentarios del recurso.
 	 */
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "recurso_comentario", joinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_comentario", referencedColumnName = "id_comentario"))
 	private Set<Comentario> comentarios;
 

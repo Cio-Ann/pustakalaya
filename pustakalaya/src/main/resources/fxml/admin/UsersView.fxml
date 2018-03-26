@@ -51,7 +51,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane hgap="5.0" layoutX="14.0" layoutY="64.0" prefHeight="240.0" prefWidth="403.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                    <GridPane hgap="5.0" layoutX="14.0" layoutY="64.0" prefWidth="403.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                                       <columnConstraints>
                                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="179.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="231.0" minWidth="10.0" prefWidth="231.0" />
@@ -91,8 +91,8 @@
                                           <String fx:value="dark" />
                                        </styleClass>
                                     </Label>
-                                    <Label fx:id="lblPwdError" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="320.0" prefHeight="17.0" prefWidth="406.0" styleClass="errorText" text="\%lblPwdError" />
-                                    <Label fx:id="lblUserDataErrors" alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="350.0" prefHeight="170.0" prefWidth="410.0" styleClass="errorText" text="\%lblUserDataErrors" />
+                                    <Label fx:id="lblPwdError" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="350.0" prefWidth="410.0" styleClass="errorText" text="\%lblPwdError" />
+                                    <Label fx:id="lblUserDataErrors" alignment="BOTTOM_LEFT" layoutX="14.0" layoutY="380.0" prefHeight="150.0" prefWidth="410.0" styleClass="errorText" text="\%lblUserDataErrors" />
                                  </children>
                               </AnchorPane>
                         </content>
@@ -101,7 +101,59 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="192.0" layoutY="259.0" text="User Address" />
+                                    <Label fx:id="lblErrorAddress" alignment="BOTTOM_LEFT" layoutX="10.0" layoutY="485.0" prefHeight="35.0" prefWidth="410.0" styleClass="errorText" text="\%lblErrorAddress" />
+                                    <Label fx:id="lblUserAddress" text="\%lblUserAddress">
+                                       <styleClass>
+                                          <String fx:value="titleText" />
+                                          <String fx:value="dark" />
+                                       </styleClass>
+                                    </Label>
+                                    <GridPane hgap="5.0" layoutX="10.0" layoutY="60.0" prefWidth="410.0" vgap="5.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="174.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="236.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label fx:id="lblTipoVia" text="\%lblTioVia" />
+                                          <Label fx:id="lblNombreVia" text="\%lblNombreVia" GridPane.rowIndex="1" />
+                                          <Label fx:id="lblNumero" text="\%lblNumero" GridPane.rowIndex="2" />
+                                          <Label fx:id="lblPortal" text="\%lblPortal" GridPane.rowIndex="3" />
+                                          <Label fx:id="lblEscalera" text="\%lblEscalera" GridPane.rowIndex="4" />
+                                          <Label fx:id="lblPlanta" text="\%lblPlanta" GridPane.rowIndex="5" />
+                                          <Label fx:id="lblPuerta" text="\%lblPuerta" GridPane.rowIndex="6" />
+                                          <Label fx:id="lblCP" text="\%lblCP" GridPane.rowIndex="7" />
+                                          <Label fx:id="lblMunicipio" text="\%lblMunicipio" GridPane.rowIndex="8" />
+                                          <Label fx:id="lblProvincia" text="\%lblProvincia" GridPane.rowIndex="9" />
+                                          <Label fx:id="lblTelefono" text="\%lblTelefono" GridPane.rowIndex="10" />
+                                          <Label fx:id="lblEmail" text="\%lblEmail" GridPane.rowIndex="11" />
+                                          <TextField fx:id="txtTipoVia" GridPane.columnIndex="1" />
+                                          <TextField fx:id="txtNombreVia" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="txtNumero" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="txtPortal" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField fx:id="txtEscalera" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <TextField fx:id="txtPlanta" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="txtPuerta" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="txtCP" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                          <TextField fx:id="txtMunicipio" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                          <TextField fx:id="txtProvincia" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                          <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                          <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                       </children>
+                                    </GridPane>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -110,7 +162,35 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="181.0" layoutY="231.0" text="User Status" />
+                                    <Label fx:id="lblErrorStatus" alignment="BOTTOM_LEFT" layoutX="10.0" layoutY="210.0" prefHeight="310.0" prefWidth="410.0" styleClass="errorText" text="\%lblErrorStatus" />
+                                    <Label fx:id="lblStatus" text="\%lblStatus">
+                                       <styleClass>
+                                          <String fx:value="titleText" />
+                                          <String fx:value="dark" />
+                                       </styleClass>
+                                    </Label>
+                                    <GridPane hgap="5.0" layoutX="10.0" layoutY="60.0" prefWidth="403.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label fx:id="lblActiveUser" text="\%lblActiveUser" />
+                                          <Label fx:id="lblRole" text="\%lblRole" GridPane.rowIndex="1" />
+                                          <Label fx:id="lblDateAlta" text="\%lblDateAlta" GridPane.rowIndex="2" />
+                                          <Label fx:id="lblDateVigor" text="\%lblDateVigor" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="chkActive" mnemonicParsing="false" GridPane.columnIndex="1" />
+                                          <ComboBox fx:id="cmbRol" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <DatePicker fx:id="dpFechaAlta" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <DatePicker fx:id="dpFechaVigor" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
                                  </children>
                               </AnchorPane>
                           </content>
