@@ -3,6 +3,8 @@ package cgr.cgfsdam.pustakalaya.model.funds;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +24,7 @@ public class Ejemplar {
 	 * Identificador.
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_ejemplar")
 	private Long idEjemplar;
 
@@ -32,13 +34,18 @@ public class Ejemplar {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_recurso")
 	private Recurso recurso;
+	
+	/**
+	 * Código identificador del ejemplar
+	 */
+	@Column(nullable=false, unique=true)
+	private String codigo;
 
 	/**
 	 * Estado del ejemplar.
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_estado")
-	private Estado estado;
+	@Enumerated(EnumType.ORDINAL)
+	private EstadoEnum estado;
 
 	/**
 	 * @return the idEjemplar
@@ -69,16 +76,30 @@ public class Ejemplar {
 	}
 
 	/**
+	 * @return the codigo
+	 */
+	public String getCodigo() {
+		return codigo;
+	}
+
+	/**
+	 * @param codigo the codigo to set
+	 */
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	/**
 	 * @return the estado
 	 */
-	public Estado getEstado() {
+	public EstadoEnum getEstado() {
 		return estado;
 	}
 
 	/**
 	 * @param estado the estado to set
 	 */
-	public void setEstado(Estado estado) {
+	public void setEstado(EstadoEnum estado) {
 		this.estado = estado;
 	}
 
@@ -93,14 +114,16 @@ public class Ejemplar {
 	 * @param recurso
 	 * @param estado
 	 */
-	public Ejemplar(Recurso recurso, Estado estado) {
+	public Ejemplar(Recurso recurso, EstadoEnum estado) {
 		this.recurso = recurso;
 		this.estado = estado;
 	}
 
 	@Override
 	public String toString() {
-		return "Ejemplar [idEjemplar=" + idEjemplar + ", recurso=" + recurso + ", estado=" + estado + "]";
+		return "Ejemplar [idEjemplar=" + idEjemplar + ", recurso=" + recurso + ", codigo=" + codigo + ", estado="
+				+ estado + "]";
 	}
 
+	
 }

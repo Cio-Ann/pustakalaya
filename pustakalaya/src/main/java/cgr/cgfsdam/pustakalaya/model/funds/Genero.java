@@ -30,13 +30,8 @@ public class Genero {
 	@Column(nullable=false)
 	private String nombre;
 	
-	/**
-	 * Tipo de recurso al que pertenece el género.
-	 */
-	@Enumerated(EnumType.ORDINAL)
-	@Column(nullable=false)
-	private TipoRecursoEnum tipoRecurso;
-
+	private String descripcion;
+	
 	/**
 	 * @return the idGenero
 	 */
@@ -65,26 +60,18 @@ public class Genero {
 		this.nombre = nombre;
 	}
 
-	/**
-	 * @return the tipoRecurso
-	 */
-	public TipoRecursoEnum getTipoRecurso() {
-		return tipoRecurso;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	/**
-	 * @param tipoRecurso the tipoRecurso to set
-	 */
-	public void setTipoRecurso(TipoRecursoEnum tipoRecurso) {
-		this.tipoRecurso = tipoRecurso;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	/**
 	 * Constructor por defecto.
 	 */
-	public Genero() {
-		this.tipoRecurso = TipoRecursoEnum.DESCONOCIDO;
-	}
+	public Genero() { }
 
 	/**
 	 * Constructor por parámetros. 
@@ -92,14 +79,14 @@ public class Genero {
 	 * @param nombre
 	 * @param tipoRecurso
 	 */
-	public Genero(String nombre, TipoRecursoEnum tipoRecurso) {
+	public Genero(String nombre, String descripcion) {
 		this.nombre = nombre;
-		this.tipoRecurso = tipoRecurso;
+		this.descripcion = descripcion;
 	}
 
 	@Override
 	public String toString() {
-		return "Genero [idGenero=" + idGenero + ", nombre=" + nombre + ", tipoRecurso=" + tipoRecurso.getNombre() + "]";
+		return "Genero [idGenero=" + idGenero + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
 	
 	

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="320.0" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.admin.IdiomaController">
+   <children>
+      <Label fx:id="lblTitle" text="\%lblTitleIdioma" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <styleClass>
+            <String fx:value="light" />
+            <String fx:value="titleText" />
+            <String fx:value="background" />
+         </styleClass>
+      </Label>
+      <GridPane hgap="5.0" layoutX="10.0" layoutY="70.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="120.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="172.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="lblNombre" text="\%lblNombre" />
+            <Label fx:id="lblDescripcion" text="\%lblDescripcion" GridPane.rowIndex="1" />
+            <TextField fx:id="txtNombre" GridPane.columnIndex="1" />
+            <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <Label fx:id="lblError" layoutX="10.0" layoutY="145.0" prefHeight="45.0" styleClass="errorText" text="\%lblError" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <HBox layoutX="108.0" layoutY="195.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button fx:id="btnExit" layoutX="108.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleExit" text="\%btnExit">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btnRed" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnSave" layoutX="160.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleSave" text="\%btnSave">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btnGreen" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
