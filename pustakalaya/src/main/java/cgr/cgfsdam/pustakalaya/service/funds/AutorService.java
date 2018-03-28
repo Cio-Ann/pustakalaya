@@ -4,6 +4,11 @@ import java.util.List;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 
+/**
+ * Interfaz del servicio de la entidad Autor
+ *
+ * @author CGR-Casa
+ */
 public interface AutorService {
 	/**
 	 * Busca autores por su nombre exacto.

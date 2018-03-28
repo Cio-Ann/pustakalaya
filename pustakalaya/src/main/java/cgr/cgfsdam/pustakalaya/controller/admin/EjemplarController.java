@@ -2,6 +2,7 @@ package cgr.cgfsdam.pustakalaya.controller.admin;
 
 import java.net.URL;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
 import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.model.users.Role;
+import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
+import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
+import cgr.cgfsdam.pustakalaya.utils.StringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,9 +24,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 /**
  * Controlador del formulario de creación / edicion de ejemplares.
@@ -63,6 +71,9 @@ public class EjemplarController extends BaseController {
 	
 	@FXML
 	private ComboBox<EstadoEnum> cbEstado;
+
+	@FXML
+	private Label lblError;
 	
 	@FXML
 	private Button btnExit;
@@ -97,9 +108,9 @@ public class EjemplarController extends BaseController {
     		saveEjemplar();
     		sendAlert(
     				AlertType.INFORMATION, 
-    				resourceBundle.getString("admin.autor.save.success.title"), 
-    				resourceBundle.getString("admin.autor.save.success.header"), 
-    				resourceBundle.getString("admin.autor.save.success.msg"));
+    				resourceBundle.getString("admin.ejemplar.save.success.title"), 
+    				resourceBundle.getString("admin.ejemplar.save.success.header"), 
+    				resourceBundle.getString("admin.ejemplar.save.success.msg"));
     		closeDialog(event);
     	}
 
@@ -107,13 +118,84 @@ public class EjemplarController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		lblTitle.setText(resources.getString("admin.ejemplar.label.title"));
+		lglRecurso.setText(resources.getString("admin.ejemplar.label.recurso"));
+		lblCodigo.setText(resources.getString("admin.ejemplar.label.codigo"));
+		lblEstado.setText(resources.getString("admin.ejemplar.label.estado"));
 
+		initializeComboEstados();
+		
+		lblError.setText(resources.getString(""));
+
+		btnExit.setText(resources.getString("admin.ejemplar.button.exit"));
+		btnSave.setText(resources.getString("admin.ejemplar.button.save"));
 	}
 
+	
+	private void initializeComboEstados() {
+		// establece el texto cuando no hay selección
+		cbEstado.setPromptText(resourceBundle.getString("admin.ejemplar.estado.unselected"));
+
+		// establece la conversión entre el tipo EstadoEnum y el String mostrado en el combo desplegable
+		cbEstado.setCellFactory(new Callback<ListView<EstadoEnum>, ListCell<EstadoEnum>>() {
+			@Override
+			public ListCell<EstadoEnum> call(ListView<EstadoEnum> param) {
+				ListCell<EstadoEnum> cell = new ListCell<EstadoEnum>() {
+					@Override
+					protected void updateItem(EstadoEnum item, boolean empty) {
+						super.updateItem(item, empty);
+						
+						if (item != null) {
+							setText(item.getNombre());
+						} else {
+							setText(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
+				
+		// establece la conversión entre el EstadoEnum y el String mostrado en el combo seleccionado.
+		cbEstado.setConverter(new StringConverter<EstadoEnum>() {
+			@Override
+			public String toString(EstadoEnum estado) {
+				if (estado == null) {
+					return "";
+				} else {
+					return estado.getNombre();
+				}
+			}
+			
+			@Override
+			public EstadoEnum fromString(String string) {
+				EstadoEnum ret = null;
+				for (EstadoEnum val : EstadoEnum.values()) {
+					if (string.equals(val.getNombre())) {
+						ret = val;
+					}
+				}
+				return ret;
+			}
+		});
+				
+		// carga los datos de la enumeracion
+		loadEstados();
+	}
+	
+	
+	/**
+	 * Carga los valores posibles de estado en el combo.
+	 */
 	private void loadEstados() {
 		estados.clear();
-		estados.addAll(Collections.list(EstadoEnum));
+		
+		EnumSet<EstadoEnum> elementos = EnumSet.allOf(EstadoEnum.class);
+		elementos.remove(EstadoEnum.UNKNOWN);
+		
+		estados.addAll(elementos);
+		
+		cbEstado.setItems(estados);
 	}
 	
 	
@@ -127,5 +209,41 @@ public class EjemplarController extends BaseController {
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
 	}
+
+	private boolean validateEjemplar() {
+		boolean ret = true;
+		String error = "";
+		
+		if(StringUtils.isEmpty(txtCodigo.getText())) {
+			ret = false;
+			error += resourceBundle.getString("admin.ejemplar.error.codigo.empty");
+		} else {
+			Ejemplar temp = ejemplarService.findByCodigo(txtCodigo.getText());
+			if (temp != null && temp.getCodigo().equals(txtCodigo.getText())) {
+				ret = false;
+				error += resourceBundle.getString("admin.ejemplar.error.codigo.alreadyExists");
+			}
+		}
+		
+		if(cbEstado.getSelectionModel().getSelectedItem() == null) {
+			error += resourceBundle.getString("admin.ejemplar.error.estado.empty");
+			ret = false;
+		}
+		
+		lblError.setText(error);
+		return ret;
+	}
 	
+	/**
+	 * Guarda el ejemplar en base de datos.
+	 */
+	private void saveEjemplar() {
+		ejemplar.setCodigo(txtCodigo.getText());
+		ejemplar.setEstado(cbEstado.getSelectionModel().getSelectedItem());
+		ejemplar.setRecurso(recurso);
+		
+		ejemplarService.save(ejemplar);
+		
+	}
+
 }
