@@ -67,4 +67,18 @@ public interface AutorService {
 	 * @return Autor entidad guardada.
 	 */
 	Autor save(Autor autor);
+
+	/**
+	 * Recupera toda la lista de autores de bbdd
+	 * @return
+	 */
+	List<Autor>  findAll();
+
+	/**
+	 * Recupera un autor por su id.
+	 * 
+	 * @param idAutor Long id del autor a recuperar
+	 * @return Autor entidad coincidente o null
+	 */
+	Autor findById(Long idAutor);
 }

@@ -84,7 +84,7 @@ public class IdiomaController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		lblTitle.setText(resources.getString("admin.idioma.title"));
 		lblNombre.setText(resources.getString("admin.idioma.label.nombre"));
-		lblDescripcion.setText(resources.getString("admin.idioma.label."));
+		lblDescripcion.setText(resources.getString("admin.idioma.label.descripcion"));
 		lblError.setText("");
 		btnSave.setText(resources.getString("admin.idioma.button.save"));
 		btnExit.setText(resources.getString("admin.idioma.button.exit"));

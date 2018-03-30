@@ -30,4 +30,9 @@ public class IdiomaServiceImpl implements IdiomaService {
 		idiomaRepository.save(idioma);
 	}
 
+	@Override
+	public List<Idioma> findAll() {
+		return idiomaRepository.findAll();
+	}
+
 }

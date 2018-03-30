@@ -246,4 +246,18 @@ public class EjemplarController extends BaseController {
 		
 	}
 
+	/**
+	 * @param recurso the recurso to set
+	 */
+	public void setRecurso(Recurso recurso) {
+		this.recurso = recurso;
+	}
+
+	/**
+	 * @param ejemplar the ejemplar to set
+	 */
+	public void setEjemplar(Ejemplar ejemplar) {
+		this.ejemplar = ejemplar;
+	}
+
 }

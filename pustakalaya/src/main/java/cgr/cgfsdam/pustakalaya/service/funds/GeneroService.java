@@ -30,4 +30,19 @@ public interface GeneroService {
 	 */
 	void save(Genero genero);
 
+	/**
+	 * Recupera todos los generos de la base de datos.
+	 * 
+	 * @return List<Genero> generos persistidos
+	 */
+	List<Genero> findAll();
+	
+	/**
+	 * Recupera un genero por su id.
+	 * 
+	 * @param idGenero Long id del genero
+	 * @return Genero entidad coincidente o null
+	 */
+	Genero findById(Long idGenero);
+
 }

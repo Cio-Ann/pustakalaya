@@ -1,6 +1,9 @@
 package cgr.cgfsdam.pustakalaya.model.funds;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,8 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -42,11 +47,11 @@ public class Recurso {
 	private String titulo;
 
 	/**
-	 * Genero al que pertenece el recurso.
+	 * Generos a los que pertenece el recurso.
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_genero")
-	private Genero genero;
+	@ManyToMany
+	@JoinTable(name = "recurso_genero", joinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_genero", referencedColumnName = "id_genero"))
+	private Set<Genero> generos;
 
 	/**
 	 * Fecha de publicación.
@@ -76,6 +81,12 @@ public class Recurso {
 	 * ISBN Número internacional normalizado de libro.
 	 */
 	private String ISBN;
+
+	/**
+	 * Conjunto de copias del recurso.
+	 */
+	@OneToMany(mappedBy = "recurso", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Ejemplar> ejemplares;
 
 	/**
 	 * @return the idRecurso
@@ -108,18 +119,28 @@ public class Recurso {
 	}
 
 	/**
-	 * @return the genero
+	 * @return the generos
 	 */
-	public Genero getGenero() {
-		return genero;
+	public Set<Genero> getGeneros() {
+		return generos;
+	}
+
+	/**
+	 * @param generos
+	 *            the generos to set
+	 */
+	public void setGeneros(Set<Genero> generos) {
+		this.generos = generos;
 	}
 
 	/**
 	 * @param genero
-	 *            the genero to set
 	 */
-	public void setGenero(Genero genero) {
-		this.genero = genero;
+	public void addGeneros(Genero genero) {
+		if (this.generos == null) {
+			generos = new HashSet<>();
+		}
+		this.generos.add(genero);
 	}
 
 	/**
@@ -173,6 +194,9 @@ public class Recurso {
 	 * @param autor
 	 */
 	public void addAutores(Autor autor) {
+		if (this.autores == null) {
+			autores = new HashSet<>();
+		}
 		this.autores.add(autor);
 	}
 
@@ -207,9 +231,33 @@ public class Recurso {
 	}
 
 	/**
+	 * @return the ejemplares
+	 */
+	public List<Ejemplar> getEjemplares() {
+		return ejemplares;
+	}
+
+	/**
+	 * @param ejemplares
+	 *            the ejemplares to set
+	 */
+	public void setEjemplares(List<Ejemplar> ejemplares) {
+		this.ejemplares = ejemplares;
+	}
+
+	public void addEjemplar(Ejemplar ejemplar) {
+		if (this.ejemplares == null) {
+			this.ejemplares = new ArrayList<>();
+		}
+		this.ejemplares.add(ejemplar);
+	}
+
+	/**
 	 * Constructor por defecto.
 	 */
 	public Recurso() {
+		generos = new HashSet<>();
+		autores = new HashSet<>();
 	}
 
 	/**
@@ -223,22 +271,23 @@ public class Recurso {
 	 * @param numPaginas
 	 * @param iSBN
 	 */
-	public Recurso(String titulo, Genero genero, Date fechaPublicacion, Idioma idioma, Set<Autor> autores,
-			int numPaginas, String iSBN) {
+	public Recurso(String titulo, Set<Genero> generos, Date fechaPublicacion, Idioma idioma, Set<Autor> autores,
+			int numPaginas, String iSBN, List<Ejemplar> ejemplares) {
 		super();
 		this.titulo = titulo;
-		this.genero = genero;
+		this.generos = generos;
 		this.fechaPublicacion = fechaPublicacion;
 		this.idioma = idioma;
 		this.autores = autores;
 		this.numPaginas = numPaginas;
-		ISBN = iSBN;
+		this.ISBN = iSBN;
+		this.ejemplares = ejemplares;
 	}
 
 	@Override
 	public String toString() {
-		return "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", genero=" + genero + ", fechaPublicacion="
+		return "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", generos=" + generos + ", fechaPublicacion="
 				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", numPaginas=" + numPaginas
-				+ ", ISBN=" + ISBN + "]";
+				+ ", ISBN=" + ISBN + ", ejemplares=" + ejemplares + "]";
 	}
 }

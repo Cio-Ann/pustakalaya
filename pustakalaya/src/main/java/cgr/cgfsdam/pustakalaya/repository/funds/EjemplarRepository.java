@@ -1,5 +1,7 @@
 package cgr.cgfsdam.pustakalaya.repository.funds;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +22,13 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 	 * @return Ejemplar entidad coincidente
 	 */
 	public Ejemplar findByCodigo(String codigo);
+
+	/**
+	 * Recupera todos los ejemplares que pertenezcan al Recurso del id dado.
+	 * 
+	 * @param idRecurso Long id del recurso para el que buscar los ejemplares.
+	 * @return List<Ejemplar> entidades coincientes
+	 */
+	public List<Ejemplar> findfindByRecurso_idRecurso(Long idRecurso);
 	
 }

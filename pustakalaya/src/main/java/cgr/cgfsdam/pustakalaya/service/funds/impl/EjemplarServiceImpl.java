@@ -1,5 +1,7 @@
 package cgr.cgfsdam.pustakalaya.service.funds.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +30,13 @@ public class EjemplarServiceImpl implements EjemplarService {
 		return ejemplarRepository.findByCodigo(codigo);
 	}
 
+	@Override
+	public List<Ejemplar> findfindByRecurso_idRecurso(Long idRecurso) {
+		return ejemplarRepository.findfindByRecurso_idRecurso(idRecurso);
+	}
+	
+	@Override
+	public void delete(Ejemplar ejemplar) {
+		ejemplarRepository.delete(ejemplar);
+	}
 }

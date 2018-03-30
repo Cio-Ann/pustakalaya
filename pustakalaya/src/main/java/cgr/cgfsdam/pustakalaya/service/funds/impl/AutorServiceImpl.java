@@ -58,4 +58,14 @@ public class AutorServiceImpl implements AutorService {
 
 	}
 
+	@Override
+	public List<Autor> findAll() {
+		return autorRepository.findAll();
+	}
+
+	@Override
+	public Autor findById(Long idAutor) {
+		return autorRepository.findOne(idAutor);
+	}
+
 }

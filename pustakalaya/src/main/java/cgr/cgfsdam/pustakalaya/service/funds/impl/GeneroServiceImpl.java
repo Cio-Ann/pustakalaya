@@ -35,4 +35,14 @@ public class GeneroServiceImpl implements GeneroService {
 		generoRepository.save(genero);
 	}
 
+	@Override
+	public List<Genero> findAll() {
+		return generoRepository.findAll();
+	}
+
+	@Override
+	public Genero findById(Long idGenero) {
+		return generoRepository.findOne(idGenero);
+	}
+
 }

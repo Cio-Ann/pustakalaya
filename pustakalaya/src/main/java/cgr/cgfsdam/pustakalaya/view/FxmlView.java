@@ -15,6 +15,11 @@ import java.util.ResourceBundle;
  * <li>{@link #A_USERS}</li>
  * <li>{@link #A_ROLES}</li>
  * <li>{@link #A_RESOURCES}</li>
+ * <li>{@link #A_AUTOR_FORM}</li>
+ * <li>{@link #A_EJEMPLAR_FORM}</li>
+ * <li>{@link #A_GENERO_FORM}</li>
+ * <li>{@link #A_IDIOMA_FORM}</li>
+ * <li>{@link #A_RECURSO_FORM}</li>
  * <li>{@link #A_BOOKINGS}</li>
  * <li>{@link #A_LOANS}</li>
  * <li>{@link #A_PENALTIES}</li>
@@ -91,6 +96,26 @@ public enum FxmlView {
 	 * Se puede crear, editar o dar de baja recursos.
 	 */
 	A_RESOURCES("admin.resources.title", "/fxml/admin/ResourcesView.fxml"), 
+	/**
+	 * Vista del formulario de creación / edición de autores.
+	 */
+	A_AUTOR_FORM("admin.resoures.autor.form.title", "/fxml/admin/AutorForm.fxml"),
+	/**
+	 * Vista del formulario de creación / edición de autores.
+	 */
+	A_EJEMPLAR_FORM("admin.resoures.ejemplar.form.title", "/fxml/admin/EjemplarForm.fxml"),
+	/**
+	 * Vista del formulario de creación / edición de generos.
+	 */
+	A_GENERO_FORM("admin.resoures.genero.form.title", "/fxml/admin/GeneroForm.fxml"),
+	/**
+	 * Vista del formulario de creación / edición de idiomas.
+	 */
+	A_IDIOMA_FORM("admin.resoures.idioma.form.title", "/fxml/admin/IdiomaForm.fxml"),
+	/**
+	 * Vista del formulario de creación / edición de recursos.
+	 */
+	A_RECURSO_FORM("admin.resoures.recurso.form.title", "/fxml/admin/RecursoForm.fxml"),
 	/**
 	 * Vista de reservas.
 	 * El administrador puede ver las reservas actuales o notificar de recursos 
