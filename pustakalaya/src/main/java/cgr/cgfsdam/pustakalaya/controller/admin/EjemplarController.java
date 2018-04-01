@@ -9,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
+import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
 import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.model.users.Role;
 import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
 import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
-import cgr.cgfsdam.pustakalaya.utils.StringUtils;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -125,7 +126,7 @@ public class EjemplarController extends BaseController {
 
 		initializeComboEstados();
 		
-		lblError.setText(resources.getString(""));
+		lblError.setText("");
 
 		btnExit.setText(resources.getString("admin.ejemplar.button.exit"));
 		btnSave.setText(resources.getString("admin.ejemplar.button.save"));
@@ -214,7 +215,7 @@ public class EjemplarController extends BaseController {
 		boolean ret = true;
 		String error = "";
 		
-		if(StringUtils.isEmpty(txtCodigo.getText())) {
+		if(MyUtils.isEmptyString(txtCodigo.getText())) {
 			ret = false;
 			error += resourceBundle.getString("admin.ejemplar.error.codigo.empty");
 		} else {
@@ -251,6 +252,9 @@ public class EjemplarController extends BaseController {
 	 */
 	public void setRecurso(Recurso recurso) {
 		this.recurso = recurso;
+		if (recurso != null && recurso.getIdRecurso() != null ) {
+			txtRecurso.setText(String.valueOf(recurso.getIdRecurso()));
+		}
 	}
 
 	/**
@@ -258,6 +262,19 @@ public class EjemplarController extends BaseController {
 	 */
 	public void setEjemplar(Ejemplar ejemplar) {
 		this.ejemplar = ejemplar;
+		sendEntityToForm();
 	}
+
+	/**
+	 * Traslada los datos de la entidad al formulario.
+	 */
+	private void sendEntityToForm() {
+		if (ejemplar == null) {
+			ejemplar = new Ejemplar();
+		}
+		txtCodigo.setText(ejemplar.getCodigo());
+		cbEstado.getSelectionModel().select(ejemplar.getEstado());
+	}
+
 
 }

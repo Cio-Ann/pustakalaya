@@ -41,10 +41,10 @@ public interface RecursoRepository extends JpaRepository<Recurso, Long>, JpaSpec
 	
 	/**
 	 * Busca un recurso por su ISBN
-	 * @param ISBN String ISBN a buscar
+	 * @param isbn String ISBN a buscar
 	 * @return Recurso entidad coincidente.
 	 */
-	Recurso findByISBN(String ISBN);
+	Recurso findByIsbn(String isbn);
 	
 	/**
 	 * Busca los recursos en los que esté incluido el autor dado.
@@ -60,7 +60,7 @@ public interface RecursoRepository extends JpaRepository<Recurso, Long>, JpaSpec
 	 * Solo tendrá en cuenta los valores
 	 * 
 	 * @param titulo String texto a buscar
-	 * @param ISBN
+	 * @param isbn
 	 * @param autor
 	 * @param genero
 	 * @param idioma
@@ -68,9 +68,9 @@ public interface RecursoRepository extends JpaRepository<Recurso, Long>, JpaSpec
 	 * @param hasta
 	 * @return
 	 */
-	default List<Recurso> findByFormData(String titulo, String ISBN, Autor autor, Genero genero,
+	default List<Recurso> findByFormData(String titulo, String isbn, Autor autor, Genero genero,
 			Idioma idioma, Date desde, Date hasta) {
-		return findAll(RecursoSpecifications.findByFormData(titulo, ISBN, autor, genero, idioma, desde, hasta));
+		return findAll(RecursoSpecifications.findByFormData(titulo, isbn, autor, genero, idioma, desde, hasta));
 	}
 	
 	

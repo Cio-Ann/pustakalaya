@@ -29,12 +29,12 @@ public class Autor {
 	@Column(name = "id_autor")
 	private Long idAutor;
 
-	/**
-	 * Conjunto de recursos de los que el autor ha colaborado en su creación.
-	 */
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "recurso_autor", joinColumns = @JoinColumn(name = "id_autor", referencedColumnName = "id_autor"), inverseJoinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"))
-	private Set<Recurso> recursos;
+//	/**
+//	 * Conjunto de recursos de los que el autor ha colaborado en su creación.
+//	 */
+//	@ManyToMany(fetch = FetchType.EAGER)
+//	@JoinTable(name = "recurso_autor", joinColumns = @JoinColumn(name = "id_autor", referencedColumnName = "id_autor"), inverseJoinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"))
+//	private Set<Recurso> recursos;
 
 	/**
 	 * Nombre del autor.
@@ -61,20 +61,20 @@ public class Autor {
 		this.idAutor = idAutor;
 	}
 
-	/**
-	 * @return the recursos
-	 */
-	public Set<Recurso> getRecursos() {
-		return recursos;
-	}
-
-	/**
-	 * @param recursos
-	 *            the recursos to set
-	 */
-	public void setRecursos(Set<Recurso> recursos) {
-		this.recursos = recursos;
-	}
+//	/**
+//	 * @return the recursos
+//	 */
+//	public Set<Recurso> getRecursos() {
+//		return recursos;
+//	}
+//
+//	/**
+//	 * @param recursos
+//	 *            the recursos to set
+//	 */
+//	public void setRecursos(Set<Recurso> recursos) {
+//		this.recursos = recursos;
+//	}
 
 	/**
 	 * @return the nombre
@@ -118,20 +118,23 @@ public class Autor {
 	 * @param nombre
 	 * @param apellidos
 	 */
-	public Autor(Set<Recurso> recursos, String nombre, String apellidos) {
-		this.recursos = recursos;
+	public Autor(
+//			Set<Recurso> recursos, 
+			String nombre, String apellidos) {
+//		this.recursos = recursos;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 	}
 
 	@Override
 	public String toString() {
-		String ret = "Autor [idAutor=" + idAutor + ", recursos=";
-		if (recursos != null) {
-			ret += recursos;
-		} else {
-			ret += " ... ";
-		}
+		String ret = "Autor [idAutor=" + idAutor ;
+//		if (recursos != null) {
+//			+ ", recursos=";
+//			ret += recursos;
+//		} else {
+//			ret += " ... ";
+//		}
 		ret += ", nombre=" + nombre + ", apellidos=" + apellidos + "]";
 
 		return ret;

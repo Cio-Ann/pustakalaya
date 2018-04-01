@@ -35,8 +35,8 @@ public class RecursoServiceImpl implements RecursoService {
 	}
 
 	@Override
-	public Recurso findByISBN(String ISBN) {
-		return recursoRepository.findByISBN(ISBN);
+	public Recurso findByIsbn(String isbn) {
+		return recursoRepository.findByIsbn(isbn);
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class RecursoServiceImpl implements RecursoService {
 	}
 
 	@Override
-	public List<Recurso> findByFormData(String titulo, String ISBN, Autor autor, Genero genero, Idioma idioma,
+	public List<Recurso> findByFormData(String titulo, String isbn, Autor autor, Genero genero, Idioma idioma,
 			Date desde, Date hasta) {
-		return recursoRepository.findByFormData(titulo, ISBN, autor, genero, idioma, desde, hasta);
+		return recursoRepository.findByFormData(titulo, isbn, autor, genero, idioma, desde, hasta);
 	}
 
 	@Override
@@ -65,6 +65,11 @@ public class RecursoServiceImpl implements RecursoService {
 	public void delete(Recurso recurso) {
 		recursoRepository.delete(recurso);
 		
+	}
+
+	@Override
+	public List<Recurso> findAll() {
+		return recursoRepository.findAll();
 	}
 
 }

@@ -41,15 +41,15 @@ public class AutorServiceImpl implements AutorService {
 	}
 	
 	@Override
-	public List<Autor> findByNombreAndByApellidosAllIgnoreCase(String nombre, String apellidos) {
+	public List<Autor> findByNombreAndApellidosAllIgnoreCase(String nombre, String apellidos) {
 
-		return autorRepository.findByNombreAndByApellidosAllIgnoreCase(nombre, apellidos);
+		return autorRepository.findByNombreAndApellidosAllIgnoreCase(nombre, apellidos);
 
 	}
 
 	@Override
-	public List<Autor> findByNombreContainingAndByApellidosContainingAllIgnoreCase(String nombre, String apellidos) {
-		return autorRepository.findByNombreContainingAndByApellidosContainingAllIgnoreCase(nombre, apellidos);
+	public List<Autor> findByNombreContainingAndApellidosContainingAllIgnoreCase(String nombre, String apellidos) {
+		return autorRepository.findByNombreContainingAndApellidosContainingAllIgnoreCase(nombre, apellidos);
 	}
 
 	@Override

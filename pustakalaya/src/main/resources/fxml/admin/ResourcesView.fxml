@@ -1,8 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.admin.ResourceViewController">
+   <children>
+      <GridPane hgap="5.0" layoutY="180.0" prefHeight="568.0" prefWidth="600.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="1.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="1.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="lblFormTitle" prefWidth="600.0" text="\%lblFormTitle" GridPane.columnSpan="6">
+               <styleClass>
+                  <String fx:value="titleText" />
+                  <String fx:value="light" />
+                  <String fx:value="background" />
+               </styleClass>
+            </Label>
+            <Label fx:id="lblTitle" text="\%lblTitle" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lblIsbn" text="\%lblIsbn" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="lblAutor" text="\%lblAutor" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lblGenero" text="\%lblGenero" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label fx:id="lblIdioma" text="\%lblIdioma" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lblDesde" text="\%lblDesde" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="lblHasta" text="\%lblHasta" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label fx:id="lblResultados" styleClass="bigText" text="\%lblResultados" GridPane.columnSpan="2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <TextField fx:id="txtIsbn" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </TextField>
+            <ComboBox fx:id="cbAutor" prefWidth="300.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cbGenero" prefWidth="300.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <ComboBox fx:id="cbIdioma" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker fx:id="dpDesde" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <DatePicker fx:id="dpHasta" GridPane.columnIndex="5" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </DatePicker>
+            <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="441.0" spacing="5.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
+               <children>
+                  <Button fx:id="btnClear" layoutX="217.0" layoutY="522.0" mnemonicParsing="false" onAction="#handleClear" text="\%btnClear">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btnBlue" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnSearch" layoutX="284.0" layoutY="522.0" mnemonicParsing="false" onAction="#handleSearch" text="\%btnSearch">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btnGreen" />
+                     </styleClass>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="5.0" right="5.0" />
+               </GridPane.margin>
+            </HBox>
+            <TableView fx:id="tableResultados" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5">
+              <columns>
+                <TableColumn fx:id="tcId" prefWidth="75.0" text="Id" />
+                <TableColumn fx:id="tcTitulo" maxWidth="1.7976931348623157E308" prefWidth="243.0" text="Titulo" />
+                  <TableColumn fx:id="tcIsbn" prefWidth="120.0" text="Isbn" />
+                  <TableColumn fx:id="tcYear" prefWidth="75.0" text="Año pub" />
+                  <TableColumn fx:id="tcEjemplares" prefWidth="75.0" text="Num Ejemplares" />
+              </columns>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </TableView>
+            <HBox alignment="CENTER_RIGHT" spacing="5.0" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+               <children>
+                  <Button fx:id="btnRecursoNew" layoutX="107.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleRecursoNew" text="\%btnNew">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btnGreen" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnRecursoEdit" layoutX="232.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleRecursoEdit" text="\%btnEdit">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btnBlue" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnRecursoDelete" layoutX="314.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleRecursoDelete" text="\%btnDelete">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btnRed" />
+                     </styleClass>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
 </AnchorPane>
-

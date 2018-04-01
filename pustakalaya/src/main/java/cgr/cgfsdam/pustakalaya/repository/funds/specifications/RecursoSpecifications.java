@@ -15,11 +15,11 @@ import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
-import cgr.cgfsdam.pustakalaya.utils.StringUtils;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 
 public class RecursoSpecifications {
 
-	public static Specification<Recurso> findByFormData(String titulo, String ISBN, Autor autor, Genero genero,
+	public static Specification<Recurso> findByFormData(String titulo, String isbn, Autor autor, Genero genero,
 			Idioma idioma, Date desde, Date hasta) {
 		return new Specification<Recurso>() {
 			public Predicate toPredicate(Root<Recurso> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -27,12 +27,12 @@ public class RecursoSpecifications {
 				List<Predicate> predicates = new ArrayList<>();
 
 				// titulo
-				if (!StringUtils.isEmpty(titulo)) {
+				if (!MyUtils.isEmptyString(titulo)) {
 					predicates.add(builder.like(builder.lower(root.get("titulo")), ("%" + titulo + "%").toLowerCase()));
 				}
 				// isbn
-				if (!StringUtils.isEmpty(ISBN)) {
-					predicates.add(builder.equal(root.get("ISBN"), ISBN));
+				if (!MyUtils.isEmptyString(isbn)) {
+					predicates.add(builder.equal(root.get("isbn"), isbn));
 				}
 
 				// autor

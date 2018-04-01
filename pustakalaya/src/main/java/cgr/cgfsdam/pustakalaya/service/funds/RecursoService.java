@@ -35,11 +35,11 @@ public interface RecursoService {
 	/**
 	 * Busca un recurso por su ISBN
 	 * 
-	 * @param ISBN
+	 * @param isbn
 	 *            String ISBN a buscar
 	 * @return Recurso entidad coincidente.
 	 */
-	Recurso findByISBN(String ISBN);
+	Recurso findByIsbn(String isbn);
 
 	/**
 	 * Busca los recursos en los que esté incluido el autor dado.
@@ -56,7 +56,7 @@ public interface RecursoService {
 	 * 
 	 * @param titulo
 	 *            String texto a buscar
-	 * @param ISBN
+	 * @param isbn
 	 * @param autor
 	 * @param genero
 	 * @param idioma
@@ -64,7 +64,7 @@ public interface RecursoService {
 	 * @param hasta
 	 * @return List<Recurso> entidades coincidentes
 	 */
-	List<Recurso> findByFormData(String titulo, String ISBN, Autor autor, Genero genero, Idioma idioma, Date desde,
+	List<Recurso> findByFormData(String titulo, String isbn, Autor autor, Genero genero, Idioma idioma, Date desde,
 			Date hasta);
 	
 	/**
@@ -88,6 +88,13 @@ public interface RecursoService {
 	 * @param recurso Recurso entidad a eliminar.
 	 */
 	void delete(Recurso recurso);
+
+	/**
+	 * Recupera todos los recursos de base de datos.
+	 * 
+	 * @return List<Recurso> todos los recursos de bbdd
+	 */
+	List<Recurso> findAll();
 	
 
 }

@@ -21,7 +21,7 @@ public interface GeneroService {
 	 * @param descripcion String descripción del genero a buscar
 	 * @return List<Genero> generos coincidentes
 	 */
-	List<Genero> findByNombreAndByDescripcionAllIgnoreCase(String nombre, String descripcion);
+	List<Genero> findByNombreAndDescripcionAllIgnoreCase(String nombre, String descripcion);
 
 	/**
 	 * Guarda el genero literario en base de datos.

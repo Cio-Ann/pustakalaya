@@ -52,7 +52,7 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 	 * @param apellidos String texto a buscar en los apellidos
 	 * @return List<Autor> autores coincidentes
 	 */
-	List<Autor> findByNombreAndByApellidosAllIgnoreCase(String nombre, String apellidos);
+	List<Autor> findByNombreAndApellidosAllIgnoreCase(String nombre, String apellidos);
 
 	/**
 	 * Busca autores cuyos nombre y apellidos contengan las cadenas dadas
@@ -61,7 +61,7 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 	 * @param apellidos String texto a buscar en los apellidos
 	 * @return List<Autor> autores coincidentes
 	 */
-	List<Autor> findByNombreContainingAndByApellidosContainingAllIgnoreCase(String nombre, String apellidos);
+	List<Autor> findByNombreContainingAndApellidosContainingAllIgnoreCase(String nombre, String apellidos);
 	
 
 }

@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import cgr.cgfsdam.pustakalaya.model.users.Direccion;
+
 /**
  * Clase que representa la entidad Recurso.
  *
@@ -49,8 +51,8 @@ public class Recurso {
 	/**
 	 * Generos a los que pertenece el recurso.
 	 */
-	@ManyToMany
-	@JoinTable(name = "recurso_genero", joinColumns = @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_genero", referencedColumnName = "id_genero"))
+	@ManyToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
+	@JoinTable(name = "recurso_genero", joinColumns = @JoinColumn(name = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_genero"))
 	private Set<Genero> generos;
 
 	/**
@@ -65,11 +67,16 @@ public class Recurso {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_idioma")
 	private Idioma idioma;
-
+	
 	/**
 	 * Conjunto de autores participantes en la creación del recurso.
 	 */
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "recursos")
+//	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "recursos")
+	
+	
+	
+	@ManyToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
+	@JoinTable(name = "recurso_autor", joinColumns = @JoinColumn(name = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_autor"))
 	private Set<Autor> autores;
 
 	/**
@@ -80,7 +87,7 @@ public class Recurso {
 	/**
 	 * ISBN Número internacional normalizado de libro.
 	 */
-	private String ISBN;
+	private String isbn;
 
 	/**
 	 * Conjunto de copias del recurso.
@@ -201,18 +208,18 @@ public class Recurso {
 	}
 
 	/**
-	 * @return the iSBN
+	 * @return the isbn
 	 */
-	public String getISBN() {
-		return ISBN;
+	public String getIsbn() {
+		return isbn;
 	}
 
 	/**
-	 * @param iSBN
-	 *            the iSBN to set
+	 * @param isbn
+	 *            the isbn to set
 	 */
-	public void setISBN(String iSBN) {
-		ISBN = iSBN;
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	/**
@@ -269,10 +276,10 @@ public class Recurso {
 	 * @param idioma
 	 * @param autores
 	 * @param numPaginas
-	 * @param iSBN
+	 * @param iSBisbnN
 	 */
 	public Recurso(String titulo, Set<Genero> generos, Date fechaPublicacion, Idioma idioma, Set<Autor> autores,
-			int numPaginas, String iSBN, List<Ejemplar> ejemplares) {
+			int numPaginas, String isbn, List<Ejemplar> ejemplares) {
 		super();
 		this.titulo = titulo;
 		this.generos = generos;
@@ -280,14 +287,28 @@ public class Recurso {
 		this.idioma = idioma;
 		this.autores = autores;
 		this.numPaginas = numPaginas;
-		this.ISBN = iSBN;
+		this.isbn = isbn;
 		this.ejemplares = ejemplares;
 	}
 
 	@Override
 	public String toString() {
-		return "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", generos=" + generos + ", fechaPublicacion="
+		String ret = "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", generos=" + generos + ", fechaPublicacion="
 				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", numPaginas=" + numPaginas
-				+ ", ISBN=" + ISBN + ", ejemplares=" + ejemplares + "]";
+				+ ", isbn=" + isbn + ", ejemplares=[";
+		
+		if (ejemplares != null ) {
+			for(Ejemplar e : ejemplares) {
+				ret += e.toStringShort();
+			}
+		}
+		ret +=  "]";
+		
+		return ret;
+		
+		
+//		return "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", generos=" + generos + ", fechaPublicacion="
+//				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", numPaginas=" + numPaginas
+//				+ ", isbn=" + isbn + ", ejemplares=" + ejemplares + "]";
 	}
 }

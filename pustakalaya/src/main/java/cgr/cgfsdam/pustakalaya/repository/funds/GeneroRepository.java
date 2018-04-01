@@ -25,6 +25,6 @@ public interface GeneroRepository extends JpaRepository<Genero, Long> {
 	 * @param descripcion String descripción del genero a buscar
 	 * @return List<Genero> generos coincidentes
 	 */
-	List<Genero> findByNombreAndByDescripcionAllIgnoreCase(String nombre, String descripcion);
+	List<Genero> findByNombreAndDescripcionAllIgnoreCase(String nombre, String descripcion);
 
 }

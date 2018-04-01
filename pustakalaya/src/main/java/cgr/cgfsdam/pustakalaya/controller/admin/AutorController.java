@@ -21,7 +21,7 @@ import cgr.cgfsdam.pustakalaya.controller.BaseController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.repository.funds.AutorRepository;
 import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
-import cgr.cgfsdam.pustakalaya.utils.StringUtils;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 
 /**
  * Controlador para el formulario de creación / edición de autores.
@@ -117,6 +117,7 @@ public class AutorController extends BaseController {
 	 */
 	public void setAutor(Autor autor) {
 		this.autor = autor;
+		sendEntityToForm();
 	}
 
 	/**
@@ -142,16 +143,16 @@ public class AutorController extends BaseController {
 		boolean ret = true;
 		lblError.setText("");
 
-		if (StringUtils.isEmpty(txtNombre.getText())) {
+		if (MyUtils.isEmptyString(txtNombre.getText())) {
 			ret = false;
 			lblError.setText(resourceBundle.getString("admin.autor.save.error.empty"));
 		} else if (autor == null || autor.getIdAutor() == null) {
 			List<Autor> temp = null;
-			if (StringUtils.isEmpty(txtApellidos.getText())) {
-				temp = autorService.findByNombreAllIgnoreCase(txtNombre.getText().trim());
+			if (MyUtils.isEmptyString(txtApellidos.getText())) {
+				temp = autorService.findByNombreAllIgnoreCase(txtNombre.getText());
 			} else {
-				temp = autorService.findByNombreAndByApellidosAllIgnoreCase(txtNombre.getText().trim(),
-						txtApellidos.getText().trim());
+				temp = autorService.findByNombreAndApellidosAllIgnoreCase(txtNombre.getText(),
+						txtApellidos.getText());
 			}
 
 			if (temp != null && temp.size() > 0) {
@@ -175,10 +176,23 @@ public class AutorController extends BaseController {
 		if (autor == null) {
 			autor = new Autor();
 		}
-		autor.setNombre(txtNombre.getText().trim());
-		autor.setApellidos(txtApellidos.getText().trim());
+		autor.setNombre(txtNombre.getText());
+		autor.setApellidos(txtApellidos.getText());
 
 		autorService.save(autor);
 	}
+
+	/**
+	 * Traslada los datos de la entidad al formulario.
+	 */
+	private void sendEntityToForm() {
+		if (autor == null) {
+			autor = new Autor();
+		}
+		txtNombre.setText(autor.getNombre());
+		txtApellidos.setText(autor.getApellidos());
+		
+	}
+
 
 }

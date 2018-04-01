@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
+import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
-import cgr.cgfsdam.pustakalaya.utils.StringUtils;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -20,65 +21,63 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Controlador para el formulario de creación / edición de idiomas. 
+ * Controlador para el formulario de creación / edición de idiomas.
  *
  * @author CGR-Casa
  */
 @Controller
 public class IdiomaController extends BaseController {
-	
+
 	private Idioma idioma;
-	
+
 	@Autowired
 	private IdiomaService idiomaService;
 
 	@Autowired
 	private ResourceBundle resourceBundle;
-	
+
 	@FXML
 	private Label lblTitle;
 
-    @FXML
-    private Label lblNombre;
+	@FXML
+	private Label lblNombre;
 
-    @FXML
-    private  TextField txtNombre;
+	@FXML
+	private TextField txtNombre;
 
-    @FXML
-    private Label lblDescripcion;
-    
-    @FXML
-    private  TextField txtDescripcion;
-    
-    @FXML
-    private Button btnSave;
+	@FXML
+	private Label lblDescripcion;
 
-    @FXML
-    private Label lblError;
+	@FXML
+	private TextField txtDescripcion;
 
-    @FXML
-    private Button btnExit;
+	@FXML
+	private Button btnSave;
 
-    @FXML
-    void handleExit(ActionEvent event) {
+	@FXML
+	private Label lblError;
+
+	@FXML
+	private Button btnExit;
+
+	@FXML
+	void handleExit(ActionEvent event) {
 		log.info("se pulsó el botón salir");
 		closeDialog(event);
-    }
+	}
 
-    @FXML
-    void handleSave(ActionEvent event) {
+	@FXML
+	void handleSave(ActionEvent event) {
 		log.info("se pulsó el botón guardar");
-    	if (validateGenero()) {
-    		saveIdioma();
-    		sendAlert(
-    				AlertType.INFORMATION, 
-    				resourceBundle.getString("admin.idioma.save.success.title"), 
-    				resourceBundle.getString("admin.idioma.save.success.header"), 
-    				resourceBundle.getString("admin.idioma.save.success.msg"));
-    		closeDialog(event);
-    	}
+		if (validateGenero()) {
+			saveIdioma();
+			sendAlert(AlertType.INFORMATION, resourceBundle.getString("admin.idioma.save.success.title"),
+					resourceBundle.getString("admin.idioma.save.success.header"),
+					resourceBundle.getString("admin.idioma.save.success.msg"));
+			closeDialog(event);
+		}
 
-    }
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -88,67 +87,80 @@ public class IdiomaController extends BaseController {
 		lblError.setText("");
 		btnSave.setText(resources.getString("admin.idioma.button.save"));
 		btnExit.setText(resources.getString("admin.idioma.button.exit"));
-		
+
 		idioma = new Idioma();
 	}
 
 	/**
 	 * Metodo para cerrar la ventana.
 	 * 
-	 * @param event ActionEvent evento que inicia el cierre de la ventana.
+	 * @param event
+	 *            ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
 		final Node source = (Node) event.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
 	}
-	
+
 	/**
 	 * Setter del objeto Idioma del formulario.
 	 * 
-	 * @param genero Genero objeto a guardar
+	 * @param genero
+	 *            Genero objeto a guardar
 	 */
 	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
+		sendEntityToForm();
 	}
-	
+
 	/**
 	 * Valida si los datos del formulario son correctos.
+	 * 
 	 * @return
 	 */
 	private boolean validateGenero() {
 		boolean ret = true;
 		lblError.setText("");
-		
-		if(StringUtils.isEmpty(txtNombre.getText())) {
+
+		if (MyUtils.isEmptyString(txtNombre.getText())) {
 			ret = false;
 			lblError.setText(resourceBundle.getString("admin.idioma.save.error.empty"));
-		} else if (idioma == null || idioma.getIdIdioma() == null) {
+		} else {
+			// if (idioma == null || idioma.getIdIdioma() == null) {
 			Idioma temp = null;
-			
-			if (StringUtils.isEmpty(txtDescripcion.getText())) {
-				temp = idiomaService.findByNombreIgnoreCase(txtNombre.getText().trim());
-			}
-			
+
+			temp = idiomaService.findByNombreIgnoreCase(txtNombre.getText());
+
 			if (temp != null && temp.getIdIdioma() != idioma.getIdIdioma()) {
 				ret = false;
 				lblError.setText(resourceBundle.getString("admin.idioma.save.error.alreadyExists"));
 			}
 		}
-		
-		
-		return ret;		
+
+		return ret;
 	}
-	
+
 	/**
 	 * Guarda el idioma del formulario en el formulario
 	 */
 	private void saveIdioma() {
-		idioma.setNombre(txtNombre.getText().trim());
-		idioma.setDescripcion(txtDescripcion.getText().trim());
-		
+		idioma.setNombre(txtNombre.getText());
+		idioma.setDescripcion(txtDescripcion.getText());
+
 		idiomaService.save(idioma);
 	}
 
-}
+	/**
+	 * Traslada los datos de la entidad al formulario.
+	 */
+	private void sendEntityToForm() {
+		if (idioma == null) {
+			idioma = new Idioma();
+		}
+		txtNombre.setText(idioma.getNombre());
+		txtDescripcion.setText(idioma.getDescripcion());
 
+	}
+
+}

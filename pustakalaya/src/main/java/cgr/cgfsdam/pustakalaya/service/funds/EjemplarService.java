@@ -32,7 +32,7 @@ public interface EjemplarService {
 	 * @param idRecurso Long id del recurso al que pertenecen los ejemplares
 	 * @return List<Ejemplar> ejemplares pertenecientes al recurso.
 	 */
-	List<Ejemplar> findfindByRecurso_idRecurso(Long idRecurso);
+	List<Ejemplar> findByRecurso_idRecurso(Long idRecurso);
 
 	/**
 	 * Elimina la entidad dada en la capa de persistencia.

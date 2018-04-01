@@ -26,8 +26,8 @@ public class GeneroServiceImpl implements GeneroService {
 	}
 
 	@Override
-	public List<Genero> findByNombreAndByDescripcionAllIgnoreCase(String nombre, String descripcion) {
-		return generoRepository.findByNombreAndByDescripcionAllIgnoreCase(nombre, descripcion);
+	public List<Genero> findByNombreAndDescripcionAllIgnoreCase(String nombre, String descripcion) {
+		return generoRepository.findByNombreAndDescripcionAllIgnoreCase(nombre, descripcion);
 	}
 
 	@Override

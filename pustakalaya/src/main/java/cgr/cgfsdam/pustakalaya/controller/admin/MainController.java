@@ -81,22 +81,38 @@ public class MainController  extends BaseController{
 
     @FXML
     void handleFunds(ActionEvent event) {
+		clearAllSelectedBtn();
+		setSelectedBtn(btnFunds);
 
+		// carga el panel correspondiente
+		loadChildPanel(FxmlView.A_RESOURCES.getFxmlFile());
     }
 
     @FXML
     void handleBookings(ActionEvent event) {
+		clearAllSelectedBtn();
+		setSelectedBtn(btnBookings);
 
+		// carga el panel correspondiente
+		loadChildPanel(FxmlView.A_BOOKINGS.getFxmlFile());
     }
 
     @FXML
     void handleLoans(ActionEvent event) {
+		clearAllSelectedBtn();
+		setSelectedBtn(btnLoans);
 
+		// carga el panel correspondiente
+		loadChildPanel(FxmlView.A_LOANS.getFxmlFile());
     }
 
     @FXML
     void handleNotifications(ActionEvent event) {
+		clearAllSelectedBtn();
+		setSelectedBtn(btnUsers);
 
+		// carga el panel correspondiente
+		loadChildPanel(FxmlView.A_USERS.getFxmlFile());
     }
 
     @FXML
@@ -169,24 +185,31 @@ public class MainController  extends BaseController{
 	private void clearAllSelectedBtn() {
 		btnUsers.getStyleClass().remove("menu-button-on");
 		btnUsers.getStyleClass().add("menu-button-off");
+		btnUsers.setDisable(false);
 
 		btnFunds.getStyleClass().remove("menu-button-on");
 		btnFunds.getStyleClass().add("menu-button-off");
+		btnFunds.setDisable(false);
 
 		btnBookings.getStyleClass().remove("menu-button-on");
 		btnBookings.getStyleClass().add("menu-button-off");
+		btnBookings.setDisable(false);
 
 		btnLoans.getStyleClass().remove("menu-button-on");
 		btnLoans.getStyleClass().add("menu-button-off");
+		btnLoans.setDisable(false);
 
 		btnNotications.getStyleClass().remove("menu-button-on");
 		btnNotications.getStyleClass().add("menu-button-off");
+		btnNotications.setDisable(false);
 
 		btnChangeAccount.getStyleClass().remove("menu-button-on");
 		btnChangeAccount.getStyleClass().add("menu-button-off");
+		btnChangeAccount.setDisable(false);
 
 		btnExit.getStyleClass().remove("menu-button-on");
 		btnExit.getStyleClass().add("menu-button-off");
+		btnExit.setDisable(false);
 	}
 
 	/**
@@ -196,5 +219,6 @@ public class MainController  extends BaseController{
 	 */
 	private void setSelectedBtn(Button button) {
 		button.getStyleClass().add("menu-button-on");
+		button.setDisable(true);
 	}
 }

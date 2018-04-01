@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import cgr.cgfsdam.pustakalaya.model.users.Usuario;
+import cgr.cgfsdam.pustakalaya.model.utility.FormObjects;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -70,6 +71,22 @@ public abstract class BaseController implements Initializable {
         return loader.load();
 	}
 
+	public FormObjects getFormOjects(String path) throws IOException {
+		FormObjects ret = new FormObjects();
+		
+		FXMLLoader loader = new FXMLLoader();
+        loader.setControllerFactory(appContext::getBean); //Spring now FXML Controller Factory
+        loader.setResources(resourceBundle);
+        loader.setLocation(getClass().getResource(path));
+        
+        ret.setParent(loader.load());
+        ret.setController(loader.getController());
+        return ret;
+	}
+	
+	
+	
+	
 	/**
 	 * Método para mostrar un popup de confirmación y recoger la respuesta del usuario.
 	 * 

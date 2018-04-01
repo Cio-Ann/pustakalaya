@@ -12,7 +12,7 @@ import cgr.cgfsdam.pustakalaya.controller.BaseController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
-import cgr.cgfsdam.pustakalaya.utils.StringUtils;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -254,7 +254,7 @@ public class SearchController extends BaseController {
 	    			} else {
 	    				item.forEach(autor -> {
 	    					String temp = autor.getNombre() + " " + autor.getApellidos();
-	    					if (!StringUtils.isEmpty(getText())) {
+	    					if (!MyUtils.isEmptyString(getText())) {
 	    						temp = getText() + "; " + temp;
 	    					}
 	    					setText(temp);

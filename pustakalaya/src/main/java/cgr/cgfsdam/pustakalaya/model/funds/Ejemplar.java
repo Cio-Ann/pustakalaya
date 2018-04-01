@@ -31,7 +31,7 @@ public class Ejemplar {
 	/**
 	 * Recurso del que es copia.
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinColumn(name = "id_recurso")
 	private Recurso recurso;
 	
@@ -123,6 +123,10 @@ public class Ejemplar {
 	public String toString() {
 		return "Ejemplar [idEjemplar=" + idEjemplar + ", recurso=" + recurso + ", codigo=" + codigo + ", estado="
 				+ estado + "]";
+	}
+	
+	public String toStringShort() {
+		return "Ejemplar [idEjemplar=" + idEjemplar + ",codigo=" + codigo + ", estado=" + estado + "]";
 	}
 
 	

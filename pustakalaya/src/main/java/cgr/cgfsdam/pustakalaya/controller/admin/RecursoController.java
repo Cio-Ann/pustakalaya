@@ -8,7 +8,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +16,22 @@ import org.springframework.stereotype.Controller;
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
-import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
-import cgr.cgfsdam.pustakalaya.model.users.Usuario;
-import cgr.cgfsdam.pustakalaya.repository.funds.EjemplarRepository;
+import cgr.cgfsdam.pustakalaya.model.utility.FormObjects;
 import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
 import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
 import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
-import cgr.cgfsdam.pustakalaya.utils.StringUtils;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -88,6 +83,7 @@ public class RecursoController extends BaseController {
 	@Autowired
 	private EjemplarService ejemplarService;
 
+	@Autowired
 	private RecursoService recursoService;
 
 	/**
@@ -227,7 +223,16 @@ public class RecursoController extends BaseController {
 	void handleAddAutor(ActionEvent event) {
 		Autor selected = cbAutor.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			lvAutor.getItems().add(selected);
+
+			if (lvAutor.getItems().stream().filter(a -> a.getIdAutor().equals(selected.getIdAutor())).count() > 0) {
+				sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.autor.add.error.title"),
+						// TODO: crear textos de ya existe
+						resourceBundle.getString("admin.recurso.form.autor.add.error.header"),
+						resourceBundle.getString("admin.recurso.form.autor.add.error.error.msg"));
+			} else {
+				lvAutor.getItems().add(selected);
+			}
+
 		} else {
 			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.autor.add.error.title"),
 					resourceBundle.getString("admin.recurso.form.autor.add.error.header"),
@@ -244,18 +249,22 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleEditAutor(ActionEvent event) {
-		Autor selected = cbAutor.getSelectionModel().getSelectedItem();
+		Autor selected = lvAutor.getSelectionModel().getSelectedItem();
+		if (selected == null) {
+			selected = new Autor();
+		}
 
-		FXMLLoader fxmlLoader = new FXMLLoader();
 		try {
-			Parent p = fxmlLoader.load(getClass().getResource(FxmlView.A_AUTOR_FORM.getFxmlFile()).openStream());
-			AutorController controller = (AutorController) fxmlLoader.getController();
-			controller.setAutor(selected);
+
+			FormObjects formData = getFormOjects(FxmlView.A_AUTOR_FORM.getFxmlFile());
+			((AutorController) formData.getController()).setAutor(selected);
 
 			Stage form = new Stage();
-			form.setScene(new Scene(p));
+			form.setScene(new Scene(formData.getParent()));
 			form.initModality(Modality.APPLICATION_MODAL);
 			form.showAndWait();
+
+			log.info("Volvemos del fomrulario de autores");
 
 			loadAutores();
 			checkAutoresExists();
@@ -293,7 +302,14 @@ public class RecursoController extends BaseController {
 	void handleAddGenero(ActionEvent event) {
 		Genero selected = cbGenero.getSelectionModel().getSelectedItem();
 		if (selected != null) {
-			lvGenero.getItems().add(selected);
+			if (lvGenero.getItems().contains(selected)) {
+
+				sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.genero.add.error.title"),
+						resourceBundle.getString("admin.recurso.form.genero.add.error.header"),
+						resourceBundle.getString("admin.recurso.form.genero.add.error.msg"));
+			} else {
+				lvGenero.getItems().add(selected);
+			}
 		} else {
 			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.genero.add.error.title"),
 					resourceBundle.getString("admin.recurso.form.genero.add.error.header"),
@@ -309,18 +325,22 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleEditGenero(ActionEvent event) {
-		Genero selected = cbGenero.getSelectionModel().getSelectedItem();
+		Genero selected = lvGenero.getSelectionModel().getSelectedItem();
+		if (selected == null) {
+			selected = new Genero();
+		}
 
-		FXMLLoader fxmlLoader = new FXMLLoader();
 		try {
-			Parent p = fxmlLoader.load(getClass().getResource(FxmlView.A_GENERO_FORM.getFxmlFile()).openStream());
-			GeneroController controller = (GeneroController) fxmlLoader.getController();
-			controller.setGenero(selected);
+
+			FormObjects formData = getFormOjects(FxmlView.A_GENERO_FORM.getFxmlFile());
+			((GeneroController) formData.getController()).setGenero(selected);
 
 			Stage form = new Stage();
-			form.setScene(new Scene(p));
+			form.setScene(new Scene(formData.getParent()));
 			form.initModality(Modality.APPLICATION_MODAL);
 			form.showAndWait();
+
+			log.info("Volvemos del fomrulario de generos");
 
 			loadGeneros();
 			checkGenerosExists();
@@ -341,6 +361,7 @@ public class RecursoController extends BaseController {
 		Genero selected = lvGenero.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			lvGenero.getItems().remove(selected);
+			lvGenero.refresh();
 		} else {
 			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.genero.delete.error.title"),
 					resourceBundle.getString("admin.recurso.form.genero.delete.error.header"),
@@ -358,17 +379,21 @@ public class RecursoController extends BaseController {
 	@FXML
 	void handleEditIdioma(ActionEvent event) {
 		Idioma selected = cbIdioma.getSelectionModel().getSelectedItem();
+		if (selected == null) {
+			selected = new Idioma();
+		}
 
-		FXMLLoader fxmlLoader = new FXMLLoader();
 		try {
-			Parent p = fxmlLoader.load(getClass().getResource(FxmlView.A_IDIOMA_FORM.getFxmlFile()).openStream());
-			IdiomaController controller = (IdiomaController) fxmlLoader.getController();
-			controller.setIdioma(selected);
+
+			FormObjects formData = getFormOjects(FxmlView.A_IDIOMA_FORM.getFxmlFile());
+			((IdiomaController) formData.getController()).setIdioma(selected);
 
 			Stage form = new Stage();
-			form.setScene(new Scene(p));
+			form.setScene(new Scene(formData.getParent()));
 			form.initModality(Modality.APPLICATION_MODAL);
 			form.showAndWait();
+
+			log.info("Volvemos del fomrulario de idiomas");
 
 			loadIdiomas();
 		} catch (IOException e) {
@@ -387,17 +412,17 @@ public class RecursoController extends BaseController {
 	void handleAddEjemplar(ActionEvent event) {
 		Ejemplar newEjemplar = new Ejemplar();
 
-		FXMLLoader fxmlLoader = new FXMLLoader();
 		try {
-			Parent p = fxmlLoader.load(getClass().getResource(FxmlView.A_EJEMPLAR_FORM.getFxmlFile()).openStream());
-			EjemplarController controller = (EjemplarController) fxmlLoader.getController();
-			controller.setEjemplar(newEjemplar);
-			controller.setRecurso(recurso);
+			FormObjects formData = getFormOjects(FxmlView.A_EJEMPLAR_FORM.getFxmlFile());
+			((EjemplarController) formData.getController()).setEjemplar(newEjemplar);
+			((EjemplarController) formData.getController()).setRecurso(recurso);
 
 			Stage form = new Stage();
-			form.setScene(new Scene(p));
+			form.setScene(new Scene(formData.getParent()));
 			form.initModality(Modality.APPLICATION_MODAL);
 			form.showAndWait();
+
+			log.info("Volvemos del fomrulario de ejemplares");
 
 			loadEjemplares();
 		} catch (IOException e) {
@@ -411,17 +436,17 @@ public class RecursoController extends BaseController {
 		Ejemplar editEjemplar = lvEjemplares.getSelectionModel().getSelectedItem();
 
 		if (editEjemplar != null) {
-			FXMLLoader fxmlLoader = new FXMLLoader();
 			try {
-				Parent p = fxmlLoader.load(getClass().getResource(FxmlView.A_EJEMPLAR_FORM.getFxmlFile()).openStream());
-				EjemplarController controller = (EjemplarController) fxmlLoader.getController();
-				controller.setEjemplar(editEjemplar);
-				controller.setRecurso(recurso);
+				FormObjects formData = getFormOjects(FxmlView.A_EJEMPLAR_FORM.getFxmlFile());
+				((EjemplarController) formData.getController()).setEjemplar(editEjemplar);
+				((EjemplarController) formData.getController()).setRecurso(recurso);
 
 				Stage form = new Stage();
-				form.setScene(new Scene(p));
+				form.setScene(new Scene(formData.getParent()));
 				form.initModality(Modality.APPLICATION_MODAL);
 				form.showAndWait();
+
+				log.info("Volvemos del fomrulario de ejemplares");
 
 				loadEjemplares();
 			} catch (IOException e) {
@@ -555,7 +580,7 @@ public class RecursoController extends BaseController {
 
 						if (item != null) {
 							String fullName = item.getNombre();
-							if (!StringUtils.isEmpty(item.getApellidos())) {
+							if (!MyUtils.isEmptyString(item.getApellidos())) {
 								fullName += ", " + item.getApellidos();
 							}
 							setText(fullName);
@@ -574,7 +599,7 @@ public class RecursoController extends BaseController {
 			@Override
 			public String toString(Autor autor) {
 				String fullName = autor.getNombre();
-				if (!StringUtils.isEmpty(autor.getApellidos())) {
+				if (!MyUtils.isEmptyString(autor.getApellidos())) {
 					fullName += ", " + autor.getApellidos();
 				}
 				return fullName;
@@ -591,7 +616,7 @@ public class RecursoController extends BaseController {
 				if (nameElements.length == 2) {
 					nombre = nameElements[0];
 					apellidos = nameElements[1];
-					ret = autorService.findByNombreAndByApellidosAllIgnoreCase(nombre, apellidos).stream().findFirst()
+					ret = autorService.findByNombreAndApellidosAllIgnoreCase(nombre, apellidos).stream().findFirst()
 							.orElse(null);
 				} else if (nameElements.length == 1) {
 					nombre = nameElements[0];
@@ -601,6 +626,27 @@ public class RecursoController extends BaseController {
 				return ret;
 			}
 
+		});
+
+		lvAutor.setCellFactory(column -> {
+			return new ListCell<Autor>() {
+
+				@Override
+				protected void updateItem(Autor item, boolean empty) {
+					super.updateItem(item, empty);
+
+					if (item == null || empty) {
+						setText("");
+					} else {
+						String fullName = item.getNombre();
+						if (!MyUtils.isEmptyString(item.getApellidos())) {
+							fullName += ", " + item.getApellidos();
+						}
+						setText(fullName);
+					}
+				}
+
+			};
 		});
 
 		loadAutores();
@@ -621,10 +667,14 @@ public class RecursoController extends BaseController {
 	 */
 	private void checkAutoresExists() {
 		lvAutor.getItems().forEach(autor -> {
-			if (autorService.findById(autor.getIdAutor()) == null) {
+			Autor dbAutor = autorService.findById(autor.getIdAutor());
+			if (dbAutor == null) {
 				lvAutor.getItems().remove(autor);
+			} else {
+				autor = dbAutor;
 			}
 		});
+		lvAutor.refresh();
 	}
 
 	/**
@@ -673,6 +723,23 @@ public class RecursoController extends BaseController {
 
 		});
 
+		lvGenero.setCellFactory(column -> {
+			return new ListCell<Genero>() {
+
+				@Override
+				protected void updateItem(Genero item, boolean empty) {
+					super.updateItem(item, empty);
+
+					if (item == null || empty) {
+						setText("");
+					} else {
+						setText(item.getNombre());
+					}
+				}
+
+			};
+		});
+
 		loadGeneros();
 	}
 
@@ -695,6 +762,7 @@ public class RecursoController extends BaseController {
 				lvGenero.getItems().remove(genero);
 			}
 		});
+		lvGenero.refresh();
 	}
 
 	/**
@@ -743,6 +811,7 @@ public class RecursoController extends BaseController {
 
 		});
 
+		loadIdiomas();
 		sendRecursoToForm();
 	}
 
@@ -785,6 +854,7 @@ public class RecursoController extends BaseController {
 				return cell;
 			}
 		});
+		
 
 		loadEjemplares();
 
@@ -798,9 +868,9 @@ public class RecursoController extends BaseController {
 		// activa o desactiva controles en función del recurso
 		checkNewRecurso();
 		// solo recarga la lista si el recurso existe
-		if (recurso != null && recurso.getIdRecurso() > 0) {
+		if (recurso != null && recurso.getIdRecurso() != null && recurso.getIdRecurso() > 0) {
 			lvEjemplares.getItems().clear();
-			lvEjemplares.getItems().addAll(ejemplarService.findfindByRecurso_idRecurso(recurso.getIdRecurso()));
+			lvEjemplares.getItems().addAll(ejemplarService.findByRecurso_idRecurso(recurso.getIdRecurso()));
 		}
 		// si el recurso es nuevo, no se puede añadir ejemplares
 	}
@@ -813,15 +883,7 @@ public class RecursoController extends BaseController {
 	 * formulario de ejemplares al no existir un recurso en base de datos todavia.
 	 */
 	private void checkNewRecurso() {
-		if (recurso != null && recurso.getIdRecurso() > 0) {
-			lblEjemplares.setDisable(true);
-			btnAddEjemplar.setDisable(true);
-			btnEditEjemplar.setDisable(true);
-			btnDeleteEjemplar.setDisable(true);
-			lvEjemplares.setDisable(true);
-
-			btnDelete.setDisable(true);
-		} else {
+		if (recurso != null && recurso.getIdRecurso() != null && recurso.getIdRecurso() > 0) {
 			lblEjemplares.setDisable(false);
 			btnAddEjemplar.setDisable(false);
 			btnEditEjemplar.setDisable(false);
@@ -829,6 +891,14 @@ public class RecursoController extends BaseController {
 			lvEjemplares.setDisable(false);
 
 			btnDelete.setDisable(false);
+		} else {
+			lblEjemplares.setDisable(true);
+			btnAddEjemplar.setDisable(true);
+			btnEditEjemplar.setDisable(true);
+			btnDeleteEjemplar.setDisable(true);
+			lvEjemplares.setDisable(true);
+
+			btnDelete.setDisable(true);
 		}
 	}
 
@@ -837,7 +907,7 @@ public class RecursoController extends BaseController {
 	 */
 	private void sendRecursoToForm() {
 		txtTitulo.setText(recurso.getTitulo());
-		txtISBN.setText(recurso.getISBN());
+		txtISBN.setText(recurso.getIsbn());
 
 		lvAutor.getItems().clear();
 		lvAutor.getItems().addAll(recurso.getAutores());
@@ -846,19 +916,23 @@ public class RecursoController extends BaseController {
 		lvGenero.getItems().addAll(recurso.getGeneros());
 
 		cbIdioma.getSelectionModel().select(recurso.getIdioma());
-		dpPDate.setValue(LocalDate
-				.from(Instant.ofEpochMilli(recurso.getFechaPublicacion().getTime()).atZone(ZoneId.systemDefault())));
+		if (null != recurso.getFechaPublicacion()) {
+			dpPDate.setValue(LocalDate.from(
+					Instant.ofEpochMilli(recurso.getFechaPublicacion().getTime()).atZone(ZoneId.systemDefault())));
+		}
 
 		lvEjemplares.getItems().clear();
-		lvEjemplares.getItems().addAll(recurso.getEjemplares());
+		if (null != recurso.getEjemplares()) {
+			lvEjemplares.getItems().addAll(recurso.getEjemplares());
+		}
 	}
 
 	/**
 	 * Lee los datos del formulario y los plasma en el recurso.
 	 */
 	private void sendFormToRecurso() {
-		recurso.setTitulo(txtTitulo.getText().trim());
-		recurso.setISBN(txtISBN.getText().trim());
+		recurso.setTitulo(txtTitulo.getText());
+		recurso.setIsbn(txtISBN.getText());
 		recurso.setAutores(lvAutor.getItems().stream().collect(Collectors.toSet()));
 		recurso.setGeneros(lvGenero.getItems().stream().collect(Collectors.toSet()));
 		recurso.setIdioma(cbIdioma.getSelectionModel().getSelectedItem());
@@ -875,6 +949,7 @@ public class RecursoController extends BaseController {
 	public void setRecurso(Recurso recurso) {
 		this.recurso = recurso;
 		sendRecursoToForm();
+		checkNewRecurso();
 	}
 
 	/**
@@ -899,11 +974,11 @@ public class RecursoController extends BaseController {
 		validationMsg = "";
 
 		// titulo obligatorio
-		if (StringUtils.isEmpty(txtTitulo.getText().trim())) {
+		if (MyUtils.isEmptyString(txtTitulo.getText())) {
 			isValid = false;
 			validationMsg += resourceBundle.getString("admin.recurso.validation.title.empty");
 		} else {
-			List<Recurso> temp = recursoService.findByTitulo(txtTitulo.getText().trim());
+			List<Recurso> temp = recursoService.findByTitulo(txtTitulo.getText());
 			if (temp != null && temp.stream().filter(r -> !r.getIdRecurso().equals(recurso.getIdRecurso())).findAny()
 					.orElse(null) != null) {
 				isValid = false;
@@ -912,9 +987,9 @@ public class RecursoController extends BaseController {
 		}
 
 		// isbn no obligatorio
-		if (!StringUtils.isEmpty(txtISBN.getText().trim())) {
-			Recurso temp = recursoService.findByISBN(txtISBN.getText().trim());
-			if (temp.getIdRecurso().equals(recurso.getIdRecurso())) {
+		if (!MyUtils.isEmptyString(txtISBN.getText())) {
+			Recurso temp = recursoService.findByIsbn(txtISBN.getText());
+			if (temp != null && temp.getIdRecurso().equals(recurso.getIdRecurso())) {
 				isValid = false;
 				validationMsg += resourceBundle.getString("admin.recurso.validation.isbn.alreadyExists");
 			}

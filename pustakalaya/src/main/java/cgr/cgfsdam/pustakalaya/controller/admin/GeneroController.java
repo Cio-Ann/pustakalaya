@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
+import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
-import cgr.cgfsdam.pustakalaya.utils.StringUtils;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -85,7 +86,7 @@ public class GeneroController extends BaseController {
 	public void initialize(URL location, ResourceBundle resources) {
 		lblTitle.setText(resources.getString("admin.genero.title"));
 		lblNombre.setText(resources.getString("admin.genero.label.nombre"));
-		lblDescripcion.setText(resources.getString("admin.genero.label.apellidos"));
+		lblDescripcion.setText(resources.getString("admin.genero.label.descripcion"));
 		lblError.setText("");
 		btnSave.setText(resources.getString("admin.genero.button.save"));
 		btnExit.setText(resources.getString("admin.genero.button.exit"));
@@ -109,6 +110,7 @@ public class GeneroController extends BaseController {
 	 */
 	public void setGenero(Genero genero) {
 		this.genero = genero;
+		sendEntityToForm();
 	}
 	
 	/**
@@ -119,18 +121,18 @@ public class GeneroController extends BaseController {
 		boolean ret = true;
 		lblError.setText("");
 		
-		if(StringUtils.isEmpty(txtNombre.getText())) {
+		if(MyUtils.isEmptyString(txtNombre.getText())) {
 			ret = false;
 			lblError.setText(resourceBundle.getString("admin.genero.save.error.empty"));
 		} else if (genero == null || genero.getIdGenero() == null) {
 			List<Genero> temp = null;
 			
-			if (StringUtils.isEmpty(txtDescripcion.getText())) {
-				temp = generoService.findByNombreIgnoreCase(txtNombre.getText().trim());
+			if (MyUtils.isEmptyString(txtDescripcion.getText())) {
+				temp = generoService.findByNombreIgnoreCase(txtNombre.getText());
 			} else {
-				temp = generoService.findByNombreAndByDescripcionAllIgnoreCase(
-						txtNombre.getText().trim(), 
-						txtDescripcion.getText().trim());
+				temp = generoService.findByNombreAndDescripcionAllIgnoreCase(
+						txtNombre.getText(), 
+						txtDescripcion.getText());
 			}
 			
 			if (temp != null && temp.size() > 0) {
@@ -150,11 +152,22 @@ public class GeneroController extends BaseController {
 		if (genero == null) {
 			genero = new Genero();
 		}
-		genero.setNombre(txtNombre.getText().trim());
-		genero.setDescripcion(txtDescripcion.getText().trim());
+		genero.setNombre(txtNombre.getText());
+		genero.setDescripcion(txtDescripcion.getText());
 		
 		generoService.save(genero);
 	}
 
+	/**
+	 * Traslada los datos de la entidad al formulario.
+	 */
+	private void sendEntityToForm() {
+		if (genero == null) {
+			genero = new Genero();
+		}
+		txtNombre.setText(genero.getNombre());
+		txtDescripcion.setText(genero.getDescripcion());
+		
+	}
 }
 
