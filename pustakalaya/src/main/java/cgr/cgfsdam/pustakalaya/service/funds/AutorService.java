@@ -81,4 +81,19 @@ public interface AutorService {
 	 * @return Autor entidad coincidente o null
 	 */
 	Autor findById(Long idAutor);
+
+	/**
+	 * Elimina el autor recibido de base de datos.
+	 * 
+	 * @param autor
+	 */
+	void delete(Autor autor);
+
+	/**
+	 * Cuenta el número de recursos de los que la entidad dada es autor o coautor.
+	 * 
+	 * @param autor Autor entidad a ser
+	 * @return Long número de obras de las que el autor dado es participe
+	 */
+	Long countResourcesByAutor(Autor autor);
 }

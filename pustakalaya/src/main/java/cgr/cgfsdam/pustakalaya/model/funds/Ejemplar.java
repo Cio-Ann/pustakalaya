@@ -28,12 +28,12 @@ public class Ejemplar {
 	@Column(name = "id_ejemplar")
 	private Long idEjemplar;
 
-	/**
-	 * Recurso del que es copia.
-	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
-	@JoinColumn(name = "id_recurso")
-	private Recurso recurso;
+//	/**
+//	 * Recurso del que es copia.
+//	 */
+//	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
+//	@JoinColumn(name = "id_recurso")
+//	private Recurso recurso;
 	
 	/**
 	 * Código identificador del ejemplar
@@ -61,19 +61,19 @@ public class Ejemplar {
 		this.idEjemplar = idEjemplar;
 	}
 
-	/**
-	 * @return the recurso
-	 */
-	public Recurso getRecurso() {
-		return recurso;
-	}
+//	/**
+//	 * @return the recurso
+//	 */
+//	public Recurso getRecurso() {
+//		return recurso;
+//	}
 
-	/**
-	 * @param recurso the recurso to set
-	 */
-	public void setRecurso(Recurso recurso) {
-		this.recurso = recurso;
-	}
+//	/**
+//	 * @param recurso the recurso to set
+//	 */
+//	public void setRecurso(Recurso recurso) {
+//		this.recurso = recurso;
+//	}
 
 	/**
 	 * @return the codigo
@@ -114,20 +114,19 @@ public class Ejemplar {
 	 * @param recurso
 	 * @param estado
 	 */
-	public Ejemplar(Recurso recurso, EstadoEnum estado) {
-		this.recurso = recurso;
+	public Ejemplar(String codigo, EstadoEnum estado) {
+		this.codigo = codigo;
 		this.estado = estado;
 	}
 
 	@Override
 	public String toString() {
-		return "Ejemplar [idEjemplar=" + idEjemplar + ", recurso=" + recurso + ", codigo=" + codigo + ", estado="
-				+ estado + "]";
+		return "Ejemplar [idEjemplar=" + idEjemplar + ", codigo=" + codigo + ", estado=" + estado + "]";
 	}
 	
-	public String toStringShort() {
-		return "Ejemplar [idEjemplar=" + idEjemplar + ",codigo=" + codigo + ", estado=" + estado + "]";
-	}
+//	public String toStringShort() {
+//		return "Ejemplar [idEjemplar=" + idEjemplar + ",codigo=" + codigo + ", estado=" + estado + "]";
+//	}
 
 	
 }

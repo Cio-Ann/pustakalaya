@@ -1,5 +1,8 @@
 package cgr.cgfsdam.pustakalaya.utils;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -36,5 +39,31 @@ public class MyUtils {
 		}
 
 		return ret;
+	}
+	
+	/**
+	 * Devuelve el Date equivalente al LocalDate recibido.
+	 * 
+	 * @param localDate LocalDate fecha original
+	 * @return Date fecha transformada
+	 */
+	public static Date fromLocalToDate(LocalDate localDate) {
+		if (null != localDate)
+			return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		else 
+			return null;
+	}
+	
+	/**
+	 * Devuelve el LocalDate equivalente al Date recibido.
+	 * 
+	 * @param date Date fecha origen
+	 * @return LocalDate fecha transformada
+	 */
+	public static LocalDate fromDateToLocal(Date date) {
+		if (null != date)
+			return LocalDate.from( Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
+		else 
+			return null;
 	}
 }

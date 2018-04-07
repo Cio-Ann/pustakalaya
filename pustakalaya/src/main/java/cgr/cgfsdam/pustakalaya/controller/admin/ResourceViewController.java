@@ -38,6 +38,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -154,9 +155,8 @@ public class ResourceViewController extends BaseController {
 
 	@FXML
 	private TableColumn<Recurso, List<Ejemplar>> tcEjemplares;
-//	@FXML
-//	private TableColumn<Recurso, String> tcEjemplares;
-
+	// @FXML
+	// private TableColumn<Recurso, String> tcEjemplares;
 
 	@FXML
 	private Button btnClear;
@@ -195,7 +195,7 @@ public class ResourceViewController extends BaseController {
 			form.showAndWait();
 
 			log.info("Volvemos del fomrulario de recursos");
-
+			loadView();
 		} catch (IOException e) {
 			log.info("No se pudo abrir el fichero fxml");
 			e.printStackTrace();
@@ -218,7 +218,7 @@ public class ResourceViewController extends BaseController {
 				form.showAndWait();
 
 				log.info("Volvemos del fomrulario de recursos");
-
+				loadView();
 			} catch (IOException e) {
 				log.info("No se pudo abrir el fichero fxml");
 				e.printStackTrace();
@@ -230,17 +230,33 @@ public class ResourceViewController extends BaseController {
 
 	@FXML
 	void handleRecursoDelete(ActionEvent event) {
+		Recurso deleteRecurso = tableResultados.getSelectionModel().getSelectedItem();
+		
+		//TODO: crear textos de confirmación y edición
+		if (deleteRecurso != null) {
+			if (showConfirmation(
+					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.title"),
+					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.header"),
+					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.error.msg"))) {
+				recursoService.delete(deleteRecurso);
+				handleSearch(event);
+			}
+		} else {
+			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.ejemplar.delete.error.title"),
+					resourceBundle.getString("admin.recurso.form.ejemplar.delete.error.header"),
+					resourceBundle.getString("admin.recurso.form.ejemplar.delete.error.error.msg"));
+		}
 
 	}
 
 	@FXML
 	void handleClear(ActionEvent event) {
-
+		clearForm();
 	}
 
 	@FXML
 	void handleSearch(ActionEvent event) {
-
+		loadResources();
 	}
 
 	@Override
@@ -486,102 +502,99 @@ public class ResourceViewController extends BaseController {
 		tcId.setCellValueFactory(new PropertyValueFactory<>("idRecurso"));
 		tcTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
 		tcIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-
 		tcYear.setCellValueFactory(new PropertyValueFactory<>("fechaPublicacion"));
-		// tcYear.setCellFactory(new Callback<TableColumn<Recurso, Date>,
-		// TableCell<Recurso, Date>>() {
-		//
-		// @Override
-		// public TableCell<Recurso, Date> call(TableColumn<Recurso, Date> param) {
-		// TableCell<Recurso, Date> cell = new TableCell<Recurso, Date>() {
-		// @Override
-		// protected void updateItem(Date item, boolean empty) {
-		// super.updateItem(item, empty);
-		//
-		// if (item == null || empty) {
-		// setText(null);
-		// } else {
-		// setText(String.valueOf(MyUtils.getYear(item)));
-		// }
-		// }
-		// };
-		//
-		// return cell;
-		// }
-		// });
-
 		tcYear.setCellFactory(column -> {
-			 return new TableCell<Recurso, Date>() {
-				 	@Override
-			 		protected void updateItem(Date item, boolean empty) {
-				 		super.updateItem(item, empty);
-		
-				 		if (item == null || empty) {
-				 			setText(null);
-				 		} else {
-				 			setText(String.valueOf(MyUtils.getYear(item)));
-				 		}
-		
-				 	}
-			 };
+			return new TableCell<Recurso, Date>() {
+				@Override
+				protected void updateItem(Date item, boolean empty) {
+					super.updateItem(item, empty);
+
+					if (item == null || empty) {
+						setText(null);
+					} else {
+						setText(String.valueOf(MyUtils.getYear(item)));
+					}
+
+				}
+			};
 		});
 		tcEjemplares.setCellValueFactory(new PropertyValueFactory<>("ejemplares"));
-//		tcEjemplares.setCellFactory(
-//				new Callback<TableColumn<Recurso, String>, TableCell<Recurso, String>>() {
-//
-//					@Override
-//					public TableCell<Recurso, String> call(TableColumn<Recurso, String> param) {
-//						TableCell<Recurso, String> cell = new TableCell<Recurso, String>() {
-//							@Override
-//							protected void updateItem(String item, boolean empty) {
-//								super.updateItem(item, empty);
-//								
-//
-//								if (empty ) {
-//									setText(null);
-//								} else {
-//									Recurso r = getTableView().getItems().get(getIndex());
-//									if ( r != null && r.getEjemplares() != null) {
-//										setText(String.valueOf(r.getEjemplares().size()));
-//									} else {
-//										setText("0");
-//									}
-//								}
-//							}
-//						};
-//
-//						return cell;
-//					}
-//				});
+		tcEjemplares.setCellFactory(column -> {
+			return new TableCell<Recurso, List<Ejemplar>>() {
+				@Override
+				protected void updateItem(List<Ejemplar> item, boolean empty) {
+					super.updateItem(item, empty);
 
-				tcEjemplares.setCellFactory(column -> {
-					return new TableCell<Recurso, List<Ejemplar>>() {
-						@Override
-						protected void updateItem(List<Ejemplar> item, boolean empty) {
-							super.updateItem(item, empty);
+					if (item == null || empty) {
+						setText(null);
+					} else {
+						setText(String.valueOf(item.size()));
+					}
 
-							if (item == null || empty) {
-								setText(null);
-							} else {
-								setText(String.valueOf(item.size()));
-							}
+				}
+			};
+		});
 
-						}
-					};
-				});
-		
+//		loadResources();
+//		loadAllRecursos();
 
-		loadAllRecursos();
-		
 		tableResultados.getColumns().clear();
 		tableResultados.getColumns().addAll(tcId, tcTitulo, tcIsbn, tcYear, tcEjemplares);
 	}
 
-	private void loadAllRecursos() {
+	/**
+	 * recarga los recursos según la información del formulario.
+	 */
+	private void loadResources() {
 		recursos.clear();
-		recursos.addAll(recursoService.findAll());
-
+		recursos.addAll(
+				recursoService.findByFormData(
+						txtTitle.getText(), 
+						txtIsbn.getText(),
+						cbAutor.getSelectionModel().getSelectedItem(), 
+						cbGenero.getSelectionModel().getSelectedItem(),
+						cbIdioma.getSelectionModel().getSelectedItem(), 
+						MyUtils.fromLocalToDate(dpDesde.getValue()),
+						MyUtils.fromLocalToDate(dpHasta.getValue())
+				)
+		);
+		
 		tableResultados.setItems(recursos);
 		tableResultados.refresh();
+	}
+	
+	
+	
+	/**
+	 * Limpia todos los valores del formulario.
+	 * No actualiza el listado de buscados.
+	 */
+	private void clearForm() {
+		txtTitle.clear();
+		txtIsbn.clear();
+		cbAutor.getSelectionModel().clearSelection();
+		cbGenero.getSelectionModel().clearSelection();
+		cbIdioma.getSelectionModel().clearSelection();
+		dpDesde.setValue(null);
+		dpDesde.getEditor().clear();
+		dpHasta.setValue(null);
+		dpHasta.getEditor().clear();
+		
+
+		recursos.clear();
+		tableResultados.setItems(recursos);
+		tableResultados.refresh();
+		
+		
+	}
+	
+	/**
+	 * Recarga todos los combos y listados al volver del formulario de recursos.
+	 */
+	private void loadView() {
+		loadAutores();
+		loadGeneros();
+		loadIdiomas();
+		loadResources();
 	}
 }

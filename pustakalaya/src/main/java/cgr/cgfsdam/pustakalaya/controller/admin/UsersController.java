@@ -21,6 +21,7 @@ import cgr.cgfsdam.pustakalaya.model.users.Usuario;
 import cgr.cgfsdam.pustakalaya.service.users.RoleService;
 import cgr.cgfsdam.pustakalaya.service.users.TipoDocumentoService;
 import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -661,12 +662,10 @@ public class UsersController extends BaseController {
 				usuarioActual.setRoles(null);
 			}
 			if (dpFechaAlta.getValue() != null) {
-				usuarioActual.setFechaAlta(
-						Date.from(dpFechaAlta.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				usuarioActual.setFechaAlta(MyUtils.fromLocalToDate(dpFechaAlta.getValue()));
 			}
 			if (dpFechaVigor.getValue() != null) {
-				usuarioActual.setFechaVigor(
-						Date.from(dpFechaVigor.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				usuarioActual.setFechaVigor(MyUtils.fromLocalToDate(dpFechaVigor.getValue()));
 			}
 		}
 	}
@@ -719,14 +718,23 @@ public class UsersController extends BaseController {
 				if (userRole != null) {
 					cmbRol.getSelectionModel().select(userRole);
 				}
+			} else {
+				cmbRol.getSelectionModel().clearSelection();
+				cmbRol.setValue(null);
 			}
+			
 			if (usuarioActual.getFechaAlta() != null) {
-				dpFechaAlta.setValue(LocalDate.from(
-						Instant.ofEpochMilli(usuarioActual.getFechaAlta().getTime()).atZone(ZoneId.systemDefault())));
+				dpFechaAlta.setValue(MyUtils.fromDateToLocal(usuarioActual.getFechaAlta()));
+			} else {
+				dpFechaAlta.getEditor().clear();
+				dpFechaAlta.setValue(null);
 			}
+			
 			if (usuarioActual.getFechaVigor() != null) {
-				dpFechaVigor.setValue(LocalDate.from(
-						Instant.ofEpochMilli(usuarioActual.getFechaVigor().getTime()).atZone(ZoneId.systemDefault())));
+				dpFechaVigor.setValue(MyUtils.fromDateToLocal(usuarioActual.getFechaVigor()));
+			} else {
+				dpFechaVigor.getEditor().clear();
+				dpFechaVigor.setValue(null);
 			}
 
 		} else {
@@ -764,7 +772,9 @@ public class UsersController extends BaseController {
 			cmbRol.getSelectionModel().clearSelection();
 			cmbRol.setValue(null);
 			dpFechaAlta.getEditor().clear();
+			dpFechaAlta.setValue(null);
 			dpFechaVigor.getEditor().clear();
+			dpFechaVigor.setValue(null);
 			lblErrorStatus.setText("");
 
 		}

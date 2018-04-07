@@ -30,10 +30,10 @@ public class EjemplarServiceImpl implements EjemplarService {
 		return ejemplarRepository.findByCodigo(codigo);
 	}
 
-	@Override
-	public List<Ejemplar> findByRecurso_idRecurso(Long idRecurso) {
-		return ejemplarRepository.findByRecurso_idRecurso(idRecurso);
-	}
+//	@Override
+//	public List<Ejemplar> findByRecurso_idRecurso(Long idRecurso) {
+//		return ejemplarRepository.findByRecurso_idRecurso(idRecurso);
+//	}
 	
 	@Override
 	public void delete(Ejemplar ejemplar) {

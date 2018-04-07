@@ -220,7 +220,7 @@ public class EjemplarController extends BaseController {
 			error += resourceBundle.getString("admin.ejemplar.error.codigo.empty");
 		} else {
 			Ejemplar temp = ejemplarService.findByCodigo(txtCodigo.getText());
-			if (temp != null && temp.getCodigo().equals(txtCodigo.getText())) {
+			if (temp != null && !temp.getIdEjemplar().equals(ejemplar.getIdEjemplar())) {
 				ret = false;
 				error += resourceBundle.getString("admin.ejemplar.error.codigo.alreadyExists");
 			}
@@ -241,7 +241,7 @@ public class EjemplarController extends BaseController {
 	private void saveEjemplar() {
 		ejemplar.setCodigo(txtCodigo.getText());
 		ejemplar.setEstado(cbEstado.getSelectionModel().getSelectedItem());
-		ejemplar.setRecurso(recurso);
+//		ejemplar.setRecurso(recurso);
 		
 		ejemplarService.save(ejemplar);
 		
@@ -263,6 +263,13 @@ public class EjemplarController extends BaseController {
 	public void setEjemplar(Ejemplar ejemplar) {
 		this.ejemplar = ejemplar;
 		sendEntityToForm();
+	}
+
+	/**
+	 * @return Ejemplar the stored ejemplar.
+	 */
+	public Ejemplar getEjemplar() {
+		return this.ejemplar;
 	}
 
 	/**

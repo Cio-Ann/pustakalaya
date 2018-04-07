@@ -63,6 +63,48 @@ public class AutorController extends BaseController {
 	@FXML
 	private Button btnExit;
 
+	@FXML
+	private Button btnDelete;
+
+	/**
+	 * Método que se ejecuta al pulsar el botón borrar. Cierra la ventana sin
+	 * guardar información.
+	 * 
+	 * @param event
+	 *            evento que inicia la ejecución.
+	 */
+	@FXML
+	void handleDelete(ActionEvent event) {
+		log.info("se pulsó el botón borrar");
+
+		if (isAutorPurgeable()) {
+			if (showConfirmation(resourceBundle.getString("admin.autor.delete.confirm.title"),
+					resourceBundle.getString("admin.autor.delete.confirm.header"),
+					resourceBundle.getString("admin.autor.delete.confirm.error.msg"))) {
+				autorService.delete(autor);
+				closeDialog(event);
+			}
+		}
+	}
+
+	/**
+	 * Indica si el autor actual es susceptible de ser eliminado - existe en base de
+	 * datos - no tiene ningún recurso relacionado
+	 * 
+	 * @return boolean true si el autor puede ser borrado, o false en caso contrario
+	 */
+	private boolean isAutorPurgeable() {
+		boolean ret = true;
+
+		if (autor == null || autor.getIdAutor() == null) {
+			ret = false;
+		} else {
+			ret = autorService.countResourcesByAutor(autor) == 0;
+		}
+
+		return ret;
+	}
+
 	/**
 	 * Método que se ejecuta al pulsar el botón salir. Cierra la ventana sin guardar
 	 * información.
@@ -108,6 +150,7 @@ public class AutorController extends BaseController {
 		lblError.setText("");
 		btnSave.setText(resources.getString("admin.autor.button.save"));
 		btnExit.setText(resources.getString("admin.autor.button.exit"));
+		btnDelete.setText(resources.getString("admin.autor.button.delete"));
 	}
 
 	/**
@@ -151,8 +194,7 @@ public class AutorController extends BaseController {
 			if (MyUtils.isEmptyString(txtApellidos.getText())) {
 				temp = autorService.findByNombreAllIgnoreCase(txtNombre.getText());
 			} else {
-				temp = autorService.findByNombreAndApellidosAllIgnoreCase(txtNombre.getText(),
-						txtApellidos.getText());
+				temp = autorService.findByNombreAndApellidosAllIgnoreCase(txtNombre.getText(), txtApellidos.getText());
 			}
 
 			if (temp != null && temp.size() > 0) {
@@ -192,7 +234,12 @@ public class AutorController extends BaseController {
 		txtNombre.setText(autor.getNombre());
 		txtApellidos.setText(autor.getApellidos());
 		
-	}
+		if (isAutorPurgeable()) {
+			btnDelete.setDisable(false);
+		} else {
+			btnDelete.setDisable(true);
+		}
 
+	}
 
 }

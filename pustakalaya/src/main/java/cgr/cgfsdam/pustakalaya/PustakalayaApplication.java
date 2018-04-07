@@ -167,7 +167,7 @@ public class PustakalayaApplication extends Application {
 
 			// recursos
 			Idioma idioma = new Idioma("Español(ES)", "Español tradicional, España");
-//			idiomaService.save(idioma);
+			idiomaService.save(idioma);
 //			idioma = idiomaService.findByNombreIgnoreCase("Español(ES)");
 
 			Autor autor = new Autor("Carlos", "Ruiz Zafón");
@@ -183,18 +183,21 @@ public class PustakalayaApplication extends Application {
 					null);
 			recurso.addAutores(autor);
 			recurso.addGeneros(genero);
-
-			recursoService.save(recurso);
-
+			
 			Ejemplar e1 = new Ejemplar();
 			e1.setCodigo("123");
 			e1.setEstado(EstadoEnum.BUENO);
-			e1.setRecurso(recurso);
-
+//			e1.setRecurso(recurso);
+			
 			Ejemplar e2 = new Ejemplar();
 			e2.setCodigo("456");
 			e2.setEstado(EstadoEnum.NORMAL);
-			e2.setRecurso(recurso);
+//			e2.setRecurso(recurso);
+
+			recurso.addEjemplar(e1);
+			recurso.addEjemplar(e2);
+			
+			recursoService.save(recurso);
 
 			ejemplarService.save(e1);
 			ejemplarService.save(e2);

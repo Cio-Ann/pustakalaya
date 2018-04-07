@@ -3,6 +3,8 @@ package cgr.cgfsdam.pustakalaya.repository.funds;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
@@ -62,6 +64,15 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByNombreContainingAndApellidosContainingAllIgnoreCase(String nombre, String apellidos);
+	
+	/**
+	 * Cuenta el número de recursos de los que el autor dado es autor o coautor.
+	 * 
+	 * @param autor Autor a contar el número de obras.
+	 * @return Long número de obras de las que el autor recibido es participe.
+	 */
+	@Query("SELECT count(r) FROM Recurso AS r WHERE :autor MEMBER OF r.autores")
+	Long countResourcesByAutor(@Param("autor")Autor autor);
 	
 
 }

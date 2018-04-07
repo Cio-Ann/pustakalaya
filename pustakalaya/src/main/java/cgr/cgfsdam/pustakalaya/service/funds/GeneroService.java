@@ -45,4 +45,19 @@ public interface GeneroService {
 	 */
 	Genero findById(Long idGenero);
 
+	/**
+	 * Elimina un genero de base de datos.
+	 * 
+	 * @param genero Genero el genero a eliminar
+	 */
+	void delete(Genero genero);
+
+	/**
+	 * Cuenta el número de recursos seleccionados con el género dado.
+	 * 
+	 * @param genero Genero entidad por la que buscar
+	 * @return Long número de recursos relacionados con el género
+	 */
+	Long countResourcesByGenero(Genero genero);
+
 }

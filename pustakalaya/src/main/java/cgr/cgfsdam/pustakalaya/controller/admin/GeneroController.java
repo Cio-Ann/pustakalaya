@@ -22,65 +22,87 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Controlador para el formulario de creación / edición de géneros literarios. 
+ * Controlador para el formulario de creación / edición de géneros literarios.
  *
  * @author CGR-Casa
  */
 @Controller
 public class GeneroController extends BaseController {
-	
+
 	private Genero genero;
-	
+
 	@Autowired
 	private GeneroService generoService;
 
 	@Autowired
 	private ResourceBundle resourceBundle;
-	
+
 	@FXML
 	private Label lblTitle;
 
-    @FXML
-    private Label lblNombre;
+	@FXML
+	private Label lblNombre;
 
-    @FXML
-    private  TextField txtNombre;
+	@FXML
+	private TextField txtNombre;
 
-    @FXML
-    private Label lblDescripcion;
-    
-    @FXML
-    private  TextField txtDescripcion;
-    
-    @FXML
-    private Button btnSave;
+	@FXML
+	private Label lblDescripcion;
 
-    @FXML
-    private Label lblError;
+	@FXML
+	private TextField txtDescripcion;
 
-    @FXML
-    private Button btnExit;
+	@FXML
+	private Button btnSave;
 
-    @FXML
-    void handleExit(ActionEvent event) {
+	@FXML
+	private Button btnExit;
+
+	@FXML
+	private Button btnDelete;
+
+	@FXML
+	private Label lblError;
+
+	/**
+	 * Método que se ejecuta al pulsar el botón borrar. Elimina el genero de base de
+	 * datos y cierra el diálogo de creación / edicion.
+	 * 
+	 * @param event
+	 *            evento que inicia la ejecución.
+	 */
+	@FXML
+	void handleDelete(ActionEvent event) {
+		log.info("se pulsó el botón borrar");
+
+		if (isGeneroPurgeable()) {
+			if (showConfirmation(resourceBundle.getString("admin.genero.delete.confirm.title"),
+					resourceBundle.getString("admin.genero.delete.confirm.header"),
+					resourceBundle.getString("admin.genero.delete.confirm.error.msg"))) {
+				generoService.delete(genero);
+				closeDialog(event);
+			}
+		}
+	}
+
+	@FXML
+	void handleExit(ActionEvent event) {
 		log.info("se pulsó el botón salir");
 		closeDialog(event);
-    }
+	}
 
-    @FXML
-    void handleSave(ActionEvent event) {
+	@FXML
+	void handleSave(ActionEvent event) {
 		log.info("se pulsó el botón guardar");
-    	if (validateGenero()) {
-    		saveGenero();
-    		sendAlert(
-    				AlertType.INFORMATION, 
-    				resourceBundle.getString("admin.genero.save.success.title"), 
-    				resourceBundle.getString("admin.genero.save.success.header"), 
-    				resourceBundle.getString("admin.genero.save.success.msg"));
-    		closeDialog(event);
-    	}
+		if (validateGenero()) {
+			saveGenero();
+			sendAlert(AlertType.INFORMATION, resourceBundle.getString("admin.genero.save.success.title"),
+					resourceBundle.getString("admin.genero.save.success.header"),
+					resourceBundle.getString("admin.genero.save.success.msg"));
+			closeDialog(event);
+		}
 
-    }
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -90,61 +112,79 @@ public class GeneroController extends BaseController {
 		lblError.setText("");
 		btnSave.setText(resources.getString("admin.genero.button.save"));
 		btnExit.setText(resources.getString("admin.genero.button.exit"));
+		btnDelete.setText(resources.getString("admin.genero.button.delete"));
 	}
 
 	/**
 	 * Metodo para cerrar la ventana.
 	 * 
-	 * @param event ActionEvent evento que inicia el cierre de la ventana.
+	 * @param event
+	 *            ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
 		final Node source = (Node) event.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
 	}
-	
+
 	/**
 	 * Setter del objeto genero del formulario.
 	 * 
-	 * @param genero Genero objeto a guardar
+	 * @param genero
+	 *            Genero objeto a guardar
 	 */
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 		sendEntityToForm();
 	}
-	
+
 	/**
 	 * Valida si los datos del formulario son correctos.
+	 * 
 	 * @return
 	 */
 	private boolean validateGenero() {
 		boolean ret = true;
 		lblError.setText("");
-		
-		if(MyUtils.isEmptyString(txtNombre.getText())) {
+
+		if (MyUtils.isEmptyString(txtNombre.getText())) {
 			ret = false;
 			lblError.setText(resourceBundle.getString("admin.genero.save.error.empty"));
 		} else if (genero == null || genero.getIdGenero() == null) {
 			List<Genero> temp = null;
-			
+
 			if (MyUtils.isEmptyString(txtDescripcion.getText())) {
 				temp = generoService.findByNombreIgnoreCase(txtNombre.getText());
 			} else {
-				temp = generoService.findByNombreAndDescripcionAllIgnoreCase(
-						txtNombre.getText(), 
+				temp = generoService.findByNombreAndDescripcionAllIgnoreCase(txtNombre.getText(),
 						txtDescripcion.getText());
 			}
-			
+
 			if (temp != null && temp.size() > 0) {
 				ret = false;
 				lblError.setText(resourceBundle.getString("admin.genero.save.error.alreadyExists"));
 			}
 		}
-		
-		
-		return ret;		
+
+		return ret;
 	}
-	
+
+	/**
+	 * Indica si el genero puede ser borrado de base de datos.
+	 * 
+	 * @return boolean true si el genero se puede borrar sin problemas, o false si está vinculado a algún recurso
+	 */
+	private boolean isGeneroPurgeable() {
+		boolean ret = true;
+		if(genero == null || genero.getIdGenero() == null) {
+			ret = false;
+		} else {
+			ret = generoService.countResourcesByGenero(genero) == 0;
+		}
+		return ret;
+	}
+
+
 	/**
 	 * Guarda el género del formulario en el formulario
 	 */
@@ -154,7 +194,7 @@ public class GeneroController extends BaseController {
 		}
 		genero.setNombre(txtNombre.getText());
 		genero.setDescripcion(txtDescripcion.getText());
-		
+
 		generoService.save(genero);
 	}
 
@@ -168,6 +208,11 @@ public class GeneroController extends BaseController {
 		txtNombre.setText(genero.getNombre());
 		txtDescripcion.setText(genero.getDescripcion());
 		
+		if (isGeneroPurgeable()) {
+			btnDelete.setDisable(false);
+		} else {
+			btnDelete.setDisable(true);
+		}
+
 	}
 }
-

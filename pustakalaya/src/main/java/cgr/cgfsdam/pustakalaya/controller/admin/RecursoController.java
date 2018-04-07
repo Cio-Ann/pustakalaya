@@ -5,6 +5,7 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -212,6 +213,8 @@ public class RecursoController extends BaseController {
 	 * Listado que contiene los idiomas a mostrar en el combo.
 	 */
 	private ObservableList<Idioma> idiomas;
+	
+	private ObservableList<Ejemplar> ejemplares;
 
 	/**
 	 * Añade el autor seleccionado del combo de autores al ListView de autores.
@@ -226,9 +229,8 @@ public class RecursoController extends BaseController {
 
 			if (lvAutor.getItems().stream().filter(a -> a.getIdAutor().equals(selected.getIdAutor())).count() > 0) {
 				sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.autor.add.error.title"),
-						// TODO: crear textos de ya existe
 						resourceBundle.getString("admin.recurso.form.autor.add.error.header"),
-						resourceBundle.getString("admin.recurso.form.autor.add.error.error.msg"));
+						resourceBundle.getString("admin.recurso.form.autor.add.error.already.msg"));
 			} else {
 				lvAutor.getItems().add(selected);
 			}
@@ -423,6 +425,8 @@ public class RecursoController extends BaseController {
 			form.showAndWait();
 
 			log.info("Volvemos del fomrulario de ejemplares");
+			
+			recurso.addEjemplar(((EjemplarController) formData.getController()).getEjemplar());
 
 			loadEjemplares();
 		} catch (IOException e) {
@@ -464,12 +468,17 @@ public class RecursoController extends BaseController {
 	@FXML
 	void handleDeleteEjemplar(ActionEvent event) {
 		Ejemplar deleteEjemplar = lvEjemplares.getSelectionModel().getSelectedItem();
+		lvEjemplares.getSelectionModel().clearSelection();
 
 		if (deleteEjemplar != null) {
 			if (showConfirmation(resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.title"),
 					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.header"),
 					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.error.msg"))) {
-				ejemplarService.delete(deleteEjemplar);
+				
+				recurso.deleteEjemplar(deleteEjemplar);
+//				ejemplarService.delete(deleteEjemplar);
+				
+				loadEjemplares();
 			}
 		} else {
 			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.ejemplar.delete.error.title"),
@@ -555,6 +564,7 @@ public class RecursoController extends BaseController {
 
 		btnExit.setText(resources.getString("admin.recurso.form.button.exit"));
 		btnSave.setText(resources.getString("admin.recurso.form.button.save"));
+//		btnDelete.setText(resources.getString("admin.recurso.form.button.delete"));
 
 	}
 
@@ -666,14 +676,19 @@ public class RecursoController extends BaseController {
 	 * elimina del listview.
 	 */
 	private void checkAutoresExists() {
-		lvAutor.getItems().forEach(autor -> {
-			Autor dbAutor = autorService.findById(autor.getIdAutor());
-			if (dbAutor == null) {
-				lvAutor.getItems().remove(autor);
-			} else {
-				autor = dbAutor;
-			}
-		});
+		ArrayList<Autor> toPurge = new ArrayList<>();
+		
+		ObservableList<Autor> listed = lvAutor.getItems();
+		
+		for (Autor a : listed) {
+			Autor dbAutor = autorService.findById(a.getIdAutor());
+			if (dbAutor == null)
+				toPurge.add(a);
+		}
+		
+		for (Autor b : toPurge) {
+			lvAutor.getItems().remove(b);
+		}
 		lvAutor.refresh();
 	}
 
@@ -757,12 +772,20 @@ public class RecursoController extends BaseController {
 	 * capa de persistencia y los elimina.
 	 */
 	private void checkGenerosExists() {
-		lvGenero.getItems().forEach(genero -> {
-			if (generoService.findById(genero.getIdGenero()) == null) {
-				lvGenero.getItems().remove(genero);
+		ArrayList<Genero> toPurge = new ArrayList<>();
+		
+		ObservableList<Genero> listed = lvGenero.getItems();
+		
+		for (Genero g : listed) {
+			Genero dbGenero = generoService.findById(g.getIdGenero());
+			if(dbGenero == null) {
+				toPurge.add(g);
 			}
-		});
-		lvGenero.refresh();
+		}
+		
+		for (Genero h : toPurge) {
+			lvGenero.getItems().remove(h);
+		}
 	}
 
 	/**
@@ -830,6 +853,7 @@ public class RecursoController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeEjemplares(ResourceBundle resources) {
+		ejemplares =  FXCollections.observableArrayList();
 
 		lvEjemplares.setCellFactory(new Callback<ListView<Ejemplar>, ListCell<Ejemplar>>() {
 
@@ -865,12 +889,25 @@ public class RecursoController extends BaseController {
 	 * datos por lo que se pueda haber hecho en el formulario de ejemplares.
 	 */
 	private void loadEjemplares() {
+		
+		
 		// activa o desactiva controles en función del recurso
 		checkNewRecurso();
 		// solo recarga la lista si el recurso existe
 		if (recurso != null && recurso.getIdRecurso() != null && recurso.getIdRecurso() > 0) {
-			lvEjemplares.getItems().clear();
-			lvEjemplares.getItems().addAll(ejemplarService.findByRecurso_idRecurso(recurso.getIdRecurso()));
+			ejemplares.clear();
+			ejemplares.addAll(recurso.getEjemplares());
+			
+			lvEjemplares.setItems(null);
+			lvEjemplares.setItems(ejemplares);
+			
+			
+			
+//			
+//			lvEjemplares.getItems().clear();
+////			lvEjemplares.getItems().addAll(ejemplarService.findByRecurso_idRecurso(recurso.getIdRecurso()));
+//			lvEjemplares.getItems().addAll(recurso.getEjemplares());
+			lvEjemplares.refresh();
 		}
 		// si el recurso es nuevo, no se puede añadir ejemplares
 	}
@@ -917,8 +954,7 @@ public class RecursoController extends BaseController {
 
 		cbIdioma.getSelectionModel().select(recurso.getIdioma());
 		if (null != recurso.getFechaPublicacion()) {
-			dpPDate.setValue(LocalDate.from(
-					Instant.ofEpochMilli(recurso.getFechaPublicacion().getTime()).atZone(ZoneId.systemDefault())));
+			dpPDate.setValue(MyUtils.fromDateToLocal(recurso.getFechaPublicacion()));
 		}
 
 		lvEjemplares.getItems().clear();
@@ -936,7 +972,7 @@ public class RecursoController extends BaseController {
 		recurso.setAutores(lvAutor.getItems().stream().collect(Collectors.toSet()));
 		recurso.setGeneros(lvGenero.getItems().stream().collect(Collectors.toSet()));
 		recurso.setIdioma(cbIdioma.getSelectionModel().getSelectedItem());
-		recurso.setFechaPublicacion(Date.from(dpPDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		recurso.setFechaPublicacion(MyUtils.fromLocalToDate(dpPDate.getValue()));
 		recurso.setEjemplares(lvEjemplares.getItems().stream().collect(Collectors.toList()));
 	}
 
@@ -989,7 +1025,7 @@ public class RecursoController extends BaseController {
 		// isbn no obligatorio
 		if (!MyUtils.isEmptyString(txtISBN.getText())) {
 			Recurso temp = recursoService.findByIsbn(txtISBN.getText());
-			if (temp != null && temp.getIdRecurso().equals(recurso.getIdRecurso())) {
+			if (temp != null && !temp.getIdRecurso().equals(recurso.getIdRecurso())) {
 				isValid = false;
 				validationMsg += resourceBundle.getString("admin.recurso.validation.isbn.alreadyExists");
 			}
@@ -1008,7 +1044,7 @@ public class RecursoController extends BaseController {
 		}
 
 		// idioma obligatorio
-		if (cbIdioma.getSelectionModel().isEmpty()) {
+		if (cbIdioma.getSelectionModel().getSelectedItem() == null) {
 			isValid = false;
 			validationMsg += resourceBundle.getString("admin.recurso.validation.idioma.empty");
 		}

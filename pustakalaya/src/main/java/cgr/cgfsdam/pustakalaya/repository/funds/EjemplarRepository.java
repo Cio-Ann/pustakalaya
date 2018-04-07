@@ -23,12 +23,12 @@ public interface EjemplarRepository extends JpaRepository<Ejemplar, Long> {
 	 */
 	public Ejemplar findByCodigo(String codigo);
 
-	/**
-	 * Recupera todos los ejemplares que pertenezcan al Recurso del id dado.
-	 * 
-	 * @param idRecurso Long id del recurso para el que buscar los ejemplares.
-	 * @return List<Ejemplar> entidades coincientes
-	 */
-	public List<Ejemplar> findByRecurso_idRecurso(Long idRecurso);
+//	/**
+//	 * Recupera todos los ejemplares que pertenezcan al Recurso del id dado.
+//	 * 
+//	 * @param idRecurso Long id del recurso para el que buscar los ejemplares.
+//	 * @return List<Ejemplar> entidades coincientes
+//	 */
+//	public List<Ejemplar> findByRecurso_idRecurso(Long idRecurso);
 	
 }

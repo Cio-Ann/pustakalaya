@@ -26,13 +26,13 @@ public interface EjemplarService {
 	 */
 	Ejemplar findByCodigo(String codigo);
 
-	/**
-	 * Recupera todos los ejemplares cuyo idRecurso coincida con el dado.
-	 * 
-	 * @param idRecurso Long id del recurso al que pertenecen los ejemplares
-	 * @return List<Ejemplar> ejemplares pertenecientes al recurso.
-	 */
-	List<Ejemplar> findByRecurso_idRecurso(Long idRecurso);
+//	/**
+//	 * Recupera todos los ejemplares cuyo idRecurso coincida con el dado.
+//	 * 
+//	 * @param idRecurso Long id del recurso al que pertenecen los ejemplares
+//	 * @return List<Ejemplar> ejemplares pertenecientes al recurso.
+//	 */
+//	List<Ejemplar> findByRecurso_idRecurso(Long idRecurso);
 
 	/**
 	 * Elimina la entidad dada en la capa de persistencia.

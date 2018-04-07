@@ -68,4 +68,14 @@ public class AutorServiceImpl implements AutorService {
 		return autorRepository.findOne(idAutor);
 	}
 
+	@Override
+	public void delete(Autor autor) {
+		autorRepository.delete(autor);
+	}
+
+	@Override
+	public Long countResourcesByAutor(Autor autor) {
+		return autorRepository.countResourcesByAutor(autor);
+	}
+
 }

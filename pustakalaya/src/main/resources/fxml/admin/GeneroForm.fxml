@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="320.0" stylesheets="@../../styles/Styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="cgr.cgfsdam.pustakalaya.controller.admin.GeneroController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="320.0" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.admin.GeneroController">
    <children>
       <Label fx:id="lblTitle" text="\%lblTitleGenre" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <styleClass>
@@ -34,10 +33,16 @@
       <Label fx:id="lblError" layoutX="10.0" layoutY="145.0" prefHeight="45.0" styleClass="errorText" text="\%lblError" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <HBox layoutX="108.0" layoutY="195.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button fx:id="btnExit" layoutX="108.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleExit" text="\%btnExit">
+            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDelete" style="-fx-min-width: 80;" text="\%btnDelete">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btnRed" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnExit" layoutX="108.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleExit" text="\%btnExit">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btnBlue" />
                </styleClass>
             </Button>
             <Button fx:id="btnSave" layoutX="160.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleSave" text="\%btnSave">

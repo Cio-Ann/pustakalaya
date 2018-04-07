@@ -45,4 +45,14 @@ public class GeneroServiceImpl implements GeneroService {
 		return generoRepository.findOne(idGenero);
 	}
 
+	@Override
+	public void delete(Genero genero) {
+		generoRepository.delete(genero);
+	}
+
+	@Override
+	public Long countResourcesByGenero(Genero genero) {
+		return generoRepository.countResourcesByGenero(genero);
+	}
+
 }
