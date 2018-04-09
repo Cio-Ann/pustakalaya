@@ -66,12 +66,6 @@ public class ResourceViewController extends BaseController {
 	@Autowired
 	private IdiomaService idiomaService;
 
-	/**
-	 * Servicio de la entidad ejemplar.
-	 */
-	@Autowired
-	private EjemplarService ejemplarService;
-
 	@Autowired
 	private RecursoService recursoService;
 
@@ -155,8 +149,6 @@ public class ResourceViewController extends BaseController {
 
 	@FXML
 	private TableColumn<Recurso, List<Ejemplar>> tcEjemplares;
-	// @FXML
-	// private TableColumn<Recurso, String> tcEjemplares;
 
 	@FXML
 	private Button btnClear;
@@ -547,17 +539,21 @@ public class ResourceViewController extends BaseController {
 	 */
 	private void loadResources() {
 		recursos.clear();
-		recursos.addAll(
-				recursoService.findByFormData(
-						txtTitle.getText(), 
-						txtIsbn.getText(),
-						cbAutor.getSelectionModel().getSelectedItem(), 
-						cbGenero.getSelectionModel().getSelectedItem(),
-						cbIdioma.getSelectionModel().getSelectedItem(), 
-						MyUtils.fromLocalToDate(dpDesde.getValue()),
-						MyUtils.fromLocalToDate(dpHasta.getValue())
-				)
-		);
+		
+		if (!isEmptyForm()) {
+			//solo recupera los recursos de busqueda si hay algún dato para buscar
+			recursos.addAll(
+					recursoService.findByFormData(
+							txtTitle.getText(), 
+							txtIsbn.getText(),
+							cbAutor.getSelectionModel().getSelectedItem(), 
+							cbGenero.getSelectionModel().getSelectedItem(),
+							cbIdioma.getSelectionModel().getSelectedItem(), 
+							MyUtils.fromLocalToDate(dpDesde.getValue()),
+							MyUtils.fromLocalToDate(dpHasta.getValue())
+					)
+			);
+		}
 		
 		tableResultados.setItems(recursos);
 		tableResultados.refresh();
@@ -565,6 +561,31 @@ public class ResourceViewController extends BaseController {
 	
 	
 	
+	private boolean isEmptyForm() {
+		if (!MyUtils.isEmptyString(txtTitle.getText())) {
+			return false;
+		}
+		if (!MyUtils.isEmptyString(txtIsbn.getText())) {
+			return false;
+		}
+		if (cbAutor.getSelectionModel().getSelectedItem() != null) {
+			return false;
+		}
+		if (cbGenero.getSelectionModel().getSelectedItem() != null) {
+			return false;
+		}
+		if (cbIdioma.getSelectionModel().getSelectedItem() != null) {
+			return false;
+		}
+		if (dpDesde.getValue() != null) {
+			return false;
+		}
+		if (dpHasta.getValue() != null) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Limpia todos los valores del formulario.
 	 * No actualiza el listado de buscados.

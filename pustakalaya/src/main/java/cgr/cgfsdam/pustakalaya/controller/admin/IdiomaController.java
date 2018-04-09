@@ -55,10 +55,27 @@ public class IdiomaController extends BaseController {
 	private Button btnSave;
 
 	@FXML
+	private Button btnExit;
+
+	@FXML
+	private Button btnDelete;
+
+	@FXML
 	private Label lblError;
 
 	@FXML
-	private Button btnExit;
+	void handleDelete(ActionEvent event) {
+		log.info("se pulsó el botón borrar");
+
+		if (isIdiomaPurgeable()) {
+			if (showConfirmation(resourceBundle.getString("admin.idioma.delete.confirm.title"),
+					resourceBundle.getString("admin.idioma.delete.confirm.header"),
+					resourceBundle.getString("admin.idioma.delete.confirm.error.msg"))) {
+				idiomaService.delete(idioma);
+				closeDialog(event);
+			}
+		}
+	}
 
 	@FXML
 	void handleExit(ActionEvent event) {
@@ -87,6 +104,7 @@ public class IdiomaController extends BaseController {
 		lblError.setText("");
 		btnSave.setText(resources.getString("admin.idioma.button.save"));
 		btnExit.setText(resources.getString("admin.idioma.button.exit"));
+		btnDelete.setText(resources.getString("admin.idioma.button.delete"));
 
 		idioma = new Idioma();
 	}
@@ -152,6 +170,20 @@ public class IdiomaController extends BaseController {
 	}
 
 	/**
+	 * Verifica si el elemento actual se puede o no eliminar.
+	 * @return boolean true si el elemento se puede borar, o false si está relacionado con algún recurso
+	 */
+	private boolean isIdiomaPurgeable() {
+		boolean ret = true;
+		if(idioma == null || idioma.getIdIdioma() == null) {
+			ret = false;
+		} else {
+			ret = idiomaService.countResourcesByIdioma(idioma) == 0;
+		}
+		return ret;
+	}
+
+	/**
 	 * Traslada los datos de la entidad al formulario.
 	 */
 	private void sendEntityToForm() {
@@ -160,7 +192,12 @@ public class IdiomaController extends BaseController {
 		}
 		txtNombre.setText(idioma.getNombre());
 		txtDescripcion.setText(idioma.getDescripcion());
-
+		
+		if (isIdiomaPurgeable()) {
+			btnDelete.setDisable(false);
+		} else {
+			btnDelete.setDisable(true);
+		}
 	}
 
 }

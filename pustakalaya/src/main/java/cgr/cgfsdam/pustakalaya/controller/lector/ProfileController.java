@@ -391,7 +391,6 @@ public class ProfileController extends BaseController {
 	 * Carga los valores actuales de la vista al usuario en memoria y lo almacena en base de datos.
 	 */
 	private void loadViewToUsuario() {
-		log.info("usuario antes de la actualización ->\n" + getUsuario().toString());
 		// recorro todos los campos
 		if (!isEmptyString(tNombre.getText()) && !tNombre.getText().equals(getUsuario().getNombre())) {
 			getUsuario().setNombre(tNombre.getText());
@@ -465,8 +464,6 @@ public class ProfileController extends BaseController {
 				&& !tProvincia.getText().equals(getUsuario().getDireccion().getProvincia())) {
 			getUsuario().getDireccion().setProvincia(tProvincia.getText());
 		}
-
-		log.info("usuario despues de la actualización ->\n" + getUsuario().toString());
 	}
 
 	/**

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
+import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
@@ -20,56 +21,95 @@ import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
  */
 @Service("recursoService")
 public class RecursoServiceImpl implements RecursoService {
-	
+
 	@Autowired
 	private RecursoRepository recursoRepository;
 
 	@Override
 	public List<Recurso> findByTitulo(String titulo) {
+
 		return recursoRepository.findByTitulo(titulo);
 	}
 
 	@Override
 	public List<Recurso> findByTituloContainingIgnoreCase(String titulo) {
+
 		return recursoRepository.findByTituloContainingIgnoreCase(titulo);
 	}
 
 	@Override
 	public Recurso findByIsbn(String isbn) {
+
 		return recursoRepository.findByIsbn(isbn);
 	}
 
 	@Override
 	public List<Recurso> findByAutor(Autor autor) {
+
 		return recursoRepository.findByAutor(autor);
 	}
 
 	@Override
 	public List<Recurso> findByFormData(String titulo, String isbn, Autor autor, Genero genero, Idioma idioma,
 			Date desde, Date hasta) {
+
 		return recursoRepository.findByFormData(titulo, isbn, autor, genero, idioma, desde, hasta);
 	}
 
 	@Override
 	public Recurso findById(Long idRecurso) {
-		return recursoRepository.findOne(idRecurso)
-				;
+
+		return recursoRepository.findOne(idRecurso);
 	}
 
 	@Override
 	public void save(Recurso recurso) {
+
 		recursoRepository.save(recurso);
 	}
 
 	@Override
 	public void delete(Recurso recurso) {
+
 		recursoRepository.delete(recurso);
-		
+
 	}
 
 	@Override
 	public List<Recurso> findAll() {
+
 		return recursoRepository.findAll();
+	}
+
+	@Override
+	public Long countEjemplaresPrestados(Recurso recurso) {
+
+		return recursoRepository.countEjemplaresPrestados(recurso.getIdRecurso());
+	}
+
+	@Override
+	public Long countEjemplaresNoPrestados(Recurso recurso) {
+
+		Long prestables = recurso.getEjemplares().stream()
+				.filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO && e.getEstado() != EstadoEnum.EN_RESTAURACION)
+				.count();
+		Long prestados = countEjemplaresPrestados(recurso);
+		Long resultado = prestables - prestados;
+		resultado = resultado < 0 ? 0 : resultado;
+
+		return resultado;
+	}
+
+	@Override
+	public Long countReservasPendientes(Recurso recurso) {
+
+		return recursoRepository.countReservasPendientes(recurso);
+	}
+
+	@Override
+	public Date getProximaDevolucion(Recurso recurso) {
+
+		return recursoRepository.getProximaDevolucion(recurso.getIdRecurso());
 	}
 
 }

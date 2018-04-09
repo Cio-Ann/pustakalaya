@@ -35,4 +35,14 @@ public class IdiomaServiceImpl implements IdiomaService {
 		return idiomaRepository.findAll();
 	}
 
+	@Override
+	public void delete(Idioma idioma) {
+		idiomaRepository.delete(idioma);
+	}
+
+	@Override
+	public Long countResourcesByIdioma(Idioma idioma) {
+		return idiomaRepository.countResourcesByIdioma(idioma);
+	}
+
 }

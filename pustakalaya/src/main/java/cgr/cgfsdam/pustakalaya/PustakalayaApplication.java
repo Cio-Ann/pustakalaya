@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.print.attribute.standard.PresentationDirection;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,10 +22,14 @@ import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
+import cgr.cgfsdam.pustakalaya.model.loans.EstadoReservaEnum;
+import cgr.cgfsdam.pustakalaya.model.loans.Prestamo;
+import cgr.cgfsdam.pustakalaya.model.loans.Reserva;
 import cgr.cgfsdam.pustakalaya.model.users.Direccion;
 import cgr.cgfsdam.pustakalaya.model.users.Role;
 import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
 import cgr.cgfsdam.pustakalaya.model.users.Usuario;
+import cgr.cgfsdam.pustakalaya.repository.funds.RecursoRepository;
 import cgr.cgfsdam.pustakalaya.repository.users.RoleRepository;
 import cgr.cgfsdam.pustakalaya.repository.users.TipoDocumentoRepository;
 import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
@@ -31,6 +37,8 @@ import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
 import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
+import cgr.cgfsdam.pustakalaya.service.loans.PrestamoService;
+import cgr.cgfsdam.pustakalaya.service.loans.ReservaService;
 import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.application.Application;
@@ -51,7 +59,7 @@ public class PustakalayaApplication extends Application {
 	/**
 	 * Gestor de Stages
 	 */
-	protected StageManager stageManager;
+	protected StageManager					 stageManager;
 
 	/**
 	 * Método de inicio.
@@ -59,22 +67,26 @@ public class PustakalayaApplication extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 		Application.launch(args);
 	}
 
 	@Override
 	public void init() throws Exception {
+
 		springContext = springBootApplicationContext();
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
+
 		stageManager = springContext.getBean(StageManager.class, stage);
 		displayInitialScene();
 	}
 
 	@Override
 	public void stop() throws Exception {
+
 		springContext.close();
 	}
 
@@ -82,6 +94,7 @@ public class PustakalayaApplication extends Application {
 	 * Establece la pantalla inicial.
 	 */
 	protected void displayInitialScene() {
+
 		stageManager.switchScene(FxmlView.LOGIN);
 	}
 
@@ -92,30 +105,36 @@ public class PustakalayaApplication extends Application {
 	 * @return ConfigurableApplicationContext contexto de aplicación
 	 */
 	private ConfigurableApplicationContext springBootApplicationContext() {
+
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(PustakalayaApplication.class);
 		String[] args = getParameters().getRaw().stream().toArray(String[]::new);
 		return builder.run(args);
 	}
 
 	@Autowired
-	RoleRepository roleRepository;
+	RoleRepository			roleRepository;
 	@Autowired
-	TipoDocumentoRepository tipoDocumentoRepository;
+	TipoDocumentoRepository	tipoDocumentoRepository;
 	@Autowired
-	UsuarioService usuarioService;
+	UsuarioService			usuarioService;
 	@Autowired
-	RecursoService recursoService;
+	RecursoService			recursoService;
 	@Autowired
-	AutorService autorService;
+	AutorService			autorService;
 	@Autowired
-	GeneroService generoService;
+	GeneroService			generoService;
 	@Autowired
-	IdiomaService idiomaService;
+	IdiomaService			idiomaService;
 	@Autowired
-	EjemplarService ejemplarService;
+	EjemplarService			ejemplarService;
+	@Autowired
+	PrestamoService			prestamoService;
+	@Autowired
+	ReservaService			reservaService;
 
 	@Bean
 	InitializingBean sendDatabase() {
+
 		return () -> {
 			// inserto los roles por defecto
 			Role roleAdmin = new Role("ADMIN", "Perfil de administrador");
@@ -165,42 +184,98 @@ public class PustakalayaApplication extends Application {
 
 			usuarioService.saveUsuario(lector);
 
+			// idiomas -------------------------------------------------------------------------------------------------
+			Idioma idioma1 = new Idioma("Español(ES)", "Español tradicional, España");
+			idiomaService.save(idioma1);
+			Idioma idioma2 = new Idioma("Inglés(EN_US)", "Inglés americano");
+			idiomaService.save(idioma2);
+			Idioma idioma3 = new Idioma("Ingles(EN_GB)", "Inglés britanico");
+			idiomaService.save(idioma3);
+
+			// autores -------------------------------------------------------------------------------------------------
+			Autor autor1 = new Autor("Autor1", "Autor1");
+			autorService.save(autor1);
+			Autor autor2 = new Autor("Autor2", "Autor2");
+			autorService.save(autor2);
+			Autor autor3 = new Autor("Autor3", "Autor3");
+			autorService.save(autor3);
+
+			// generos -------------------------------------------------------------------------------------------------
+			Genero genero1 = new Genero("Genero 1", "Genero 1");
+			generoService.save(genero1);
+			Genero genero2 = new Genero("Genero 2", "Genero 2");
+			generoService.save(genero2);
+			Genero genero3 = new Genero("Genero 3", "Genero 3");
+			generoService.save(genero3);
+
 			// recursos
-			Idioma idioma = new Idioma("Español(ES)", "Español tradicional, España");
-			idiomaService.save(idioma);
-//			idioma = idiomaService.findByNombreIgnoreCase("Español(ES)");
+			// -------------------------------------------------------------------------------------------------
+			Recurso recurso1 = new Recurso("Recurso 1", null, new Date(), idioma1, null, 111, "111111111", null);
+			recurso1.addAutores(autor1);
+			recurso1.addGeneros(genero1);
+			Ejemplar ej11 = new Ejemplar("r1-e1", EstadoEnum.BUENO);
+			Ejemplar ej12 = new Ejemplar("r1-e2", EstadoEnum.BUENO);
+			Ejemplar ej13 = new Ejemplar("r1-e3", EstadoEnum.BUENO);
+			recurso1.addEjemplar(ej11);
+			recurso1.addEjemplar(ej12);
+			recurso1.addEjemplar(ej13);
+			recursoService.save(recurso1);
+			Recurso recurso2 = new Recurso("Recurso 2", null, new Date(), idioma2, null, 222, "111111112", null);
+			recurso1.addAutores(autor2);
+			recurso1.addGeneros(genero2);
+			Ejemplar ej21 = new Ejemplar("r2-e1", EstadoEnum.DESCATALOGADO);
+			Ejemplar ej22 = new Ejemplar("r2-e2", EstadoEnum.EN_RESTAURACION);
+			Ejemplar ej23 = new Ejemplar("r2-e3", EstadoEnum.BUENO);
+			recurso2.addEjemplar(ej21);
+			recurso2.addEjemplar(ej22);
+			recurso2.addEjemplar(ej23);
+			recursoService.save(recurso2);
+			Recurso recurso3 = new Recurso("Recurso 3", null, new Date(), idioma3, null, 333, "111111113", null);
+			recurso3.addAutores(autor3);
+			recurso3.addGeneros(genero3);
+			Ejemplar ej31 = new Ejemplar("r3-e1", EstadoEnum.BUENO);
+			Ejemplar ej32 = new Ejemplar("r3-e2", EstadoEnum.BUENO);
+			Ejemplar ej33 = new Ejemplar("r3-e3", EstadoEnum.BUENO);
+			recurso3.addEjemplar(ej31);
+			recurso3.addEjemplar(ej32);
+			recurso3.addEjemplar(ej33);
+			recursoService.save(recurso3);
 
-			Autor autor = new Autor("Carlos", "Ruiz Zafón");
-			autorService.save(autor);
-			autor = autorService.findByNombreAndApellidosAllIgnoreCase("Carlos", "Ruiz Zafón").stream().findAny()
-					.orElse(null);
+			cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, -1);
+			Date pasada = cal.getTime();
+			cal.add(Calendar.DATE, 15);
+			Date futura = cal.getTime();
+			cal.add(Calendar.DATE, -30);
+			Date older = cal.getTime();
 
-			Genero genero = new Genero("Novela Histórica", "Novela de ficcion ambiendata en hechos históricos");
-			generoService.save(genero);
-			genero = generoService.findByNombreIgnoreCase("Novela Histórica").stream().findAny().orElse(null);
+			// reservas ------------------------------------------------------------------------------------------------
+			Reserva rr1 = new Reserva(lector, recursoService.findById(2L), new Date(), EstadoReservaEnum.WAITING);
+			reservaService.save(rr1);
+			Reserva rr2 = new Reserva(lector,  recursoService.findById(2L), older, EstadoReservaEnum.CONSUMED);
+			reservaService.save(rr2);
 
-			Recurso recurso = new Recurso("La sombra del viento", null, new Date(), idioma, null, 555, "123456789",
-					null);
-			recurso.addAutores(autor);
-			recurso.addGeneros(genero);
-			
-			Ejemplar e1 = new Ejemplar();
-			e1.setCodigo("123");
-			e1.setEstado(EstadoEnum.BUENO);
-//			e1.setRecurso(recurso);
-			
-			Ejemplar e2 = new Ejemplar();
-			e2.setCodigo("456");
-			e2.setEstado(EstadoEnum.NORMAL);
-//			e2.setRecurso(recurso);
+			// prestamos -----------------------------------------------------------------------------------------------
+			/* el recurso 1 tiene todos los ejemplares prestados y uno pendiente de devolución (sancion) */
+			Prestamo pr11 = new Prestamo(pasada, futura, null, lector, ej11, null); // pendiente de devolución ok
+			prestamoService.save(pr11);
+			Prestamo pr12 = new Prestamo(older, pasada, null, lector, ej12, null); // pendiente de devolución ko
+			prestamoService.save(pr12);
+			Prestamo pr13 = new Prestamo(pasada, futura, null, lector, ej13, null); // pendiente de devolución ok
+			prestamoService.save(pr11);
 
-			recurso.addEjemplar(e1);
-			recurso.addEjemplar(e2);
-			
-			recursoService.save(recurso);
+			/* el recurso 2 tiene todos los ejemplares prestados ok */
+			Prestamo pr21 = new Prestamo(pasada, futura, null, lector, ej21, null); // pendiente de devolución ok
+			prestamoService.save(pr21);
+			Prestamo pr22 = new Prestamo(pasada, futura, null, lector, ej22, null); // pendiente de devolución ok
+			prestamoService.save(pr22);
+			Prestamo pr23 = new Prestamo(pasada, futura, null, lector, ej23, null); // pendiente de devolución ok
+			prestamoService.save(pr23);
 
-			ejemplarService.save(e1);
-			ejemplarService.save(e2);
+			/* el recurso 3 tiene un recurso prestado ok y otro devuelto ok */
+			Prestamo pr31 = new Prestamo(pasada, futura, null, lector, ej31, null); // pendiente de devolución ok
+			prestamoService.save(pr31);
+			Prestamo pr32 = new Prestamo(older, pasada, pasada, lector, ej32, null); // devuelto
 
 		};
 	}

@@ -29,4 +29,19 @@ public interface IdiomaService {
 	 * @return List<Idioma> idiomas de base de datos.
 	 */
 	List<Idioma> findAll();
+
+	/**
+	 * Elimina el idioma dado de base de datos.
+	 * 
+	 * @param idioma Idioma entidad a eliminar.
+	 */
+	void delete(Idioma idioma);
+
+	/**
+	 * Cuenta el número de recursos relacionados con un idioma dado.
+	 * 
+	 * @param idioma Idioma entidad por la que buscar.
+	 * @return Long número de recursos con el idioma dado.
+	 */
+	Long countResourcesByIdioma(Idioma idioma);
 }

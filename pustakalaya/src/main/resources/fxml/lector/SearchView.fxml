@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
@@ -9,67 +10,118 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgr.cgfsdam.pustakalaya.controller.lector.SearchController">
    <children>
-      <Label fx:id="lblFechaPub" layoutX="270.0" layoutY="100.0" text="\%lblFechaPub" />
-      <HBox layoutX="510.0" layoutY="95.0">
+      <GridPane hgap="10.0" layoutX="81.0" layoutY="56.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <ToggleButton fx:id="tbFPAntes" layoutX="110.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleSwitchFP" prefWidth="40.0" styleClass="switcherLeft" text="\%tbAntes" />
-            <ToggleButton fx:id="tbFPDespues" layoutX="199.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleSwitchFP" prefWidth="40.0" styleClass="switcherRight" text="\%tbDespues" />
-         </children>
-      </HBox>
-      <Label fx:id="lblTitleSearch" text="\%lblTitleSearch" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <styleClass>
-            <String fx:value="titleText" />
-            <String fx:value="background" />
-            <String fx:value="light" />
-         </styleClass>
-      </Label>
-      <DatePicker fx:id="dpFechaPub" layoutX="370.0" layoutY="96.0" prefWidth="130.0" />
-      <Label fx:id="lblTitulo" layoutX="10.0" layoutY="70.0" text="\%lblTitulo" />
-      <TextField fx:id="txtTitulo" layoutX="110.0" layoutY="66.0" prefWidth="180.0" />
-      <Label fx:id="lblAutor" layoutX="310.0" layoutY="70.0" text="\%lblAutor" />
-      <TextField fx:id="txtAutor" layoutX="410.0" layoutY="66.0" prefWidth="180.0" />
-      <Label fx:id="lblGenero" layoutX="10.0" layoutY="100.0" text="\%lblGenero" />
-      <ComboBox fx:id="cmbGenero" layoutX="110.0" layoutY="96.0" prefWidth="150.0" />
-      <HBox layoutX="10.0" layoutY="130.0">
-         <children>
-            <ToggleButton fx:id="tbRecursosLibro" layoutX="10.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleSwitchRecurso" prefWidth="75.0" styleClass="switcherLeft" text="\%tbLibros" />
-            <ToggleButton fx:id="tbRecursosMultimedia" layoutX="99.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleSwitchRecurso" prefWidth="75.0" styleClass="switcherRight" text="\%tbMultimedia" />
-         </children>
-      </HBox>
-      <Label fx:id="lblISBN" layoutX="170.0" layoutY="135.0" text="\%lblISBN" />
-      <TextField fx:id="txtISBN" layoutX="250.0" layoutY="131.0" />
-      <Label fx:id="lblNumPag" layoutX="410.0" layoutY="135.0" text="\%lblNumPags" />
-      <TextField fx:id="txtNumPag" layoutX="510.0" layoutY="131.0" prefHeight="25.0" prefWidth="80.0" />
-      <Label fx:id="lblISAN" layoutX="170.0" layoutY="135.0" text="\%lblISAN" />
-      <TextField fx:id="txtISAN" layoutX="250.0" layoutY="131.0" />
-      <Label fx:id="lblDuracion" layoutX="410.0" layoutY="135.0" text="\%lblDuracion" />
-      <TextField fx:id="txtDuracion" layoutX="510.0" layoutY="131.0" prefHeight="25.0" prefWidth="80.0" />
-      <Label layoutX="10.0" layoutY="170.0" text="\%lblEtiquetas" />
-      <TextField layoutX="110.0" layoutY="166.0" prefHeight="25.0" prefWidth="480.0" />
-      <HBox layoutX="376.0" layoutY="200.0" spacing="10.0" AnchorPane.rightAnchor="10.0">
-         <children>
-            <Button fx:id="btnClearForm" layoutX="363.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleClearForm" text="\%btnClear">
+            <Label fx:id="lblViewTitle" maxWidth="1.7976931348623157E308" text="\%lblViewTitle" GridPane.columnSpan="2147483647">
                <styleClass>
-                  <String fx:value="btn" />
-                  <String fx:value="btnBlue" />
+                  <String fx:value="light" />
+                  <String fx:value="titleText" />
+                  <String fx:value="background" />
                </styleClass>
-            </Button>
-            <Button fx:id="btnSearch" layoutX="481.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleSearch" text="\%btnSearch">
-               <styleClass>
-                  <String fx:value="btnGreen" />
-                  <String fx:value="btn" />
-               </styleClass>
-            </Button>
+            </Label>
+            <Label fx:id="lblTitle" text="\%lblTitle" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="txtTitle" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Label fx:id="lblISBN" text="\%lblISBN" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="txtIsbn" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label fx:id="lblAutor" text="\%lblAutor" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <ComboBox fx:id="cbAutor" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <Label fx:id="lblGenero" text="\%lblGenero" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cbGenero" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </ComboBox>
+            <Label fx:id="lblIdioma" text="\%lblIdioma" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <ComboBox fx:id="cbIdioma" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Label fx:id="lblDesde" text="\%lblDesde" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <DatePicker fx:id="dpDesde" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </DatePicker>
+            <Label fx:id="lblHasta" text="\%lblHasta" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dpHasta" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </DatePicker>
+            <Label text="\%lblResultados" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <HBox alignment="CENTER_RIGHT" spacing="10.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="7">
+               <children>
+                  <Button fx:id="btnClean" layoutX="287.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleClean" text="\%btnClean">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btnBlue" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnSearch" layoutX="339.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleSearch" text="\%handleSearch">
+                     <styleClass>
+                        <String fx:value="btnGreen" />
+                        <String fx:value="btn" />
+                     </styleClass>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" right="10.0" />
+               </padding>
+            </HBox>
+            <TableView fx:id="tvResults" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
+              <columns>
+                <TableColumn fx:id="colId" prefWidth="50.0" text="\%id" />
+                <TableColumn fx:id="colTitle" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="190.0" text="\%title" />
+                  <TableColumn fx:id="colAnno" prefWidth="50.0" text="\%Anno" />
+                  <TableColumn fx:id="colLang" prefWidth="110.0" text="\%Lang" />
+                  <TableColumn fx:id="colDisp" prefWidth="90.0" text="\%Disp" />
+                  <TableColumn fx:id="ColAction" prefWidth="90.0" text="\%Action" />
+              </columns>
+               <GridPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </GridPane.margin>
+            </TableView>
+            <Label fx:id="lblResults" styleClass="bigText" text="\%lblResults" GridPane.columnSpan="3" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
          </children>
-      </HBox>
-      <TableView fx:id="tvRecursos" layoutX="10.0" layoutY="240.0" prefHeight="350.0" prefWidth="580.0">
-        <columns>
-          <TableColumn fx:id="tcTitulo" prefWidth="200.0" text="\$colTitulo" />
-          <TableColumn fx:id="tcAutor" prefWidth="155.0" text="\%colAutor" />
-            <TableColumn fx:id="tcAnnoPub" prefWidth="75.0" text="\%colAño" />
-            <TableColumn fx:id="tcDisponible" prefWidth="75.0" text="\%colDisp" />
-            <TableColumn fx:id="tcActions" prefWidth="75.0" text="\%colAcc" />
-        </columns>
-      </TableView>
+      </GridPane>
    </children>
 </AnchorPane>

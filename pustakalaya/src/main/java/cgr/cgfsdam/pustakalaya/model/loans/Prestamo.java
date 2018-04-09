@@ -55,14 +55,14 @@ public class Prestamo {
 	/**
 	 * Usuario al que se le ha prestado el recurso.
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
 	/**
 	 * Ejemplar prestado.
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_ejemplar")
 	private Ejemplar ejemplar;
 

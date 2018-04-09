@@ -1,5 +1,6 @@
 package cgr.cgfsdam.pustakalaya.utils;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -65,5 +66,17 @@ public class MyUtils {
 			return LocalDate.from( Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
 		else 
 			return null;
+	}
+
+	/**
+	 * Devuelve un String a partir de la fecha dada en formato dd/MM/yyyy.
+	 * 
+	 * @param fecha Date fecha de la que obtener el texto
+	 * @return String fecha formateada
+	 */
+	public static String dateToShort(Date fecha) {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		
+		return format.format(fecha);
 	}
 }

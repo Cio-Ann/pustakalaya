@@ -476,8 +476,8 @@ public class RecursoController extends BaseController {
 					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.error.msg"))) {
 				
 				recurso.deleteEjemplar(deleteEjemplar);
-//				ejemplarService.delete(deleteEjemplar);
-				
+				ejemplarService.delete(deleteEjemplar);
+
 				loadEjemplares();
 			}
 		} else {
@@ -564,7 +564,7 @@ public class RecursoController extends BaseController {
 
 		btnExit.setText(resources.getString("admin.recurso.form.button.exit"));
 		btnSave.setText(resources.getString("admin.recurso.form.button.save"));
-//		btnDelete.setText(resources.getString("admin.recurso.form.button.delete"));
+		btnDelete.setText(resources.getString("admin.recurso.form.button.delete"));
 
 	}
 
@@ -871,6 +871,8 @@ public class RecursoController extends BaseController {
 									.append(SEPARATOR).append(item.getEstado().getNombre());
 
 							setText(out.toString());
+						} else {
+							setText(null);
 						}
 					};
 				};

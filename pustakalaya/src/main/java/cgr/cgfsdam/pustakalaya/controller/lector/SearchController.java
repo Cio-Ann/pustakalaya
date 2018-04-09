@@ -1,30 +1,54 @@
 package cgr.cgfsdam.pustakalaya.controller.lector;
 
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
+import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
+import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
+import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
+import cgr.cgfsdam.pustakalaya.model.loans.EstadoReservaEnum;
+import cgr.cgfsdam.pustakalaya.model.loans.Reserva;
+import cgr.cgfsdam.pustakalaya.model.users.Usuario;
+import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
+import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
+import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
+import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
+import cgr.cgfsdam.pustakalaya.service.loans.ReservaService;
+import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 import cgr.cgfsdam.pustakalaya.utils.MyUtils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 /**
  * Controlador de la vista de búsqueda de recursos.
@@ -34,264 +58,682 @@ import javafx.scene.control.cell.PropertyValueFactory;
 @Controller
 public class SearchController extends BaseController {
 
-	@FXML
-	private Label lblTitleSearch;
+	/**
+	 * Servicio de la entidad autor.
+	 */
+	@Autowired
+	private AutorService autorService;
+
+	/**
+	 * Servicio de la entidad genero.
+	 */
+	@Autowired
+	private GeneroService generoService;
+
+	/**
+	 * Servicio de la entidad idioma.
+	 */
+	@Autowired
+	private IdiomaService idiomaService;
+
+	/**
+	 * Servicio de la entidad recurso.
+	 */
+	@Autowired
+	private RecursoService recursoService;
+
+	/**
+	 * Servicio de la entidad reserva.
+	 */
+	@Autowired
+	private ReservaService reservaService;
+
+	/**
+	 * Clase para extraer los textos localizados.
+	 */
+	@Autowired
+	private ResourceBundle resourceBundle;
+	
+	/**
+	 * 
+	 */
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@FXML
-	private Label lblTitulo;
+	private Label lblViewTitle;
 
 	@FXML
-	private TextField txtTitulo;
+	private Label lblTitle;
 
 	@FXML
-	private TextField txtAutor;
-
-	@FXML
-	private Label lblAutor;
-
-	@FXML
-	private Label lblGenero;
-
-	@FXML
-	private ComboBox<Genero> cmbGenero;
-
-	@FXML
-	private Label lblFechaPub;
-
-	@FXML
-	private DatePicker dpFechaPub;
-
-	@FXML
-	private ToggleButton tbFPAntes;
-
-	@FXML
-	private ToggleButton tbFPDespues;
-
-	@FXML
-	private ToggleButton tbRecursosLibro;
-
-	@FXML
-	private ToggleButton tbRecursosMultimedia;
+	private TextField txtTitle;
 
 	@FXML
 	private Label lblISBN;
 
 	@FXML
-	private TextField txtISBN;
+	private TextField txtIsbn;
 
 	@FXML
-	private Label lblNumPag;
+	private Label lblAutor;
 
 	@FXML
-	private TextField txtNumPag;
+	private ComboBox<Autor> cbAutor;
 
 	@FXML
-	private Label lblISAN;
+	private Label lblGenero;
 
 	@FXML
-	private TextField txtISAN;
+	private ComboBox<Genero> cbGenero;
 
 	@FXML
-	private Label lblDuracion;
+	private Label lblIdioma;
 
 	@FXML
-	private TextField txtDuracion;
+	private ComboBox<Idioma> cbIdioma;
+
+	@FXML
+	private Label lblDesde;
+
+	@FXML
+	private DatePicker dpDesde;
+
+	@FXML
+	private Label lblHasta;
+
+	@FXML
+	private DatePicker dpHasta;
+
+	@FXML
+	private Label lblResults;
+
+	@FXML
+	private TableView<Recurso> tvResults;
+
+	@FXML
+	private TableColumn<Recurso, Long> colId;
+
+	@FXML
+	private TableColumn<Recurso, String> colTitle;
+
+	@FXML
+	private TableColumn<Recurso, Date> colAnno;
+
+	@FXML
+	private TableColumn<Recurso, Idioma> colLang;
+
+	@FXML
+	private TableColumn<Recurso, Boolean> colDisp;
+
+	@FXML
+	private TableColumn<Recurso, Boolean> ColAction;
+
+	@FXML
+	private Button btnClean;
 
 	@FXML
 	private Button btnSearch;
 
-	@FXML
-	private Button btnClearForm;
-
-    @FXML
-    private TableView<Recurso> tvRecursos;
-
-    @FXML
-    private TableColumn<Recurso, String> tcTitulo;
-
-    @FXML
-    private TableColumn<Recurso, Set<Autor>> tcAutor;
-
-    @FXML
-    private TableColumn<Recurso, Date> tcAnnoPub;
-
-    @FXML
-    private TableColumn<Recurso, String> tcDisponible;
-
-    @FXML
-    private TableColumn<Recurso, String> tcActions;
-
+	// observables de los combos
 	/**
-	 * Flag que indica si los recursos se buscan antes de la fecha indicada(true) o
-	 * después(false)
+	 * Listado que contiene los autores a mostrar en el combo.
 	 */
-	private boolean findPrevious;
+	private ObservableList<Autor>	autores;
+	/**
+	 * Listado que contiene los generos a mostrar en el combo.
+	 */
+	private ObservableList<Genero>	generos;
+	/**
+	 * Listado que contiene los idiomas a mostrar en el combo.
+	 */
+	private ObservableList<Idioma>	idiomas;
+	/**
+	 * Listado con los recursos resultantes de la búsqueda
+	 */
+	private ObservableList<Recurso>	recursos = FXCollections.observableArrayList();
 
 	@FXML
-	void handleSwitchFP(ActionEvent event) {
-		if (tbFPAntes.equals(event.getSource())) {
-			if (tbFPAntes.isSelected()) {
-				tbFPDespues.setSelected(false);
-				findPrevious = true;
-			}
-		} else if (tbFPDespues.equals(event.getSource())) {
-			if (tbFPDespues.isSelected()) {
-				tbFPAntes.setSelected(false);
-				findPrevious = false;
-			}
+	void handleClean(ActionEvent event) {
 
-		}
-	}
-
-	@FXML
-	void handleSwitchRecurso(ActionEvent event) {
-		if (tbRecursosLibro.equals(event.getSource())) {
-			if (tbRecursosLibro.isSelected()) {
-				tbRecursosMultimedia.setSelected(false);
-				hideMultimediaResource();
-				showBookResource();
-			} else if (!tbRecursosLibro.isSelected()) {
-				hideBookResource();
-			}
-		} else if (tbRecursosMultimedia.equals(event.getSource())) {
-			if (tbRecursosMultimedia.isSelected()) {
-				tbRecursosLibro.setSelected(false);
-				hideBookResource();
-				showMultimediaResource();
-			} else if (!tbRecursosMultimedia.isSelected()) {
-				hideMultimediaResource();
-			}
-		}
-	}
-
-	private void showMultimediaResource() {
-		lblISAN.setVisible(true);
-		txtISAN.setVisible(true);
-		lblDuracion.setVisible(true);
-		txtDuracion.setVisible(true);
-	}
-
-	private void showBookResource() {
-		lblISBN.setVisible(true);
-		txtISBN.setVisible(true);
-		lblNumPag.setVisible(true);
-		txtNumPag.setVisible(true);
-	}
-
-	private void hideBookResource() {
-		lblISBN.setVisible(false);
-		txtISBN.clear();
-		txtISBN.setVisible(false);
-		lblNumPag.setVisible(false);
-		txtNumPag.clear();
-		txtNumPag.setVisible(false);
-	}
-
-	private void hideMultimediaResource() {
-		lblISAN.setVisible(false);
-		txtISAN.clear();
-		txtISAN.setVisible(false);
-		lblDuracion.setVisible(false);
-		txtDuracion.clear();
-		txtDuracion.setVisible(false);
-	}
-
-	@FXML
-	void handleClearForm(ActionEvent event) {
-		log.info("se el boton limpiar");
+		clearForm();
 	}
 
 	@FXML
 	void handleSearch(ActionEvent event) {
-		log.info("se pulsa el boton buscar");
+
+		loadResources();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		lblTitleSearch.setText(resources.getString("lector.search.label.titleView"));
-		lblTitulo.setText(resources.getString("lector.search.label.title"));
-//		private TextField txtTitulo;
-		lblAutor.setText(resources.getString("lector.search.label.autor"));
-//		private TextField txtAutor;
-		lblGenero.setText(resources.getString("lector.search.label.genero"));
-		cmbGenero.setPromptText(resources.getString("lector.search.combo.genero"));
-//		private ComboBox<Genero> cmbGenero;
-		lblFechaPub.setText(resources.getString("lector.search.label.fechaPub"));
-//		private DatePicker dpFechaPub;
-		tbFPAntes.setText(resources.getString("lector.search.toggle.antes"));
-		tbFPDespues.setText(resources.getString("lector.search.toggle.despues"));
-		tbRecursosLibro.setText(resources.getString("lector.search.toggle.libros"));
-		tbRecursosMultimedia.setText(resources.getString("lector.search.toggle.multimedia"));
-		lblISBN.setText(resources.getString("lector.search.label.ISBN"));
-//		private TextField txtISBN;
-		lblNumPag.setText(resources.getString("lector.search.label.numPag"));
-//		private TextField txtNumPag;
-		lblISAN.setText(resources.getString("lector.search.label.ISAN"));
-//		private TextField txtISAN;
-		lblDuracion.setText(resources.getString("lector.search.label.duracion"));
-//		private TextField txtDuracion;
-		btnSearch.setText(resources.getString("lector.search.button.search"));
-		btnClearForm.setText(resources.getString("lector.search.button.clear"));
-//	    private TableView<Recurso> tvRecursos;
-//	    tvRecursos.setVisible(false);
-	    tcTitulo.setText(resources.getString("lector.search.column.title"));
-	    tcAutor.setText(resources.getString("lector.search.column.author"));
-	    tcAnnoPub.setText(resources.getString("lector.search.columno.year"));
-	    tcDisponible.setText(resources.getString("lector.search.column.available"));
-	    tcActions.setText(resources.getString("lector.search.column.actions"));
-		
-		//configuración de la tabla
-	    tcTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-	    
-	    tcAutor.setCellFactory(column -> {
-	    	return new TableCell<Recurso, Set<Autor>>() {
-	    		@Override
-	    		protected void updateItem(Set<Autor> item, boolean empty) {
-	    			super.updateItem(item, empty);
-	    			
-	    			if (item == null || empty) {
-	    				setText(null);
-	    			} else {
-	    				item.forEach(autor -> {
-	    					String temp = autor.getNombre() + " " + autor.getApellidos();
-	    					if (!MyUtils.isEmptyString(getText())) {
-	    						temp = getText() + "; " + temp;
-	    					}
-	    					setText(temp);
-	    				});
-	    			}
-	    			
-	    		}
-	    	};
-	    });
 
-	    tcAnnoPub.setCellFactory(column ->{
-	    	return new TableCell<Recurso, Date>() {
-	    		@Override
-	    		protected void updateItem(Date item, boolean empty) {
-	    			super.updateItem(item, empty);
-	    			
-	    			if (item == null || empty) {
-	    				setText(null);
-	    			} else {
-	    				Calendar cal = Calendar.getInstance();
-	    				cal.setTime(item);
-	    				setText(String.valueOf(cal.get(Calendar.YEAR)));
-	    			}
-	    		}
-	    	};
-	    });
-	    
-	    
-	    tcTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-	    tcTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-	    
-	    
-		
-		
-		hideBookResource();
-		hideMultimediaResource();
+		lblViewTitle.setText(resources.getString("lector.searcView.form.title"));
+		lblTitle.setText(resources.getString("lector.searcView.title.label"));
+		lblISBN.setText(resources.getString("lector.searcView.isbn.label"));
+		lblAutor.setText(resources.getString("lector.searcView.autor.label"));
+		lblGenero.setText(resources.getString("lector.searcView.genero.label"));
+		lblIdioma.setText(resources.getString("lector.searcView.idioma.label"));
+		lblDesde.setText(resources.getString("lector.searcView.desde.label"));
+		lblHasta.setText(resources.getString("lector.searcView.hasta.label"));
+		lblResults.setText(resources.getString("lector.searcView.resultados.label"));
+
+		btnSearch.setText(resources.getString("lector.searcView.search.button"));
+		btnClean.setText(resources.getString("lector.searcView.clear.button"));
+
+		// inicializar combos
+		initializeAutor();
+		initializeGenero();
+		initializeIdioma();
+
+		// inicializar tabla
+		initializeTable(resources);
+
 	}
 
-	
+	/**
+	 * Inicializa el combo de autores
+	 * 
+	 * @param resources
+	 */
+	private void initializeAutor() {
+
+		autores = FXCollections.observableArrayList();
+
+		cbAutor.setPromptText(resourceBundle.getString("lector.searcView.autores.combo.promt"));
+
+		// establece la conversión entre el Autor y el string mostrado
+		cbAutor.setCellFactory(new Callback<ListView<Autor>, ListCell<Autor>>() {
+
+			@Override
+			public ListCell<Autor> call(ListView<Autor> param) {
+
+				ListCell<Autor> cell = new ListCell<Autor>() {
+
+					@Override
+					protected void updateItem(Autor item, boolean empty) {
+
+						super.updateItem(item, empty);
+
+						if (item != null) {
+							String fullName = item.getNombre();
+							if (!MyUtils.isEmptyString(item.getApellidos())) {
+								fullName += ", " + item.getApellidos();
+							}
+							setText(fullName);
+						} else {
+							setText(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
+
+		cbAutor.setConverter(new StringConverter<Autor>() {
+
+			@Override
+			public String toString(Autor autor) {
+
+				String fullName = autor.getNombre();
+				if (!MyUtils.isEmptyString(autor.getApellidos())) {
+					fullName += ", " + autor.getApellidos();
+				}
+				return fullName;
+			}
+
+			@Override
+			public Autor fromString(String fullName) {
+
+				String[] nameElements = fullName.split(", ");
+
+				String nombre = null;
+				String apellidos = null;
+				Autor ret = null;
+
+				if (nameElements.length == 2) {
+					nombre = nameElements[0];
+					apellidos = nameElements[1];
+					ret = autorService.findByNombreAndApellidosAllIgnoreCase(nombre, apellidos).stream().findFirst()
+							.orElse(null);
+				} else if (nameElements.length == 1) {
+					nombre = nameElements[0];
+					ret = autorService.findByNombreAllIgnoreCase(nombre).stream().findFirst().orElse(null);
+				}
+
+				return ret;
+			}
+
+		});
+
+		loadAutores();
+	}
+
+	/**
+	 * Carga los autores en el combo de autores
+	 */
+	private void loadAutores() {
+
+		autores.clear();
+		autores.addAll(autorService.findAll());
+		cbAutor.setItems(autores);
+	}
+
+	/**
+	 * Inicializa el combo de genero
+	 */
+	private void initializeGenero() {
+
+		generos = FXCollections.observableArrayList();
+
+		cbGenero.setPromptText(resourceBundle.getString("lector.searcView.genero.combo.promt"));
+
+		// establece la conversión entre el Autor y el string mostrado
+		cbGenero.setCellFactory(new Callback<ListView<Genero>, ListCell<Genero>>() {
+
+			@Override
+			public ListCell<Genero> call(ListView<Genero> param) {
+
+				ListCell<Genero> cell = new ListCell<Genero>() {
+
+					@Override
+					protected void updateItem(Genero item, boolean empty) {
+
+						super.updateItem(item, empty);
+
+						if (item != null) {
+							setText(item.getNombre());
+						} else {
+							setText(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
+
+		cbGenero.setConverter(new StringConverter<Genero>() {
+
+			@Override
+			public String toString(Genero genero) {
+
+				return genero.getNombre();
+			}
+
+			@Override
+			public Genero fromString(String genero) {
+
+				return generoService.findByNombreIgnoreCase(genero).stream().findFirst().orElse(null);
+			}
+
+		});
+
+		loadGeneros();
+	}
+
+	/**
+	 * Carga los recursos de base de datos en el compbo de recursos
+	 */
+	private void loadGeneros() {
+
+		generos.clear();
+		generos.addAll(generoService.findAll());
+		cbGenero.setItems(generos);
+	}
+
+	/**
+	 * Inicializa el combo de idiomas.
+	 */
+	private void initializeIdioma() {
+
+		idiomas = FXCollections.observableArrayList();
+
+		cbIdioma.setPromptText(resourceBundle.getString("lector.searcView.idioma.combo.promt"));
+
+		// establece la conversión entre el Autor y el string mostrado
+		cbIdioma.setCellFactory(new Callback<ListView<Idioma>, ListCell<Idioma>>() {
+
+			@Override
+			public ListCell<Idioma> call(ListView<Idioma> param) {
+
+				ListCell<Idioma> cell = new ListCell<Idioma>() {
+
+					@Override
+					protected void updateItem(Idioma item, boolean empty) {
+
+						super.updateItem(item, empty);
+
+						if (item != null) {
+							setText(item.getNombre());
+						} else {
+							setText(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
+
+		cbIdioma.setConverter(new StringConverter<Idioma>() {
+
+			@Override
+			public String toString(Idioma idioma) {
+
+				return idioma.getNombre();
+			}
+
+			@Override
+			public Idioma fromString(String idioma) {
+
+				return idiomaService.findByNombreIgnoreCase(idioma);
+			}
+
+		});
+
+		loadIdiomas();
+	}
+
+	/**
+	 * Recarga los idiomas en el combo de idomas y elimina la selección actual.
+	 */
+	private void loadIdiomas() {
+
+		idiomas.clear();
+		idiomas.addAll(idiomaService.findAll());
+		cbIdioma.setItems(idiomas);
+	}
+
+	/**
+	 * Inicia los textos y conversiones de cada columna de la tabla
+	 * 
+	 * @param resources
+	 */
+	private void initializeTable(ResourceBundle resources) {
+
+		// recupera el usuario si el padre no se lo inyectó
+		loadUsuarioFromSecurity();
+
+		tvResults.setPlaceholder(new Label(""));
+
+		colId.setText(resources.getString("lector.searcView.resultados.table.id"));
+		colId.setStyle( "-fx-alignment: CENTER;");
+		colTitle.setText(resources.getString("lector.searcView.resultados.table.titulo"));
+		colAnno.setText(resources.getString("lector.searcView.resultados.table.year"));
+		colAnno.setStyle( "-fx-alignment: CENTER;");
+		colLang.setText(resources.getString("lector.searcView.resultados.table.language"));
+		colDisp.setText(resources.getString("lector.searcView.resultados.table.disponible"));
+		ColAction.setText(resources.getString("lector.searcView.resultados.table.action"));
+		ColAction.setStyle( "-fx-alignment: CENTER;");
+
+		colId.setCellValueFactory(new PropertyValueFactory<>("idRecurso"));
+		colTitle.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+		colLang.setCellValueFactory(new PropertyValueFactory<>("idioma"));
+		colLang.setCellFactory(column -> {
+			return new TableCell<Recurso, Idioma>() {
+
+				@Override
+				protected void updateItem(Idioma item, boolean empty) {
+					super.updateItem(item, empty);
+					
+					if (item == null || empty) {
+						setText(null);
+					} else {
+						setText(item.getNombre());
+					}
+				}
+			};
+		});
+		colAnno.setCellValueFactory(new PropertyValueFactory<>("fechaPublicacion"));
+		colAnno.setCellFactory(column -> {
+			return new TableCell<Recurso, Date>() {
+
+				@Override
+				protected void updateItem(Date item, boolean empty) {
+
+					super.updateItem(item, empty);
+
+					if (item == null || empty) {
+						setText(null);
+					} else {
+						setText(String.valueOf(MyUtils.getYear(item)));
+					}
+
+				}
+			};
+		});
+
+		colDisp.setCellFactory(column -> {
+			return new TableCell<Recurso, Boolean>() {
+
+				//
+				// final Button btnReservar = new Button();
+				// final Button btnRetirar = new Button();
+				//
+				@Override
+				protected void updateItem(Boolean item, boolean empty) {
+
+					super.updateItem(item, empty);
+
+					String out = null;
+
+					if (!empty) {
+						// calculo si el recurso tiene ejemplares para prestar
+						Recurso current = getTableView().getItems().get(getIndex());
+						long numEjemplares =
+								current.getEjemplares().stream().filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO
+										&& e.getEstado() != EstadoEnum.EN_RESTAURACION).count();
+
+						if (numEjemplares == 0) {
+							out = resourceBundle.getString("lector.search.disp.unavailable");
+						} else {
+							// calculo si alguno de los ejemplares esta disponible
+							long noPrestado = recursoService.countEjemplaresNoPrestados(current);
+
+							if (noPrestado > 0) {
+								// si hay ejemplares en prestamo
+								out = MessageFormat.format(resourceBundle.getString("lector.search.disp.available"),
+										noPrestado);
+							} else {
+								// si no hay ejemplares en prestamo muestra la fecha de devolución y el número de
+								// reservas
+								Long reservasPendientes = recursoService.countReservasPendientes(current);
+								Date fechaPrimeraDevolucion = recursoService.getProximaDevolucion(current);
+
+								out = MessageFormat.format(resourceBundle.getString("lector.search.disp.pending"),
+										reservasPendientes, MyUtils.dateToShort(fechaPrimeraDevolucion));
+							}
+
+						}
+
+					}
+					setText(out);
+
+				}
+			};
+		});
+
+		ColAction.setCellFactory(column -> {
+			return new TableCell<Recurso, Boolean>() {
+
+				final Button btnReservar = new Button();
+				final Button btnRetirar	 = new Button();
+
+				@Override
+				protected void updateItem(Boolean item, boolean empty) {
+
+					super.updateItem(item, empty);
+
+					if (empty) {
+						setGraphic(null);
+						setText(null);
+					} else {
+						Usuario currentUsuario = getUsuario();
+						Recurso currentRecurso = getTableView().getItems().get(getIndex());
+
+						// calculo si el recurso tiene ejemplares para prestar
+						long numEjemplares = currentRecurso.getEjemplares().stream()
+								.filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO
+										&& e.getEstado() != EstadoEnum.EN_RESTAURACION)
+								.count();
+
+						// caso 1 no hay ejemplares prestables
+						if (numEjemplares == 0) {
+							setGraphic(null);
+							setText(null);
+						} else {
+							// caso 2 el recurso ya está reservado por el usuario
+							Reserva tempReserva = reservaService.findByRecursoAndUsuarioAndEstadoReserva(currentRecurso,
+									currentUsuario, EstadoReservaEnum.WAITING);
+
+							if (tempReserva != null) {
+								btnReservar.setDisable(true);
+								btnReservar.setText(resourceBundle
+										.getString("lector.searcView.resultados.table.action.alreadyBooked"));
+							} else {
+
+								btnReservar.setDisable(false);
+								btnReservar.setText(
+										resourceBundle.getString("lector.searcView.resultados.table.action.book"));
+
+							}
+
+							btnReservar.getStyleClass().add("btnBlue");
+							btnReservar.getStyleClass().add("btn");
+							btnReservar.setStyle("-fx-min-width:0");
+							btnReservar.setOnAction(e -> {
+								reservarRecurso(currentUsuario, currentRecurso);
+							});
+
+							setGraphic(btnReservar);
+							setAlignment(Pos.CENTER);
+							setText(null);
+						}
+					}
+
+				}
+			};
+		});
+
+		tvResults.getColumns().clear();
+		tvResults.getColumns().addAll(colId, colTitle, colAnno, colLang, colDisp, ColAction);
+	}
+
+	/**
+	 * Carga el usuario del contexto de seguridad de Spring.
+	 */
+	private void loadUsuarioFromSecurity() {
+		if (getUsuario() == null) {
+			log.info("No existe usuario en el controller");
+			String securityUser = SecurityContextHolder.getContext().getAuthentication().getName();
+			log.info("El usuario autenticado es: " + securityUser);
+
+			setUsuario(usuarioService.findByUsername(securityUser));
+		}
+	}
+
+	/**
+	 * recarga los recursos según la información del formulario.
+	 */
+	private void loadResources() {
+
+		recursos.clear();
+
+		if (!isEmptyForm()) {
+			// solo recupera los recursos de busqueda si hay algún dato para buscar
+			recursos.addAll(recursoService.findByFormData(txtTitle.getText(), txtIsbn.getText(),
+					cbAutor.getSelectionModel().getSelectedItem(), cbGenero.getSelectionModel().getSelectedItem(),
+					cbIdioma.getSelectionModel().getSelectedItem(), MyUtils.fromLocalToDate(dpDesde.getValue()),
+					MyUtils.fromLocalToDate(dpHasta.getValue())));
+		}
+
+		tvResults.setItems(recursos);
+		tvResults.refresh();
+	}
+
+	/**
+	 * Comprueba si hay criterios de busqueda en el formulario.
+	 * @return boolean true si todos los campos del formulario están vacios, o false en caso contrario
+	 */
+	private boolean isEmptyForm() {
+
+		if (!MyUtils.isEmptyString(txtTitle.getText())) {
+			return false;
+		}
+		if (!MyUtils.isEmptyString(txtIsbn.getText())) {
+			return false;
+		}
+		if (cbAutor.getSelectionModel().getSelectedItem() != null) {
+			return false;
+		}
+		if (cbGenero.getSelectionModel().getSelectedItem() != null) {
+			return false;
+		}
+		if (cbIdioma.getSelectionModel().getSelectedItem() != null) {
+			return false;
+		}
+		if (dpDesde.getValue() != null) {
+			return false;
+		}
+		if (dpHasta.getValue() != null) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Limpia todos los valores del formulario. No actualiza el listado de buscados.
+	 */
+	private void clearForm() {
+
+		txtTitle.clear();
+		txtIsbn.clear();
+		cbAutor.getSelectionModel().clearSelection();
+		cbGenero.getSelectionModel().clearSelection();
+		cbIdioma.getSelectionModel().clearSelection();
+		dpDesde.setValue(null);
+		dpDesde.getEditor().clear();
+		dpHasta.setValue(null);
+		dpHasta.getEditor().clear();
+
+		recursos.clear();
+		tvResults.setItems(recursos);
+		tvResults.refresh();
+
+	}
+
+	/**
+	 * Realiza una reserva del recurso selecionado para el usuario seleccionado.
+	 * 
+	 * @param usuario Usuario entidad que participa en la reserva
+	 * @param recurso Recurso entidad que participa en la reserva
+	 */
+	private void reservarRecurso(Usuario usuario, Recurso recurso) {
+
+		Reserva reserva = new Reserva(getUsuario(), recurso, new Date(), EstadoReservaEnum.WAITING);
+
+		/*
+		 * si hay ejemplares disponibles en este momento (mas ejemplares que ejemplares prestados o reservados),
+		 * muestra un popup indicando que se puede recoger.
+		 */
+		long numEjemplares = recurso.getEjemplares().stream()
+				.filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO && e.getEstado() != EstadoEnum.EN_RESTAURACION)
+				.count();
+		long prestados = recursoService.countEjemplaresPrestados(recurso);
+		long reservados = recursoService.countReservasPendientes(recurso);
+
+		//hago la reserva despues del cálculo
+		reservaService.save(reserva);
+
+		if (numEjemplares > (prestados + reservados)) {
+			this.sendAlert(AlertType.INFORMATION, resourceBundle.getString("lector.searcView.resultados.table.action.available.title"),
+					resourceBundle.getString("lector.searcView.resultados.table.action.available.header"),
+					resourceBundle.getString("lector.searcView.resultados.table.action.available.msg"));
+		}
+		//recarga los resources para que se visualice la reserva
+		loadResources();
+	}
+
 }

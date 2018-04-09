@@ -33,10 +33,16 @@
       <Label fx:id="lblError" layoutX="10.0" layoutY="145.0" prefHeight="45.0" styleClass="errorText" text="\%lblError" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
       <HBox layoutX="108.0" layoutY="195.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button fx:id="btnExit" layoutX="108.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleExit" text="\%btnExit">
+            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDelete" style="-fx-min-width: 80;" text="\%btnDelete">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btnRed" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnExit" layoutX="108.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleExit" text="\%btnExit">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btnBlue" />
                </styleClass>
             </Button>
             <Button fx:id="btnSave" layoutX="160.0" layoutY="195.0" mnemonicParsing="false" onAction="#handleSave" text="\%btnSave">

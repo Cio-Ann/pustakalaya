@@ -95,6 +95,37 @@ public interface RecursoService {
 	 * @return List<Recurso> todos los recursos de bbdd
 	 */
 	List<Recurso> findAll();
+
+	/**
+	 * Cuenta el número de ejemplares de un recurso dado que están en prestamo actualmente
+	 * 
+	 * @param recurso Recurso entidad para la que contar los ejemplares
+	 * @return long número de ejemplares actualmente en prestamo
+	 */
+	Long countEjemplaresPrestados(Recurso recurso);
+	
+	/**
+	 * Cuenta el número de ejemplares disponibles que no están en prestamo actualmente.
+	 * @param recurso Recurso entidad para la que contar los ejemplares
+	 * @return long número de ejemplares disponibles y a disposición
+	 */
+	Long countEjemplaresNoPrestados(Recurso recurso);
+
+	/**
+	 * Cuenta el número de reservas pendientes sobre el ejemplar dado.
+	 * 
+	 * @param recurso Recurso entidad para la que buscar reservas
+	 * @return Long número de reservas vigentes
+	 */
+	Long countReservasPendientes(Recurso recurso);
+
+	/**
+	 * Devuelve la fecha de la proxima devolución prevista de un ejemplar del recurso.
+	 * 
+	 * @param recurso Recurso entidad a evaluar
+	 * @return Date fecha de devolución del proximo ejemplar del recurso
+	 */
+	Date getProximaDevolucion(Recurso recurso);
 	
 
 }

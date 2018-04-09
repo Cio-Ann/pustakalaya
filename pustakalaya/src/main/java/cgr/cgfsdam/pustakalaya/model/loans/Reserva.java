@@ -38,14 +38,14 @@ public class Reserva {
 	/**
 	 * Usuario que realiza la reserva.
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
 	/**
 	 * Ejemplar reservado.
 	 */
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_recurso")
 	private Recurso recurso;
 
