@@ -66,6 +66,9 @@ public class ResourceViewController extends BaseController {
 	@Autowired
 	private IdiomaService idiomaService;
 
+	/**
+	 * Servicio de la entidad recurso,
+	 */
 	@Autowired
 	private RecursoService recursoService;
 

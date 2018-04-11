@@ -121,7 +121,7 @@ public enum FxmlView {
 	 * El administrador puede ver las reservas actuales o notificar de recursos 
 	 * disponibles a los usuarios que las han reservado.
 	 */
-	A_BOOKINGS("admin.bookings.title", "/fxml/admin/Bookings.fxml"), 
+	A_BOOKINGS("admin.bookings.title", "/fxml/admin/BookingsView.fxml"), 
 	/**
 	 * Vista de prestamos.
 	 * Se puede registrar prestamos y devoluciones, además se pueden notificar

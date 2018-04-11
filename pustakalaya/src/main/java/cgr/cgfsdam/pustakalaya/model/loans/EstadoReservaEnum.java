@@ -13,19 +13,19 @@ public enum EstadoReservaEnum {
 	/**
 	 * WAITING: reserva en espera de disponibilidad del recurso.
 	 */
-	WAITING("Esperando disponibilidad"),
+	WAITING("Disponible"),
 	/**
 	 * CONSUMED: se ha consumido la reserva, restando el recurso al usuario.
 	 */
-	CONSUMED("Reserva consumida"),
+	CONSUMED("Consumida"),
 	/**
 	 * USER_CANCELLED: el usuario canceló la reserva.
 	 */
-	USER_CANCELLED("Reserva cancelada por el usuario"),
+	USER_CANCELLED("Cancelada/Usuario"),
 	/**
 	 * ADMIN_CANCELLED: el administrador cancelo la reserva.
 	 */
-	ADMIN_CANCELLED("Reserva cancelada por el administrador");
+	ADMIN_CANCELLED("Cancelada/Admin");
 	
 	/**
 	 * Campo que contiene la descripción del estado.
