@@ -16,9 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class MyUtils {
 	
-	@Value("${prestamos.dias.vigencia:15")
-	private static int diasVigencia;
-	
 	/**
 	 * Método que indica si una String es nula o vacia.
 	 * 
@@ -85,16 +82,4 @@ public class MyUtils {
 		return format.format(fecha);
 	}
 
-	/**
-	 * Calcula una fecha de vencimiento a partir de una fecha dada
-	 * @param fechaInicio Date fecha desde la que calcular la vigencia.
-	 * @return Date fecha de vigencia.
-	 */
-	public static Date getFechaVencimiento(Date fechaInicio) {
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(fechaInicio);
-		calendar.add(Calendar.DAY_OF_YEAR, diasVigencia);  
-		return calendar.getTime(); 
-	}
 }

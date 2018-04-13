@@ -3,7 +3,6 @@ package cgr.cgfsdam.pustakalaya.controller.admin;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +10,11 @@ import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
-import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.model.utility.FormObjects;
 import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
-import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
 import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
@@ -28,6 +25,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -38,7 +36,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -151,9 +148,6 @@ public class ResourceViewController extends BaseController {
 	private TableColumn<Recurso, Date> tcYear;
 
 	@FXML
-	private TableColumn<Recurso, List<Ejemplar>> tcEjemplares;
-
-	@FXML
 	private Button btnClear;
 
 	@FXML
@@ -163,7 +157,7 @@ public class ResourceViewController extends BaseController {
 	/**
 	 * Listado que contiene los autores a mostrar en el combo.
 	 */
-	private ObservableList<Autor> autores;
+	private ObservableList<Autor>  autores;
 	/**
 	 * Listado que contiene los generos a mostrar en el combo.
 	 */
@@ -177,6 +171,7 @@ public class ResourceViewController extends BaseController {
 
 	@FXML
 	void handleRecursoNew(ActionEvent event) {
+
 		Recurso recurso = new Recurso();
 
 		try {
@@ -199,6 +194,7 @@ public class ResourceViewController extends BaseController {
 
 	@FXML
 	void handleRecursoEdit(ActionEvent event) {
+
 		Recurso recurso = tableResultados.getSelectionModel().getSelectedItem();
 
 		if (recurso != null) {
@@ -225,12 +221,11 @@ public class ResourceViewController extends BaseController {
 
 	@FXML
 	void handleRecursoDelete(ActionEvent event) {
+
 		Recurso deleteRecurso = tableResultados.getSelectionModel().getSelectedItem();
-		
-		//TODO: crear textos de confirmación y edición
+
 		if (deleteRecurso != null) {
-			if (showConfirmation(
-					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.title"),
+			if (showConfirmation(resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.title"),
 					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.header"),
 					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.error.msg"))) {
 				recursoService.delete(deleteRecurso);
@@ -246,16 +241,19 @@ public class ResourceViewController extends BaseController {
 
 	@FXML
 	void handleClear(ActionEvent event) {
+
 		clearForm();
 	}
 
 	@FXML
 	void handleSearch(ActionEvent event) {
+
 		loadResources();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		lblFormTitle.setText(resources.getString("admin.resourceview.form.title"));
 		lblTitle.setText(resources.getString("admin.resourceview.title.label"));
 		lblIsbn.setText(resources.getString("admin.resourceview.isbn.label"));
@@ -288,6 +286,7 @@ public class ResourceViewController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeAutor(ResourceBundle resources) {
+
 		autores = FXCollections.observableArrayList();
 
 		cbAutor.setPromptText(resources.getString("admin.recurso.form.autores.combo.promt"));
@@ -297,9 +296,11 @@ public class ResourceViewController extends BaseController {
 
 			@Override
 			public ListCell<Autor> call(ListView<Autor> param) {
+
 				ListCell<Autor> cell = new ListCell<Autor>() {
 					@Override
 					protected void updateItem(Autor item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -322,6 +323,7 @@ public class ResourceViewController extends BaseController {
 
 			@Override
 			public String toString(Autor autor) {
+
 				String fullName = autor.getNombre();
 				if (!MyUtils.isEmptyString(autor.getApellidos())) {
 					fullName += ", " + autor.getApellidos();
@@ -331,6 +333,7 @@ public class ResourceViewController extends BaseController {
 
 			@Override
 			public Autor fromString(String fullName) {
+
 				String[] nameElements = fullName.split(", ");
 
 				String nombre = null;
@@ -359,6 +362,7 @@ public class ResourceViewController extends BaseController {
 	 * Carga los autores en el combo de autores
 	 */
 	private void loadAutores() {
+
 		autores.clear();
 		autores.addAll(autorService.findAll());
 		cbAutor.setItems(autores);
@@ -370,6 +374,7 @@ public class ResourceViewController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeGenero(ResourceBundle resources) {
+
 		generos = FXCollections.observableArrayList();
 
 		cbGenero.setPromptText(resources.getString("admin.recurso.form.genero.combo.promt"));
@@ -379,9 +384,11 @@ public class ResourceViewController extends BaseController {
 
 			@Override
 			public ListCell<Genero> call(ListView<Genero> param) {
+
 				ListCell<Genero> cell = new ListCell<Genero>() {
 					@Override
 					protected void updateItem(Genero item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -400,11 +407,13 @@ public class ResourceViewController extends BaseController {
 
 			@Override
 			public String toString(Genero genero) {
+
 				return genero.getNombre();
 			}
 
 			@Override
 			public Genero fromString(String genero) {
+
 				return generoService.findByNombreIgnoreCase(genero).stream().findFirst().orElse(null);
 			}
 
@@ -417,6 +426,7 @@ public class ResourceViewController extends BaseController {
 	 * Carga los recursos de base de datos en el compbo de recursos
 	 */
 	private void loadGeneros() {
+
 		generos.clear();
 		generos.addAll(generoService.findAll());
 		cbGenero.setItems(generos);
@@ -428,6 +438,7 @@ public class ResourceViewController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeIdioma(ResourceBundle resources) {
+
 		idiomas = FXCollections.observableArrayList();
 
 		cbIdioma.setPromptText(resources.getString("admin.recurso.form.idioma.combo.promt"));
@@ -437,9 +448,11 @@ public class ResourceViewController extends BaseController {
 
 			@Override
 			public ListCell<Idioma> call(ListView<Idioma> param) {
+
 				ListCell<Idioma> cell = new ListCell<Idioma>() {
 					@Override
 					protected void updateItem(Idioma item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -458,11 +471,13 @@ public class ResourceViewController extends BaseController {
 
 			@Override
 			public String toString(Idioma idioma) {
+
 				return idioma.getNombre();
 			}
 
 			@Override
 			public Idioma fromString(String idioma) {
+
 				return idiomaService.findByNombreIgnoreCase(idioma);
 			}
 
@@ -475,6 +490,7 @@ public class ResourceViewController extends BaseController {
 	 * Recarga los idiomas en el combo de idomas y elimina la selección actual.
 	 */
 	private void loadIdiomas() {
+
 		idiomas.clear();
 		idiomas.addAll(idiomaService.findAll());
 		cbIdioma.setItems(idiomas);
@@ -486,13 +502,13 @@ public class ResourceViewController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeTable(ResourceBundle resources) {
+
 		tableResultados.setPlaceholder(new Label(""));
 
 		tcId.setText(resources.getString("admin.resourceview.resultados.table.id"));
 		tcTitulo.setText(resources.getString("admin.resourceview.resultados.table.titulo"));
 		tcIsbn.setText(resources.getString("admin.resourceview.resultados.table.isbn"));
 		tcYear.setText(resources.getString("admin.resourceview.resultados.table.year"));
-		tcEjemplares.setText(resources.getString("admin.resourceview.resultados.table.ejemplares"));
 
 		tcId.setCellValueFactory(new PropertyValueFactory<>("idRecurso"));
 		tcTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
@@ -502,6 +518,7 @@ public class ResourceViewController extends BaseController {
 			return new TableCell<Recurso, Date>() {
 				@Override
 				protected void updateItem(Date item, boolean empty) {
+
 					super.updateItem(item, empty);
 
 					if (item == null || empty) {
@@ -513,58 +530,32 @@ public class ResourceViewController extends BaseController {
 				}
 			};
 		});
-		tcEjemplares.setCellValueFactory(new PropertyValueFactory<>("ejemplares"));
-		tcEjemplares.setCellFactory(column -> {
-			return new TableCell<Recurso, List<Ejemplar>>() {
-				@Override
-				protected void updateItem(List<Ejemplar> item, boolean empty) {
-					super.updateItem(item, empty);
-
-					if (item == null || empty) {
-						setText(null);
-					} else {
-						setText(String.valueOf(item.size()));
-					}
-
-				}
-			};
-		});
-
-//		loadResources();
-//		loadAllRecursos();
 
 		tableResultados.getColumns().clear();
-		tableResultados.getColumns().addAll(tcId, tcTitulo, tcIsbn, tcYear, tcEjemplares);
+		tableResultados.getColumns().addAll(tcId, tcTitulo, tcIsbn, tcYear);
 	}
 
 	/**
 	 * recarga los recursos según la información del formulario.
 	 */
 	private void loadResources() {
+
 		recursos.clear();
-		
+
 		if (!isEmptyForm()) {
-			//solo recupera los recursos de busqueda si hay algún dato para buscar
-			recursos.addAll(
-					recursoService.findByFormData(
-							txtTitle.getText(), 
-							txtIsbn.getText(),
-							cbAutor.getSelectionModel().getSelectedItem(), 
-							cbGenero.getSelectionModel().getSelectedItem(),
-							cbIdioma.getSelectionModel().getSelectedItem(), 
-							MyUtils.fromLocalToDate(dpDesde.getValue()),
-							MyUtils.fromLocalToDate(dpHasta.getValue())
-					)
-			);
+			// solo recupera los recursos de busqueda si hay algún dato para buscar
+			recursos.addAll(recursoService.findByFormData(txtTitle.getText(), txtIsbn.getText(),
+					cbAutor.getSelectionModel().getSelectedItem(), cbGenero.getSelectionModel().getSelectedItem(),
+					cbIdioma.getSelectionModel().getSelectedItem(), MyUtils.fromLocalToDate(dpDesde.getValue()),
+					MyUtils.fromLocalToDate(dpHasta.getValue())));
 		}
-		
+
 		tableResultados.setItems(recursos);
 		tableResultados.refresh();
 	}
-	
-	
-	
+
 	private boolean isEmptyForm() {
+
 		if (!MyUtils.isEmptyString(txtTitle.getText())) {
 			return false;
 		}
@@ -594,6 +585,7 @@ public class ResourceViewController extends BaseController {
 	 * No actualiza el listado de buscados.
 	 */
 	private void clearForm() {
+
 		txtTitle.clear();
 		txtIsbn.clear();
 		cbAutor.getSelectionModel().clearSelection();
@@ -603,19 +595,18 @@ public class ResourceViewController extends BaseController {
 		dpDesde.getEditor().clear();
 		dpHasta.setValue(null);
 		dpHasta.getEditor().clear();
-		
 
 		recursos.clear();
 		tableResultados.setItems(recursos);
 		tableResultados.refresh();
-		
-		
+
 	}
-	
+
 	/**
 	 * Recarga todos los combos y listados al volver del formulario de recursos.
 	 */
 	private void loadView() {
+
 		loadAutores();
 		loadGeneros();
 		loadIdiomas();

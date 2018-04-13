@@ -23,134 +23,191 @@
       <Insets />
    </opaqueInsets>
    <children>
-      <AnchorPane prefHeight="50.0" prefWidth="800.0" styleClass="background">
+      <GridPane hgap="10.0" layoutX="1.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Label fx:id="lblTitle" text="\%lblTitle">
+            <Label fx:id="lblTitle" maxWidth="1.7976931348623157E308" text="\%lblTitle" GridPane.columnSpan="2147483647">
                <font>
                   <Font size="24.0" />
                </font>
                <styleClass>
                   <String fx:value="light" />
                   <String fx:value="titleText" />
+                  <String fx:value="background" />
                </styleClass>
             </Label>
-         </children>
-      </AnchorPane>
-      <Label fx:id="lblUserData" layoutY="59.0" text="\%lblUserData">
-         <styleClass>
-            <String fx:value="dark" />
-            <String fx:value="titleText" />
-         </styleClass>
-      </Label>
-      <Label fx:id="lblUserAddress" layoutX="400.0" layoutY="59.0" text="\%lblUserAddress">
-         <styleClass>
-            <String fx:value="titleText" />
-            <String fx:value="dark" />
-         </styleClass>
-      </Label>
-      <GridPane hgap="6.0" layoutX="412.0" layoutY="118.0" prefHeight="360.0" prefWidth="376.0" vgap="3.0">
-        <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label fx:id="lblTipoVia" text="\%lblTipoVia" />
-            <Label fx:id="lblVia" text="\%lblVia" GridPane.rowIndex="1" />
-            <Label fx:id="lblNumero" text="\%lblNumero" GridPane.rowIndex="2" />
-            <Label fx:id="lblPortal" text="\%lblPortal" GridPane.rowIndex="3" />
-            <Label fx:id="lblEscalera" text="\%lblEscalera" GridPane.rowIndex="4" />
-            <Label fx:id="lblPlanta" text="\%lblPlanta" GridPane.rowIndex="5" />
-            <Label fx:id="lblPuerta" text="\%lblPuerta" GridPane.rowIndex="6" />
-            <Label fx:id="lblLocalidad" text="\%lblLocalidad" GridPane.rowIndex="7" />
-            <Label fx:id="lblProvincia" text="\%lblProvincia" GridPane.rowIndex="8" />
-            <Label fx:id="lblCP" text="\%lblCP" GridPane.rowIndex="9" />
-            <Label fx:id="lblTelf" text="\%lblTelf" GridPane.rowIndex="10" />
-            <Label fx:id="lblEmail" text="\%lblEmail" GridPane.rowIndex="11" />
-            <TextField fx:id="tTipoVia" GridPane.columnIndex="1" />
-            <TextField fx:id="tVia" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tNumero" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tPortal" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="tEscalera" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="tPlanta" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="tPuerta" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="tLocalidad" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="tProvincia" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="tCP" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <TextField fx:id="tTelf" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <TextField fx:id="tEmail" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <Label fx:id="lblUserData" maxWidth="1.7976931348623157E308" text="\%lblUserData" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="dark" />
+                  <String fx:value="titleText" />
+               </styleClass>
+            </Label>
+            <Label fx:id="lblUserAddress" maxWidth="1.7976931348623157E308" text="\%lblUserAddress" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="titleText" />
+                  <String fx:value="dark" />
+               </styleClass>
+            </Label>
+            <Label fx:id="lblNombre" text="\%lblNombre" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="tNombre" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <Label fx:id="lblApellido1" text="\%lblApellido1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="tApellido1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Label fx:id="lblApellido2" text="\%lblApellido2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="tApellido2" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <Label fx:id="lblTipoDocumento" text="lblTipoDocumento" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <ComboBox fx:id="cbTipoDocumento" maxWidth="1.7976931348623157E308" promptText="\%phTipoDocumento" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <Label fx:id="lblTipoVia" text="\%lblTipoVia" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="tTipoVia" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblVia" text="\%lblVia" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="tVia" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblNumero" text="\%lblNumero" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <TextField fx:id="tNumero" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblPortal" text="\%lblPortal" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <TextField fx:id="tPortal" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblDocumento" text="\%lblDocumento" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="tDocumento" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <Label fx:id="lblUsername" text="\%lblUsername" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="tUsername" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+            <Label fx:id="lblPassword" text="\%lblPassword" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <PasswordField fx:id="pPassword" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+            <Label fx:id="lblConfirmPassword" text="\%lblConfirmPassworld" GridPane.rowIndex="9">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <PasswordField fx:id="pConfirmPassword" onKeyTyped="#handleCheckPass" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+            <Label fx:id="lblPswError" alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" styleClass="errorText" text="\%pwdError" textAlignment="RIGHT" wrapText="true" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lblEscalera" text="\%lblEscalera" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <TextField fx:id="tEscalera" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblPlanta" text="\%lblPlanta" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <TextField fx:id="tPlanta" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblPuerta" text="\%lblPuerta" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+            <TextField fx:id="tPuerta" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblLocalidad" text="\%lblLocalidad" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+            <TextField fx:id="tLocalidad" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblProvincia" text="\%lblProvincia" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+            <TextField fx:id="tProvincia" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="10">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblCP" text="\%lblCP" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+            <TextField fx:id="tCP" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="11">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblTelf" text="\%lblTelf" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+            <TextField fx:id="tTelf" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="12">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblEmail" text="\%lblEmail" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+            <TextField fx:id="tEmail" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="13">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="lblValidationErrors" alignment="BOTTOM_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="errorText" text="\%validationError" textAlignment="RIGHT" wrapText="true" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.rowIndex="11" GridPane.rowSpan="4" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" prefWidth="269.0" spacing="6.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="14">
+               <children>
+                  <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#handleRegister" text="\%register">
+                     <styleClass>
+                        <String fx:value="btnGreen" />
+                        <String fx:value="btn" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnBack" layoutX="681.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleBack" text="\%back">
+                     <styleClass>
+                        <String fx:value="btnBlue" />
+                        <String fx:value="btn" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnExit" layoutX="734.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleExit" text="\%exit">
+                     <styleClass>
+                        <String fx:value="btnRed" />
+                        <String fx:value="btn" />
+                     </styleClass>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="10.0" right="10.0" />
+               </GridPane.margin>
+            </HBox>
          </children>
       </GridPane>
-      <GridPane hgap="6.0" layoutX="12.0" layoutY="118.0" prefHeight="240.0" prefWidth="376.0" vgap="3.0">
-        <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="183.0" minWidth="10.0" prefWidth="166.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="210.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label fx:id="lblNombre" text="\%lblNombre" />
-            <Label fx:id="lblApellido1" text="\%lblApellido1" GridPane.rowIndex="1" />
-            <Label fx:id="lblApellido2" text="\%lblApellido2" GridPane.rowIndex="2" />
-            <Label fx:id="lblTipoDocumento" text="lblTipoDocumento" GridPane.rowIndex="3" />
-            <Label fx:id="lblDocumento" text="\%lblDocumento" GridPane.rowIndex="4" />
-            <Label fx:id="lblUsername" text="\%lblUsername" GridPane.rowIndex="5" />
-            <Label fx:id="lblPassword" text="\%lblPassword" GridPane.rowIndex="6" />
-            <Label fx:id="lblConfirmPassword" text="\%lblConfirmPassworld" GridPane.rowIndex="7" />
-            <ComboBox fx:id="cbTipoDocumento" prefHeight="25.0" prefWidth="198.0" promptText="\%phTipoDocumento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <PasswordField fx:id="pPassword" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <PasswordField fx:id="pConfirmPassword" onKeyTyped="#handleCheckPass" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="tNombre" GridPane.columnIndex="1" />
-            <TextField fx:id="tApellido1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tApellido2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tDocumento" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="tUsername" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-         </children>
-      </GridPane>
-      <HBox alignment="BOTTOM_RIGHT" layoutX="474.0" layoutY="561.0" prefHeight="25.0" prefWidth="269.0" spacing="6.0">
-         <children>
-            <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#handleRegister" text="\%register">
-               <styleClass>
-                  <String fx:value="btnGreen" />
-                  <String fx:value="btn" />
-               </styleClass>
-            </Button>
-            <Button fx:id="btnBack" layoutX="681.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleBack" text="\%back">
-               <styleClass>
-                  <String fx:value="btnBlue" />
-                  <String fx:value="btn" />
-               </styleClass>
-            </Button>
-            <Button fx:id="btnExit" layoutX="734.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleExit" text="\%exit">
-               <styleClass>
-                  <String fx:value="btnRed" />
-                  <String fx:value="btn" />
-               </styleClass>
-            </Button>
-         </children>
-      </HBox>
-      <Label fx:id="lblPswError" alignment="TOP_LEFT" layoutX="177.0" layoutY="367.0" prefHeight="82.0" prefWidth="209.0" text="\%pwdError" wrapText="true" />
-      <Label fx:id="lblValidationErrors" alignment="TOP_LEFT" layoutY="449.0" prefHeight="151.0" prefWidth="376.0" text="\%validationError" wrapText="true" />
    </children>
 </AnchorPane>

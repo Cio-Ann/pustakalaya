@@ -65,8 +65,6 @@ public class IdiomaController extends BaseController {
 
 	@FXML
 	void handleDelete(ActionEvent event) {
-		log.info("se pulsó el botón borrar");
-
 		if (isIdiomaPurgeable()) {
 			if (showConfirmation(resourceBundle.getString("admin.idioma.delete.confirm.title"),
 					resourceBundle.getString("admin.idioma.delete.confirm.header"),
@@ -79,13 +77,11 @@ public class IdiomaController extends BaseController {
 
 	@FXML
 	void handleExit(ActionEvent event) {
-		log.info("se pulsó el botón salir");
 		closeDialog(event);
 	}
 
 	@FXML
 	void handleSave(ActionEvent event) {
-		log.info("se pulsó el botón guardar");
 		if (validateGenero()) {
 			saveIdioma();
 			sendAlert(AlertType.INFORMATION, resourceBundle.getString("admin.idioma.save.success.title"),
@@ -93,7 +89,6 @@ public class IdiomaController extends BaseController {
 					resourceBundle.getString("admin.idioma.save.success.msg"));
 			closeDialog(event);
 		}
-
 	}
 
 	@Override
@@ -112,8 +107,7 @@ public class IdiomaController extends BaseController {
 	/**
 	 * Metodo para cerrar la ventana.
 	 * 
-	 * @param event
-	 *            ActionEvent evento que inicia el cierre de la ventana.
+	 * @param event ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
 		final Node source = (Node) event.getSource();
@@ -124,8 +118,7 @@ public class IdiomaController extends BaseController {
 	/**
 	 * Setter del objeto Idioma del formulario.
 	 * 
-	 * @param genero
-	 *            Genero objeto a guardar
+	 * @param genero Genero objeto a guardar
 	 */
 	public void setIdioma(Idioma idioma) {
 		this.idioma = idioma;
@@ -199,5 +192,4 @@ public class IdiomaController extends BaseController {
 			btnDelete.setDisable(true);
 		}
 	}
-
 }

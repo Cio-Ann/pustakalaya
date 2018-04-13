@@ -1,39 +1,34 @@
 package cgr.cgfsdam.pustakalaya.controller.lector;
 
+import java.io.IOException;
 import java.net.URL;
-import java.text.MessageFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
+import cgr.cgfsdam.pustakalaya.controller.admin.RecursoController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
-import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
-import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
-import cgr.cgfsdam.pustakalaya.model.loans.EstadoReservaEnum;
-import cgr.cgfsdam.pustakalaya.model.loans.Reserva;
-import cgr.cgfsdam.pustakalaya.model.users.Usuario;
+import cgr.cgfsdam.pustakalaya.model.utility.FormObjects;
 import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
 import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
-import cgr.cgfsdam.pustakalaya.service.loans.ReservaService;
 import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 import cgr.cgfsdam.pustakalaya.utils.MyUtils;
+import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -44,9 +39,9 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -83,22 +78,16 @@ public class SearchController extends BaseController {
 	private RecursoService recursoService;
 
 	/**
-	 * Servicio de la entidad reserva.
+	 * Servicio de la entidad Usuario.
 	 */
 	@Autowired
-	private ReservaService reservaService;
+	private UsuarioService usuarioService;
 
 	/**
 	 * Clase para extraer los textos localizados.
 	 */
 	@Autowired
 	private ResourceBundle resourceBundle;
-	
-	/**
-	 * 
-	 */
-	@Autowired
-	private UsuarioService usuarioService;
 
 	@FXML
 	private Label lblViewTitle;
@@ -164,10 +153,7 @@ public class SearchController extends BaseController {
 	private TableColumn<Recurso, Idioma> colLang;
 
 	@FXML
-	private TableColumn<Recurso, Boolean> colDisp;
-
-	@FXML
-	private TableColumn<Recurso, Boolean> ColAction;
+	private TableColumn<Recurso, Boolean> colAction;
 
 	@FXML
 	private Button btnClean;
@@ -374,7 +360,7 @@ public class SearchController extends BaseController {
 	}
 
 	/**
-	 * Carga los recursos de base de datos en el compbo de recursos
+	 * Carga los recursos de base de datos en el combo de recursos
 	 */
 	private void loadGeneros() {
 
@@ -459,14 +445,12 @@ public class SearchController extends BaseController {
 		tvResults.setPlaceholder(new Label(""));
 
 		colId.setText(resources.getString("lector.searcView.resultados.table.id"));
-		colId.setStyle( "-fx-alignment: CENTER;");
+		colId.setStyle("-fx-alignment: CENTER;");
 		colTitle.setText(resources.getString("lector.searcView.resultados.table.titulo"));
 		colAnno.setText(resources.getString("lector.searcView.resultados.table.year"));
-		colAnno.setStyle( "-fx-alignment: CENTER;");
+		colAnno.setStyle("-fx-alignment: CENTER;");
 		colLang.setText(resources.getString("lector.searcView.resultados.table.language"));
-		colDisp.setText(resources.getString("lector.searcView.resultados.table.disponible"));
-		ColAction.setText(resources.getString("lector.searcView.resultados.table.action"));
-		ColAction.setStyle( "-fx-alignment: CENTER;");
+		colAction.setText("");
 
 		colId.setCellValueFactory(new PropertyValueFactory<>("idRecurso"));
 		colTitle.setCellValueFactory(new PropertyValueFactory<>("titulo"));
@@ -476,8 +460,9 @@ public class SearchController extends BaseController {
 
 				@Override
 				protected void updateItem(Idioma item, boolean empty) {
+
 					super.updateItem(item, empty);
-					
+
 					if (item == null || empty) {
 						setText(null);
 					} else {
@@ -505,61 +490,47 @@ public class SearchController extends BaseController {
 			};
 		});
 
-		colDisp.setCellFactory(column -> {
-			return new TableCell<Recurso, Boolean>() {
+//		colAction.setCellFactory(column -> {
+//			return new TableCell<Recurso, Boolean>() {
+//
+//				Button btnDetalles = new Button();
+//
+//				@Override
+//				protected void updateItem(Boolean item, boolean empty) {
+//
+//					super.updateItem(item, empty);
+//
+//					log.info("Actualiza celda de action -> item = " + item + "/empty = " + empty);
+//
+//					if (item == null || empty) {
+//						setGraphic(null);
+//						setText(null);
+//					} else {
+//						Recurso currentRecurso = getTableView().getItems().get(getIndex());
+//
+//						btnDetalles
+//								.setText(resourceBundle.getString("lector.searcView.resultados.table.action.detalles"));
+//						btnDetalles.getStyleClass().add("btnBlue");
+//						btnDetalles.getStyleClass().add("btn");
+//						btnDetalles.setStyle("-fx-min-width:0");
+//						btnDetalles.setOnAction(e -> {
+//							showResourceDetails(currentRecurso);
+//						});
+//
+//						setGraphic(btnDetalles);
+//						setAlignment(Pos.CENTER);
+//						setText(null);
+//
+//					}
+//
+//				}
+//			};
+//		});
 
-				//
-				// final Button btnReservar = new Button();
-				// final Button btnRetirar = new Button();
-				//
-				@Override
-				protected void updateItem(Boolean item, boolean empty) {
-
-					super.updateItem(item, empty);
-
-					String out = null;
-
-					if (!empty) {
-						// calculo si el recurso tiene ejemplares para prestar
-						Recurso current = getTableView().getItems().get(getIndex());
-						long numEjemplares =
-								current.getEjemplares().stream().filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO
-										&& e.getEstado() != EstadoEnum.EN_RESTAURACION).count();
-
-						if (numEjemplares == 0) {
-							out = resourceBundle.getString("lector.search.disp.unavailable");
-						} else {
-							// calculo si alguno de los ejemplares esta disponible
-							long noPrestado = recursoService.countEjemplaresNoPrestados(current);
-
-							if (noPrestado > 0) {
-								// si hay ejemplares en prestamo
-								out = MessageFormat.format(resourceBundle.getString("lector.search.disp.available"),
-										noPrestado);
-							} else {
-								// si no hay ejemplares en prestamo muestra la fecha de devolución y el número de
-								// reservas
-								Long reservasPendientes = recursoService.countReservasPendientes(current);
-								Date fechaPrimeraDevolucion = recursoService.getProximaDevolucion(current);
-
-								out = MessageFormat.format(resourceBundle.getString("lector.search.disp.pending"),
-										reservasPendientes, MyUtils.dateToShort(fechaPrimeraDevolucion));
-							}
-
-						}
-
-					}
-					setText(out);
-
-				}
-			};
-		});
-
-		ColAction.setCellFactory(column -> {
+		colAction.setCellFactory(column -> {
 			return new TableCell<Recurso, Boolean>() {
 
 				final Button btnReservar = new Button();
-				final Button btnRetirar	 = new Button();
 
 				@Override
 				protected void updateItem(Boolean item, boolean empty) {
@@ -570,61 +541,39 @@ public class SearchController extends BaseController {
 						setGraphic(null);
 						setText(null);
 					} else {
-						Usuario currentUsuario = getUsuario();
 						Recurso currentRecurso = getTableView().getItems().get(getIndex());
 
-						// calculo si el recurso tiene ejemplares para prestar
-						long numEjemplares = currentRecurso.getEjemplares().stream()
-								.filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO
-										&& e.getEstado() != EstadoEnum.EN_RESTAURACION)
-								.count();
+						
+						btnReservar.setDisable(false);
+						btnReservar.setText(resourceBundle.getString("lector.searcView.resultados.table.action.detalles"));
 
-						// caso 1 no hay ejemplares prestables
-						if (numEjemplares == 0) {
-							setGraphic(null);
-							setText(null);
-						} else {
-							// caso 2 el recurso ya está reservado por el usuario
-							Reserva tempReserva = reservaService.findByRecursoAndUsuarioAndEstadoReserva(currentRecurso,
-									currentUsuario, EstadoReservaEnum.WAITING);
+						btnReservar.getStyleClass().add("btnBlue");
+						btnReservar.getStyleClass().add("btn");
+						btnReservar.setStyle("-fx-min-width:0");
+						btnReservar.setOnAction(e -> {
+								showResourceDetails(currentRecurso);
+						});
 
-							if (tempReserva != null) {
-								btnReservar.setDisable(true);
-								btnReservar.setText(resourceBundle
-										.getString("lector.searcView.resultados.table.action.alreadyBooked"));
-							} else {
-
-								btnReservar.setDisable(false);
-								btnReservar.setText(
-										resourceBundle.getString("lector.searcView.resultados.table.action.book"));
-
-							}
-
-							btnReservar.getStyleClass().add("btnBlue");
-							btnReservar.getStyleClass().add("btn");
-							btnReservar.setStyle("-fx-min-width:0");
-							btnReservar.setOnAction(e -> {
-								reservarRecurso(currentUsuario, currentRecurso);
-							});
-
-							setGraphic(btnReservar);
-							setAlignment(Pos.CENTER);
-							setText(null);
-						}
+						setGraphic(btnReservar);
+						setAlignment(Pos.CENTER);
+						setText(null);
+						
 					}
+					
 
 				}
 			};
 		});
 
 		tvResults.getColumns().clear();
-		tvResults.getColumns().addAll(colId, colTitle, colAnno, colLang, colDisp, ColAction);
+		tvResults.getColumns().addAll(colId, colTitle, colAnno, colLang, colAction);
 	}
 
 	/**
 	 * Carga el usuario del contexto de seguridad de Spring.
 	 */
 	private void loadUsuarioFromSecurity() {
+
 		if (getUsuario() == null) {
 			log.info("No existe usuario en el controller");
 			String securityUser = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -655,6 +604,7 @@ public class SearchController extends BaseController {
 
 	/**
 	 * Comprueba si hay criterios de busqueda en el formulario.
+	 * 
 	 * @return boolean true si todos los campos del formulario están vacios, o false en caso contrario
 	 */
 	private boolean isEmptyForm() {
@@ -705,35 +655,29 @@ public class SearchController extends BaseController {
 	}
 
 	/**
-	 * Realiza una reserva del recurso selecionado para el usuario seleccionado.
+	 * Muestra la ventana de detalles del recurso.
 	 * 
-	 * @param usuario Usuario entidad que participa en la reserva
-	 * @param recurso Recurso entidad que participa en la reserva
+	 * @param recurso
 	 */
-	private void reservarRecurso(Usuario usuario, Recurso recurso) {
+	private void showResourceDetails(Recurso recurso) {
 
-		Reserva reserva = new Reserva(getUsuario(), recurso, new Date(), EstadoReservaEnum.WAITING);
+		try {
 
-		/*
-		 * si hay ejemplares disponibles en este momento (mas ejemplares que ejemplares prestados o reservados),
-		 * muestra un popup indicando que se puede recoger.
-		 */
-		long numEjemplares = recurso.getEjemplares().stream()
-				.filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO && e.getEstado() != EstadoEnum.EN_RESTAURACION)
-				.count();
-		long prestados = recursoService.countEjemplaresPrestados(recurso);
-		long reservados = recursoService.countReservasPendientes(recurso);
+			FormObjects formData = getFormOjects(FxmlView.L_RECURSO_DETALLES.getFxmlFile());
+			((ResourceDetail) formData.getController()).setRecurso(recurso);
 
-		//hago la reserva despues del cálculo
-		reservaService.save(reserva);
+			Stage form = new Stage();
+			form.setTitle(FxmlView.L_RECURSO_DETALLES.getTitle());
+//			form.setTitle(resourceBundle.getString("lector.search.detalles.title"));
+			form.setScene(new Scene(formData.getParent()));
+			form.initModality(Modality.APPLICATION_MODAL);
+			form.showAndWait();
 
-		if (numEjemplares > (prestados + reservados)) {
-			this.sendAlert(AlertType.INFORMATION, resourceBundle.getString("lector.searcView.resultados.table.action.available.title"),
-					resourceBundle.getString("lector.searcView.resultados.table.action.available.header"),
-					resourceBundle.getString("lector.searcView.resultados.table.action.available.msg"));
+			log.info("Volvemos del fomrulario de detalles");
+		} catch (IOException e) {
+			log.info("No se pudo abrir el fichero fxml");
+			e.printStackTrace();
 		}
-		//recarga los resources para que se visualice la reserva
-		loadResources();
 	}
 
 }

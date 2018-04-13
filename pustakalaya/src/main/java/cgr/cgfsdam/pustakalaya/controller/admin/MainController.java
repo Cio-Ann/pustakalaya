@@ -41,21 +41,15 @@ public class MainController  extends BaseController{
 	@Lazy
 	@Autowired
 	private StageManager stageManager;
+	
+	@FXML
+	private Label username;
 
     @FXML
     private Button btnUsers;
 
     @FXML
     private Button btnFunds;
-
-    @FXML
-    private Button btnBookings;
-
-    @FXML
-    private Button btnLoans;
-
-    @FXML
-    private Button btnNotications;
 
     @FXML
     private Button btnChangeAccount;
@@ -67,16 +61,11 @@ public class MainController  extends BaseController{
     private AnchorPane mainPanel;
 
     @FXML
-    private Label username;
-
-    @FXML
     void handleUsers(ActionEvent event) {
 		clearAllSelectedBtn();
 		setSelectedBtn(btnUsers);
 
-		// carga el panel correspondiente
 		loadChildPanel(FxmlView.A_USERS.getFxmlFile());
-
     }
 
     @FXML
@@ -84,40 +73,11 @@ public class MainController  extends BaseController{
 		clearAllSelectedBtn();
 		setSelectedBtn(btnFunds);
 
-		// carga el panel correspondiente
 		loadChildPanel(FxmlView.A_RESOURCES.getFxmlFile());
     }
 
     @FXML
-    void handleBookings(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnBookings);
-
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.A_BOOKINGS.getFxmlFile());
-    }
-
-    @FXML
-    void handleLoans(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnLoans);
-
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.A_LOANS.getFxmlFile());
-    }
-
-    @FXML
-    void handleNotifications(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnUsers);
-
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.A_USERS.getFxmlFile());
-    }
-
-    @FXML
     void handleChangeAccount(ActionEvent event) {
-		log.info("se pulsó el botón Cambiar de cuenta");
 		// vacia el contexto de seguridad
 		SecurityContextHolder.clearContext();
 		// redirige a la pantalla de login
@@ -126,7 +86,6 @@ public class MainController  extends BaseController{
 
     @FXML
     void handleExit(ActionEvent event) {
-		log.info("se pulsó el botón salir");
 		if (showConfirmation(resourceBundle.getString("app.exit.title"), resourceBundle.getString("app.exit.header"),
 				resourceBundle.getString("app.exit.text"))) {
 			Platform.exit();
@@ -135,7 +94,6 @@ public class MainController  extends BaseController{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
 			String securityUser = SecurityContextHolder.getContext().getAuthentication().getName();
 			log.info("El usuario autenticado es: " + securityUser);
@@ -145,9 +103,6 @@ public class MainController  extends BaseController{
 			username.setText(getUsuario().getUsername());
 			btnUsers.setText(resources.getString("admin.btn.users"));
 			btnFunds.setText(resources.getString("admin.btn.funds"));
-			btnBookings.setText(resources.getString("admin.btn.bookings"));
-			btnLoans.setText(resources.getString("admin.btn.loans"));
-			btnNotications.setText(resources.getString("admin.btn.notifications"));
 			btnChangeAccount.setText(resources.getString("admin.btn.change.account"));
 			btnExit.setText(resources.getString("admin.btn.exit"));
 
@@ -190,18 +145,6 @@ public class MainController  extends BaseController{
 		btnFunds.getStyleClass().remove("menu-button-on");
 		btnFunds.getStyleClass().add("menu-button-off");
 		btnFunds.setDisable(false);
-
-		btnBookings.getStyleClass().remove("menu-button-on");
-		btnBookings.getStyleClass().add("menu-button-off");
-		btnBookings.setDisable(false);
-
-		btnLoans.getStyleClass().remove("menu-button-on");
-		btnLoans.getStyleClass().add("menu-button-off");
-		btnLoans.setDisable(false);
-
-		btnNotications.getStyleClass().remove("menu-button-on");
-		btnNotications.getStyleClass().add("menu-button-off");
-		btnNotications.setDisable(false);
 
 		btnChangeAccount.getStyleClass().remove("menu-button-on");
 		btnChangeAccount.getStyleClass().add("menu-button-off");

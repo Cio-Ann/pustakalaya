@@ -81,35 +81,4 @@ public class RecursoServiceImpl implements RecursoService {
 		return recursoRepository.findAll();
 	}
 
-	@Override
-	public Long countEjemplaresPrestados(Recurso recurso) {
-
-		return recursoRepository.countEjemplaresPrestados(recurso.getIdRecurso());
-	}
-
-	@Override
-	public Long countEjemplaresNoPrestados(Recurso recurso) {
-
-		Long prestables = recurso.getEjemplares().stream()
-				.filter(e -> e.getEstado() != EstadoEnum.DESCATALOGADO && e.getEstado() != EstadoEnum.EN_RESTAURACION)
-				.count();
-		Long prestados = countEjemplaresPrestados(recurso);
-		Long resultado = prestables - prestados;
-		resultado = resultado < 0 ? 0 : resultado;
-
-		return resultado;
-	}
-
-	@Override
-	public Long countReservasPendientes(Recurso recurso) {
-
-		return recursoRepository.countReservasPendientes(recurso);
-	}
-
-	@Override
-	public Date getProximaDevolucion(Recurso recurso) {
-
-		return recursoRepository.getProximaDevolucion(recurso.getIdRecurso());
-	}
-
 }

@@ -73,8 +73,6 @@ public class GeneroController extends BaseController {
 	 */
 	@FXML
 	void handleDelete(ActionEvent event) {
-		log.info("se pulsó el botón borrar");
-
 		if (isGeneroPurgeable()) {
 			if (showConfirmation(resourceBundle.getString("admin.genero.delete.confirm.title"),
 					resourceBundle.getString("admin.genero.delete.confirm.header"),
@@ -87,13 +85,11 @@ public class GeneroController extends BaseController {
 
 	@FXML
 	void handleExit(ActionEvent event) {
-		log.info("se pulsó el botón salir");
 		closeDialog(event);
 	}
 
 	@FXML
 	void handleSave(ActionEvent event) {
-		log.info("se pulsó el botón guardar");
 		if (validateGenero()) {
 			saveGenero();
 			sendAlert(AlertType.INFORMATION, resourceBundle.getString("admin.genero.save.success.title"),
@@ -101,7 +97,6 @@ public class GeneroController extends BaseController {
 					resourceBundle.getString("admin.genero.save.success.msg"));
 			closeDialog(event);
 		}
-
 	}
 
 	@Override
@@ -118,8 +113,7 @@ public class GeneroController extends BaseController {
 	/**
 	 * Metodo para cerrar la ventana.
 	 * 
-	 * @param event
-	 *            ActionEvent evento que inicia el cierre de la ventana.
+	 * @param event ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
 		final Node source = (Node) event.getSource();
@@ -130,8 +124,7 @@ public class GeneroController extends BaseController {
 	/**
 	 * Setter del objeto genero del formulario.
 	 * 
-	 * @param genero
-	 *            Genero objeto a guardar
+	 * @param genero Genero objeto a guardar
 	 */
 	public void setGenero(Genero genero) {
 		this.genero = genero;
@@ -184,7 +177,6 @@ public class GeneroController extends BaseController {
 		return ret;
 	}
 
-
 	/**
 	 * Guarda el género del formulario en el formulario
 	 */
@@ -213,6 +205,5 @@ public class GeneroController extends BaseController {
 		} else {
 			btnDelete.setDisable(true);
 		}
-
 	}
 }

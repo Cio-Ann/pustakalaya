@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.print.attribute.standard.PresentationDirection;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,28 +15,19 @@ import org.springframework.context.annotation.Bean;
 
 import cgr.cgfsdam.pustakalaya.config.StageManager;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
-import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
-import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
-import cgr.cgfsdam.pustakalaya.model.loans.EstadoReservaEnum;
-import cgr.cgfsdam.pustakalaya.model.loans.Prestamo;
-import cgr.cgfsdam.pustakalaya.model.loans.Reserva;
 import cgr.cgfsdam.pustakalaya.model.users.Direccion;
 import cgr.cgfsdam.pustakalaya.model.users.Role;
 import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
 import cgr.cgfsdam.pustakalaya.model.users.Usuario;
-import cgr.cgfsdam.pustakalaya.repository.funds.RecursoRepository;
 import cgr.cgfsdam.pustakalaya.repository.users.RoleRepository;
 import cgr.cgfsdam.pustakalaya.repository.users.TipoDocumentoRepository;
 import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
-import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
 import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
-import cgr.cgfsdam.pustakalaya.service.loans.PrestamoService;
-import cgr.cgfsdam.pustakalaya.service.loans.ReservaService;
 import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.application.Application;
@@ -125,12 +114,6 @@ public class PustakalayaApplication extends Application {
 	GeneroService			generoService;
 	@Autowired
 	IdiomaService			idiomaService;
-	@Autowired
-	EjemplarService			ejemplarService;
-	@Autowired
-	PrestamoService			prestamoService;
-	@Autowired
-	ReservaService			reservaService;
 
 	@Bean
 	InitializingBean sendDatabase() {
@@ -210,72 +193,18 @@ public class PustakalayaApplication extends Application {
 
 			// recursos
 			// -------------------------------------------------------------------------------------------------
-			Recurso recurso1 = new Recurso("Recurso 1", null, new Date(), idioma1, null, 111, "111111111", null);
+			Recurso recurso1 = new Recurso("Recurso 1", null, new Date(), idioma1, null, 111, "111111111");
 			recurso1.addAutores(autor1);
 			recurso1.addGeneros(genero1);
-			Ejemplar ej11 = new Ejemplar("r1-e1", EstadoEnum.BUENO);
-			Ejemplar ej12 = new Ejemplar("r1-e2", EstadoEnum.BUENO);
-			Ejemplar ej13 = new Ejemplar("r1-e3", EstadoEnum.BUENO);
-			recurso1.addEjemplar(ej11);
-			recurso1.addEjemplar(ej12);
-			recurso1.addEjemplar(ej13);
 			recursoService.save(recurso1);
-			Recurso recurso2 = new Recurso("Recurso 2", null, new Date(), idioma2, null, 222, "111111112", null);
-			recurso1.addAutores(autor2);
-			recurso1.addGeneros(genero2);
-			Ejemplar ej21 = new Ejemplar("r2-e1", EstadoEnum.DESCATALOGADO);
-			Ejemplar ej22 = new Ejemplar("r2-e2", EstadoEnum.EN_RESTAURACION);
-			Ejemplar ej23 = new Ejemplar("r2-e3", EstadoEnum.BUENO);
-			recurso2.addEjemplar(ej21);
-			recurso2.addEjemplar(ej22);
-			recurso2.addEjemplar(ej23);
+			Recurso recurso2 = new Recurso("Recurso 2", null, new Date(), idioma2, null, 222, "111111112");
+			recurso2.addAutores(autor2);
+			recurso2.addGeneros(genero2);
 			recursoService.save(recurso2);
-			Recurso recurso3 = new Recurso("Recurso 3", null, new Date(), idioma3, null, 333, "111111113", null);
+			Recurso recurso3 = new Recurso("Recurso 3", null, new Date(), idioma3, null, 333, "111111113");
 			recurso3.addAutores(autor3);
 			recurso3.addGeneros(genero3);
-			Ejemplar ej31 = new Ejemplar("r3-e1", EstadoEnum.BUENO);
-			Ejemplar ej32 = new Ejemplar("r3-e2", EstadoEnum.BUENO);
-			Ejemplar ej33 = new Ejemplar("r3-e3", EstadoEnum.BUENO);
-			recurso3.addEjemplar(ej31);
-			recurso3.addEjemplar(ej32);
-			recurso3.addEjemplar(ej33);
 			recursoService.save(recurso3);
-
-			cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, -1);
-			Date pasada = cal.getTime();
-			cal.add(Calendar.DATE, 15);
-			Date futura = cal.getTime();
-			cal.add(Calendar.DATE, -30);
-			Date older = cal.getTime();
-
-			// reservas ------------------------------------------------------------------------------------------------
-			Reserva rr1 = new Reserva(lector, recursoService.findById(2L), new Date(), EstadoReservaEnum.WAITING);
-			reservaService.save(rr1);
-			Reserva rr2 = new Reserva(lector,  recursoService.findById(2L), older, EstadoReservaEnum.CONSUMED);
-			reservaService.save(rr2);
-
-			// prestamos -----------------------------------------------------------------------------------------------
-			/* el recurso 1 tiene todos los ejemplares prestados y uno pendiente de devolución (sancion) */
-			Prestamo pr11 = new Prestamo(pasada, futura, null, lector, ej11, null); // pendiente de devolución ok
-			prestamoService.save(pr11);
-			Prestamo pr12 = new Prestamo(older, pasada, null, lector, ej12, null); // pendiente de devolución ko
-			prestamoService.save(pr12);
-			Prestamo pr13 = new Prestamo(pasada, futura, null, lector, ej13, null); // pendiente de devolución ok
-			prestamoService.save(pr11);
-
-			/* el recurso 2 tiene todos los ejemplares prestados ok */
-			Prestamo pr21 = new Prestamo(pasada, futura, null, lector, ej21, null); // pendiente de devolución ok
-			prestamoService.save(pr21);
-			Prestamo pr22 = new Prestamo(pasada, futura, null, lector, ej22, null); // pendiente de devolución ok
-			prestamoService.save(pr22);
-			Prestamo pr23 = new Prestamo(pasada, futura, null, lector, ej23, null); // pendiente de devolución ok
-			prestamoService.save(pr23);
-
-			/* el recurso 3 tiene un recurso prestado ok y otro devuelto ok */
-			Prestamo pr31 = new Prestamo(pasada, futura, null, lector, ej31, null); // pendiente de devolución ok
-			prestamoService.save(pr31);
-			Prestamo pr32 = new Prestamo(older, pasada, pasada, lector, ej32, null); // devuelto
 
 		};
 	}

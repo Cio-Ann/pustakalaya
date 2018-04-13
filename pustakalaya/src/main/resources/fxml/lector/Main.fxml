@@ -46,8 +46,6 @@
                            </children>
                         </AnchorPane>
                         <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#handleProfile" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%profile" />
-                        <Button fx:id="btnStatus" mnemonicParsing="false" onAction="#handleStatus" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%status" />
-                        <Button fx:id="btnRecord" mnemonicParsing="false" onAction="#handleRecord" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%record" />
                         <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#handleSearch" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%search" />
                         <Button fx:id="btnChangeAccount" mnemonicParsing="false" onAction="#handleChangeAccount" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%changeAccount" />
                         <Button fx:id="btnExit" mnemonicParsing="false" onAction="#handleExit" prefHeight="50.0" prefWidth="200.0" styleClass="menu-button-off" text="\%exit" />

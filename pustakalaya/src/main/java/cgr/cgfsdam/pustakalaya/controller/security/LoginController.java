@@ -51,6 +51,9 @@ public class LoginController implements Initializable {
 
 	@Autowired
 	AuthenticationManager autenticationManager;
+	
+	@Autowired
+	ResourceBundle resourceBundle;
 
 	@Lazy
 	@Autowired
@@ -152,7 +155,7 @@ public class LoginController implements Initializable {
 		log.info("Intento fallido de login, user = " + getUsername() + ", password= " + getPassword());
 		log.error(e.getLocalizedMessage());
 
-		lblLogin.setText("Login Failed.");
+		lblLogin.setText(resourceBundle.getString("login.Failed"));
 	}
 
 	/**

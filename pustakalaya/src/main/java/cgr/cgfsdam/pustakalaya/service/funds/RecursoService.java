@@ -3,14 +3,10 @@ package cgr.cgfsdam.pustakalaya.service.funds;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
-import cgr.cgfsdam.pustakalaya.repository.funds.specifications.RecursoSpecifications;
 
 public interface RecursoService {
 
@@ -48,7 +44,7 @@ public interface RecursoService {
 	 *            Autor autor a buscar en los recursos
 	 * @return List<Recurso> entidades coincidentes
 	 */
-	List<Recurso> findByAutor(@Param("autor") Autor autor);
+	List<Recurso> findByAutor(Autor autor);
 
 	/**
 	 * Busca todos los recursos que coincidan con los datos del formulario dados.
@@ -66,7 +62,7 @@ public interface RecursoService {
 	 */
 	List<Recurso> findByFormData(String titulo, String isbn, Autor autor, Genero genero, Idioma idioma, Date desde,
 			Date hasta);
-	
+
 	/**
 	 * Busca un recurso por su id.
 	 * 
@@ -74,14 +70,14 @@ public interface RecursoService {
 	 * @return Recurso entidad coincidente.
 	 */
 	Recurso findById(Long idRecurso);
-	
+
 	/**
 	 * Guarda el recurso dado en la capa de persistencia.
 	 * 
 	 * @param recurso Recurso entidad a persistir
 	 */
 	void save(Recurso recurso);
-	
+
 	/**
 	 * Elimina el recurso dado de la base de datos.
 	 * 
@@ -95,37 +91,5 @@ public interface RecursoService {
 	 * @return List<Recurso> todos los recursos de bbdd
 	 */
 	List<Recurso> findAll();
-
-	/**
-	 * Cuenta el número de ejemplares de un recurso dado que están en prestamo actualmente
-	 * 
-	 * @param recurso Recurso entidad para la que contar los ejemplares
-	 * @return long número de ejemplares actualmente en prestamo
-	 */
-	Long countEjemplaresPrestados(Recurso recurso);
-	
-	/**
-	 * Cuenta el número de ejemplares disponibles que no están en prestamo actualmente.
-	 * @param recurso Recurso entidad para la que contar los ejemplares
-	 * @return long número de ejemplares disponibles y a disposición
-	 */
-	Long countEjemplaresNoPrestados(Recurso recurso);
-
-	/**
-	 * Cuenta el número de reservas pendientes sobre el ejemplar dado.
-	 * 
-	 * @param recurso Recurso entidad para la que buscar reservas
-	 * @return Long número de reservas vigentes
-	 */
-	Long countReservasPendientes(Recurso recurso);
-
-	/**
-	 * Devuelve la fecha de la proxima devolución prevista de un ejemplar del recurso.
-	 * 
-	 * @param recurso Recurso entidad a evaluar
-	 * @return Date fecha de devolución del proximo ejemplar del recurso
-	 */
-	Date getProximaDevolucion(Recurso recurso);
-	
 
 }

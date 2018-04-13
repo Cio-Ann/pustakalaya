@@ -2,11 +2,7 @@ package cgr.cgfsdam.pustakalaya.controller.admin;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -16,13 +12,11 @@ import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
-import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.model.utility.FormObjects;
 import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
-import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
 import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
@@ -56,11 +50,6 @@ import javafx.util.StringConverter;
 public class RecursoController extends BaseController {
 
 	/**
-	 * Constante para concatenaciones en la muestra de ejemplares.
-	 */
-	private final String SEPARATOR = " - ";
-
-	/**
 	 * Servicio de la entidad autor.
 	 */
 	@Autowired
@@ -79,11 +68,8 @@ public class RecursoController extends BaseController {
 	private IdiomaService idiomaService;
 
 	/**
-	 * Servicio de la entidad ejemplar.
+	 * Servicio de la entidad Recurso
 	 */
-	@Autowired
-	private EjemplarService ejemplarService;
-
 	@Autowired
 	private RecursoService recursoService;
 
@@ -177,21 +163,6 @@ public class RecursoController extends BaseController {
 	private TextField txtNumPages;
 
 	@FXML
-	private Label lblEjemplares;
-
-	@FXML
-	private Button btnAddEjemplar;
-
-	@FXML
-	private Button btnEditEjemplar;
-
-	@FXML
-	private Button btnDeleteEjemplar;
-
-	@FXML
-	private ListView<Ejemplar> lvEjemplares;
-
-	@FXML
 	private Button btnExit;
 
 	@FXML
@@ -204,7 +175,7 @@ public class RecursoController extends BaseController {
 	/**
 	 * Listado que contiene los autores a mostrar en el combo.
 	 */
-	private ObservableList<Autor> autores;
+	private ObservableList<Autor>  autores;
 	/**
 	 * Listado que contiene los generos a mostrar en el combo.
 	 */
@@ -213,8 +184,6 @@ public class RecursoController extends BaseController {
 	 * Listado que contiene los idiomas a mostrar en el combo.
 	 */
 	private ObservableList<Idioma> idiomas;
-	
-	private ObservableList<Ejemplar> ejemplares;
 
 	/**
 	 * Añade el autor seleccionado del combo de autores al ListView de autores.
@@ -224,6 +193,7 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleAddAutor(ActionEvent event) {
+
 		Autor selected = cbAutor.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 
@@ -251,6 +221,7 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleEditAutor(ActionEvent event) {
+
 		Autor selected = lvAutor.getSelectionModel().getSelectedItem();
 		if (selected == null) {
 			selected = new Autor();
@@ -284,6 +255,7 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleDeleteAutor(ActionEvent event) {
+
 		Autor selected = lvAutor.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			lvAutor.getItems().remove(selected);
@@ -302,6 +274,7 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleAddGenero(ActionEvent event) {
+
 		Genero selected = cbGenero.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			if (lvGenero.getItems().contains(selected)) {
@@ -327,6 +300,7 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleEditGenero(ActionEvent event) {
+
 		Genero selected = lvGenero.getSelectionModel().getSelectedItem();
 		if (selected == null) {
 			selected = new Genero();
@@ -360,6 +334,7 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleDeleteGenero(ActionEvent event) {
+
 		Genero selected = lvGenero.getSelectionModel().getSelectedItem();
 		if (selected != null) {
 			lvGenero.getItems().remove(selected);
@@ -380,6 +355,7 @@ public class RecursoController extends BaseController {
 	 */
 	@FXML
 	void handleEditIdioma(ActionEvent event) {
+
 		Idioma selected = cbIdioma.getSelectionModel().getSelectedItem();
 		if (selected == null) {
 			selected = new Idioma();
@@ -404,97 +380,15 @@ public class RecursoController extends BaseController {
 		}
 	}
 
-	/**
-	 * Muestra el formulario de creación de ejemplares.
-	 * 
-	 * @param event
-	 *            ActionEvent pulsación en el botón añadir ejemplar
-	 */
-	@FXML
-	void handleAddEjemplar(ActionEvent event) {
-		Ejemplar newEjemplar = new Ejemplar();
-
-		try {
-			FormObjects formData = getFormOjects(FxmlView.A_EJEMPLAR_FORM.getFxmlFile());
-			((EjemplarController) formData.getController()).setEjemplar(newEjemplar);
-			((EjemplarController) formData.getController()).setRecurso(recurso);
-
-			Stage form = new Stage();
-			form.setScene(new Scene(formData.getParent()));
-			form.initModality(Modality.APPLICATION_MODAL);
-			form.showAndWait();
-
-			log.info("Volvemos del fomrulario de ejemplares");
-			
-			recurso.addEjemplar(((EjemplarController) formData.getController()).getEjemplar());
-
-			loadEjemplares();
-		} catch (IOException e) {
-			log.info("No se pudo abrir el fichero fxml");
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	void handleEditEjemplar(ActionEvent event) {
-		Ejemplar editEjemplar = lvEjemplares.getSelectionModel().getSelectedItem();
-
-		if (editEjemplar != null) {
-			try {
-				FormObjects formData = getFormOjects(FxmlView.A_EJEMPLAR_FORM.getFxmlFile());
-				((EjemplarController) formData.getController()).setEjemplar(editEjemplar);
-				((EjemplarController) formData.getController()).setRecurso(recurso);
-
-				Stage form = new Stage();
-				form.setScene(new Scene(formData.getParent()));
-				form.initModality(Modality.APPLICATION_MODAL);
-				form.showAndWait();
-
-				log.info("Volvemos del fomrulario de ejemplares");
-
-				loadEjemplares();
-			} catch (IOException e) {
-				log.info("No se pudo abrir el fichero fxml");
-				e.printStackTrace();
-			}
-		} else {
-			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.ejemplar.editar.empty.title"),
-					resourceBundle.getString("admin.recurso.form.ejemplar.editar.empty.header"),
-					resourceBundle.getString("admin.recurso.form.ejemplar.editar.empty.error.msg"));
-		}
-
-	}
-
-	@FXML
-	void handleDeleteEjemplar(ActionEvent event) {
-		Ejemplar deleteEjemplar = lvEjemplares.getSelectionModel().getSelectedItem();
-		lvEjemplares.getSelectionModel().clearSelection();
-
-		if (deleteEjemplar != null) {
-			if (showConfirmation(resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.title"),
-					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.header"),
-					resourceBundle.getString("admin.recurso.form.ejemplar.delete.confirm.error.msg"))) {
-				
-				recurso.deleteEjemplar(deleteEjemplar);
-				ejemplarService.delete(deleteEjemplar);
-
-				loadEjemplares();
-			}
-		} else {
-			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.ejemplar.delete.error.title"),
-					resourceBundle.getString("admin.recurso.form.ejemplar.delete.error.header"),
-					resourceBundle.getString("admin.recurso.form.ejemplar.delete.error.error.msg"));
-		}
-	}
-
 	@FXML
 	void handleExit(ActionEvent event) {
-		log.info("se pulsó el botón salir");
+
 		closeDialog(event);
 	}
 
 	@FXML
 	void handleSave(ActionEvent event) {
+
 		validationMsg = "";
 		if (validateRecurso()) {
 			saveRecurso();
@@ -510,6 +404,7 @@ public class RecursoController extends BaseController {
 
 	@FXML
 	void handleDelete(ActionEvent event) {
+
 		if (recurso.getIdRecurso() != null && recurso.getIdRecurso() > 0) {
 			boolean borrar = showConfirmation(resourceBundle.getString("admin.recurso.delete.confirmation.title"),
 					resourceBundle.getString("admin.recurso.delete.confirmation.header"),
@@ -556,12 +451,6 @@ public class RecursoController extends BaseController {
 		lblPDate.setText(resources.getString("admin.recurso.form.publicationDate.label"));
 		lblNumPages.setText(resources.getString("admin.recurso.form.numPages.label"));
 
-		lblEjemplares.setText(resources.getString("admin.recurso.form.ejemplar.label"));
-		btnAddEjemplar.setText(resources.getString("admin.recurso.form.ejemplar.button.add"));
-		btnEditEjemplar.setText(resources.getString("admin.recurso.form.ejemplar.button.edit"));
-		btnDeleteEjemplar.setText(resources.getString("admin.recurso.form.ejemplar.button.delete"));
-		initializeEjemplares(resources);
-
 		btnExit.setText(resources.getString("admin.recurso.form.button.exit"));
 		btnSave.setText(resources.getString("admin.recurso.form.button.save"));
 		btnDelete.setText(resources.getString("admin.recurso.form.button.delete"));
@@ -574,18 +463,19 @@ public class RecursoController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeAutor(ResourceBundle resources) {
+
 		autores = FXCollections.observableArrayList();
 
 		cbAutor.setPromptText(resources.getString("admin.recurso.form.autores.combo.promt"));
 
-		// establece la conversión entre el Autor y el string mostrado
 		cbAutor.setCellFactory(new Callback<ListView<Autor>, ListCell<Autor>>() {
-
 			@Override
 			public ListCell<Autor> call(ListView<Autor> param) {
+
 				ListCell<Autor> cell = new ListCell<Autor>() {
 					@Override
 					protected void updateItem(Autor item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -605,9 +495,9 @@ public class RecursoController extends BaseController {
 		});
 
 		cbAutor.setConverter(new StringConverter<Autor>() {
-
 			@Override
 			public String toString(Autor autor) {
+
 				String fullName = autor.getNombre();
 				if (!MyUtils.isEmptyString(autor.getApellidos())) {
 					fullName += ", " + autor.getApellidos();
@@ -617,6 +507,7 @@ public class RecursoController extends BaseController {
 
 			@Override
 			public Autor fromString(String fullName) {
+
 				String[] nameElements = fullName.split(", ");
 
 				String nombre = null;
@@ -640,9 +531,9 @@ public class RecursoController extends BaseController {
 
 		lvAutor.setCellFactory(column -> {
 			return new ListCell<Autor>() {
-
 				@Override
 				protected void updateItem(Autor item, boolean empty) {
+
 					super.updateItem(item, empty);
 
 					if (item == null || empty) {
@@ -655,7 +546,6 @@ public class RecursoController extends BaseController {
 						setText(fullName);
 					}
 				}
-
 			};
 		});
 
@@ -666,6 +556,7 @@ public class RecursoController extends BaseController {
 	 * Carga los autores en el combo de autores
 	 */
 	private void loadAutores() {
+
 		autores.clear();
 		autores.addAll(autorService.findAll());
 		cbAutor.setItems(autores);
@@ -676,19 +567,20 @@ public class RecursoController extends BaseController {
 	 * elimina del listview.
 	 */
 	private void checkAutoresExists() {
+
 		ArrayList<Autor> toPurge = new ArrayList<>();
-		
 		ObservableList<Autor> listed = lvAutor.getItems();
-		
+
 		for (Autor a : listed) {
 			Autor dbAutor = autorService.findById(a.getIdAutor());
 			if (dbAutor == null)
 				toPurge.add(a);
 		}
-		
+
 		for (Autor b : toPurge) {
 			lvAutor.getItems().remove(b);
 		}
+
 		lvAutor.refresh();
 	}
 
@@ -698,18 +590,19 @@ public class RecursoController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeGenero(ResourceBundle resources) {
-		generos = FXCollections.observableArrayList();
 
+		generos = FXCollections.observableArrayList();
 		cbGenero.setPromptText(resources.getString("admin.recurso.form.genero.combo.promt"));
 
 		// establece la conversión entre el Autor y el string mostrado
 		cbGenero.setCellFactory(new Callback<ListView<Genero>, ListCell<Genero>>() {
-
 			@Override
 			public ListCell<Genero> call(ListView<Genero> param) {
+
 				ListCell<Genero> cell = new ListCell<Genero>() {
 					@Override
 					protected void updateItem(Genero item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -719,30 +612,29 @@ public class RecursoController extends BaseController {
 						}
 					}
 				};
-
 				return cell;
 			}
 		});
 
 		cbGenero.setConverter(new StringConverter<Genero>() {
-
 			@Override
 			public String toString(Genero genero) {
+
 				return genero.getNombre();
 			}
 
 			@Override
 			public Genero fromString(String genero) {
+
 				return generoService.findByNombreIgnoreCase(genero).stream().findFirst().orElse(null);
 			}
-
 		});
 
 		lvGenero.setCellFactory(column -> {
 			return new ListCell<Genero>() {
-
 				@Override
 				protected void updateItem(Genero item, boolean empty) {
+
 					super.updateItem(item, empty);
 
 					if (item == null || empty) {
@@ -751,7 +643,6 @@ public class RecursoController extends BaseController {
 						setText(item.getNombre());
 					}
 				}
-
 			};
 		});
 
@@ -762,6 +653,7 @@ public class RecursoController extends BaseController {
 	 * Carga los recursos de base de datos en el compbo de recursos
 	 */
 	private void loadGeneros() {
+
 		generos.clear();
 		generos.addAll(generoService.findAll());
 		cbGenero.setItems(generos);
@@ -772,17 +664,18 @@ public class RecursoController extends BaseController {
 	 * capa de persistencia y los elimina.
 	 */
 	private void checkGenerosExists() {
+
 		ArrayList<Genero> toPurge = new ArrayList<>();
-		
+
 		ObservableList<Genero> listed = lvGenero.getItems();
-		
+
 		for (Genero g : listed) {
 			Genero dbGenero = generoService.findById(g.getIdGenero());
-			if(dbGenero == null) {
+			if (dbGenero == null) {
 				toPurge.add(g);
 			}
 		}
-		
+
 		for (Genero h : toPurge) {
 			lvGenero.getItems().remove(h);
 		}
@@ -794,18 +687,19 @@ public class RecursoController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeIdioma(ResourceBundle resources) {
-		idiomas = FXCollections.observableArrayList();
 
+		idiomas = FXCollections.observableArrayList();
 		cbIdioma.setPromptText(resources.getString("admin.recurso.form.idioma.combo.promt"));
 
 		// establece la conversión entre el Autor y el string mostrado
 		cbIdioma.setCellFactory(new Callback<ListView<Idioma>, ListCell<Idioma>>() {
-
 			@Override
 			public ListCell<Idioma> call(ListView<Idioma> param) {
+
 				ListCell<Idioma> cell = new ListCell<Idioma>() {
 					@Override
 					protected void updateItem(Idioma item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -815,23 +709,22 @@ public class RecursoController extends BaseController {
 						}
 					}
 				};
-
 				return cell;
 			}
 		});
 
 		cbIdioma.setConverter(new StringConverter<Idioma>() {
-
 			@Override
 			public String toString(Idioma idioma) {
+
 				return idioma.getNombre();
 			}
 
 			@Override
 			public Idioma fromString(String idioma) {
+
 				return idiomaService.findByNombreIgnoreCase(idioma);
 			}
-
 		});
 
 		loadIdiomas();
@@ -842,109 +735,17 @@ public class RecursoController extends BaseController {
 	 * Recarga los idiomas en el combo de idomas y elimina la selección actual.
 	 */
 	private void loadIdiomas() {
+
 		idiomas.clear();
 		idiomas.addAll(idiomaService.findAll());
 		cbIdioma.setItems(idiomas);
 	}
 
 	/**
-	 * Metodo que inicia el listview de ejemplares.
-	 * 
-	 * @param resources
-	 */
-	private void initializeEjemplares(ResourceBundle resources) {
-		ejemplares =  FXCollections.observableArrayList();
-
-		lvEjemplares.setCellFactory(new Callback<ListView<Ejemplar>, ListCell<Ejemplar>>() {
-
-			@Override
-			public ListCell<Ejemplar> call(ListView<Ejemplar> param) {
-				ListCell<Ejemplar> cell = new ListCell<Ejemplar>() {
-
-					protected void updateItem(Ejemplar item, boolean empty) {
-						super.updateItem(item, empty);
-
-						if (item != null) {
-							StringBuffer out = new StringBuffer();
-
-							out.append(item.getIdEjemplar()).append(SEPARATOR).append(item.getCodigo())
-									.append(SEPARATOR).append(item.getEstado().getNombre());
-
-							setText(out.toString());
-						} else {
-							setText(null);
-						}
-					};
-				};
-
-				return cell;
-			}
-		});
-		
-
-		loadEjemplares();
-
-	}
-
-	/**
-	 * Carga los ejemplares del recurso desde base de datos. Se carga desde base de
-	 * datos por lo que se pueda haber hecho en el formulario de ejemplares.
-	 */
-	private void loadEjemplares() {
-		
-		
-		// activa o desactiva controles en función del recurso
-		checkNewRecurso();
-		// solo recarga la lista si el recurso existe
-		if (recurso != null && recurso.getIdRecurso() != null && recurso.getIdRecurso() > 0) {
-			ejemplares.clear();
-			ejemplares.addAll(recurso.getEjemplares());
-			
-			lvEjemplares.setItems(null);
-			lvEjemplares.setItems(ejemplares);
-			
-			
-			
-//			
-//			lvEjemplares.getItems().clear();
-////			lvEjemplares.getItems().addAll(ejemplarService.findByRecurso_idRecurso(recurso.getIdRecurso()));
-//			lvEjemplares.getItems().addAll(recurso.getEjemplares());
-			lvEjemplares.refresh();
-		}
-		// si el recurso es nuevo, no se puede añadir ejemplares
-	}
-
-	/**
-	 * Activa o desactiva los controles de ejemplares en función de si el recurso es
-	 * nuevo o no.
-	 * 
-	 * Si el recurso es nuevo no se puede relacionar los ejemplares generados en el
-	 * formulario de ejemplares al no existir un recurso en base de datos todavia.
-	 */
-	private void checkNewRecurso() {
-		if (recurso != null && recurso.getIdRecurso() != null && recurso.getIdRecurso() > 0) {
-			lblEjemplares.setDisable(false);
-			btnAddEjemplar.setDisable(false);
-			btnEditEjemplar.setDisable(false);
-			btnDeleteEjemplar.setDisable(false);
-			lvEjemplares.setDisable(false);
-
-			btnDelete.setDisable(false);
-		} else {
-			lblEjemplares.setDisable(true);
-			btnAddEjemplar.setDisable(true);
-			btnEditEjemplar.setDisable(true);
-			btnDeleteEjemplar.setDisable(true);
-			lvEjemplares.setDisable(true);
-
-			btnDelete.setDisable(true);
-		}
-	}
-
-	/**
 	 * Lee los datos del recurso y los plasma en el formulario.
 	 */
 	private void sendRecursoToForm() {
+
 		txtTitulo.setText(recurso.getTitulo());
 		txtISBN.setText(recurso.getIsbn());
 
@@ -958,24 +759,19 @@ public class RecursoController extends BaseController {
 		if (null != recurso.getFechaPublicacion()) {
 			dpPDate.setValue(MyUtils.fromDateToLocal(recurso.getFechaPublicacion()));
 		}
-
-		lvEjemplares.getItems().clear();
-		if (null != recurso.getEjemplares()) {
-			lvEjemplares.getItems().addAll(recurso.getEjemplares());
-		}
 	}
 
 	/**
 	 * Lee los datos del formulario y los plasma en el recurso.
 	 */
 	private void sendFormToRecurso() {
+
 		recurso.setTitulo(txtTitulo.getText());
 		recurso.setIsbn(txtISBN.getText());
 		recurso.setAutores(lvAutor.getItems().stream().collect(Collectors.toSet()));
 		recurso.setGeneros(lvGenero.getItems().stream().collect(Collectors.toSet()));
 		recurso.setIdioma(cbIdioma.getSelectionModel().getSelectedItem());
 		recurso.setFechaPublicacion(MyUtils.fromLocalToDate(dpPDate.getValue()));
-		recurso.setEjemplares(lvEjemplares.getItems().stream().collect(Collectors.toList()));
 	}
 
 	/**
@@ -985,9 +781,9 @@ public class RecursoController extends BaseController {
 	 *            Recurso entidad a editar.
 	 */
 	public void setRecurso(Recurso recurso) {
+
 		this.recurso = recurso;
 		sendRecursoToForm();
-		checkNewRecurso();
 	}
 
 	/**
@@ -997,6 +793,7 @@ public class RecursoController extends BaseController {
 	 *            ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
+
 		final Node source = (Node) event.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
@@ -1008,6 +805,7 @@ public class RecursoController extends BaseController {
 	 * @return
 	 */
 	private boolean validateRecurso() {
+
 		boolean isValid = true;
 		validationMsg = "";
 
@@ -1061,6 +859,7 @@ public class RecursoController extends BaseController {
 	 * Guarda el recurso en la capa del formulario
 	 */
 	private void saveRecurso() {
+
 		sendFormToRecurso();
 		recursoService.save(recurso);
 	}

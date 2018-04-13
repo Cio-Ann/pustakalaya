@@ -43,28 +43,22 @@ public class MainController extends BaseController {
 	private StageManager stageManager;
 
 	@FXML
-	private Button btnSearch;
-
+	private Label username;
+	
 	@FXML
 	private Button btnProfile;
 
 	@FXML
-	private Button btnStatus;
+	private Button btnSearch;
 
 	@FXML
 	private Button btnChangeAccount;
-
-	@FXML
-	private AnchorPane mainPanel;
-
-	@FXML
-	private Button btnRecord;
-
+	
 	@FXML
 	private Button btnExit;
 
 	@FXML
-	private Label username;
+	private AnchorPane mainPanel;
 
 	@FXML
 	void handleProfile(ActionEvent event) {
@@ -73,24 +67,6 @@ public class MainController extends BaseController {
 
 		// carga el panel correspondiente
 		loadChildPanel(FxmlView.L_PROFILE.getFxmlFile());
-	}
-
-	@FXML
-	void handleStatus(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnStatus);
-
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_STATUS.getFxmlFile());
-	}
-
-	@FXML
-	void handleRecord(ActionEvent event) {
-		clearAllSelectedBtn();
-		setSelectedBtn(btnRecord);
-
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_RECORD.getFxmlFile());
 	}
 
 	@FXML
@@ -131,8 +107,6 @@ public class MainController extends BaseController {
 
 			username.setText(getUsuario().getUsername());
 			btnProfile.setText(resources.getString("lector.btn.profile"));
-			btnStatus.setText(resources.getString("lector.btn.status"));
-			btnRecord.setText(resources.getString("lector.btn.record"));
 			btnSearch.setText(resources.getString("lector.btn.search"));
 			btnChangeAccount.setText(resources.getString("lector.btn.change.account"));
 			btnExit.setText(resources.getString("lector.btn.exit"));
@@ -171,14 +145,6 @@ public class MainController extends BaseController {
 		btnProfile.getStyleClass().remove("menu-button-on");
 		btnProfile.getStyleClass().add("menu-button-off");
 		btnProfile.setDisable(false);
-
-		btnStatus.getStyleClass().remove("menu-button-on");
-		btnStatus.getStyleClass().add("menu-button-off");
-		btnStatus.setDisable(false);
-
-		btnRecord.getStyleClass().remove("menu-button-on");
-		btnRecord.getStyleClass().add("menu-button-off");
-		btnRecord.setDisable(false);
 
 		btnSearch.getStyleClass().remove("menu-button-on");
 		btnSearch.getStyleClass().add("menu-button-off");

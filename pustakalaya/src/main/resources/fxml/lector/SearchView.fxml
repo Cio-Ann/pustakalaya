@@ -105,12 +105,11 @@
             </HBox>
             <TableView fx:id="tvResults" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6">
               <columns>
-                <TableColumn fx:id="colId" prefWidth="50.0" text="\%id" />
-                <TableColumn fx:id="colTitle" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="190.0" text="\%title" />
-                  <TableColumn fx:id="colAnno" prefWidth="50.0" text="\%Anno" />
-                  <TableColumn fx:id="colLang" prefWidth="110.0" text="\%Lang" />
-                  <TableColumn fx:id="colDisp" prefWidth="90.0" text="\%Disp" />
-                  <TableColumn fx:id="ColAction" prefWidth="90.0" text="\%Action" />
+                <TableColumn fx:id="colId" prefWidth="100.0" text="\%id" />
+                <TableColumn fx:id="colTitle" maxWidth="1.7976931348623157E308" prefWidth="180.0" text="\%title" />
+                  <TableColumn fx:id="colAnno" prefWidth="75.0" text="\%Anno" />
+                  <TableColumn fx:id="colLang" prefWidth="125.0" text="\%Lang" />
+                  <TableColumn fx:id="colAction" prefWidth="100.0" text="\%Action" />
               </columns>
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />

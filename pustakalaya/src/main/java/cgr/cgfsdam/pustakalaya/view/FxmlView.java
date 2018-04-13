@@ -7,23 +7,18 @@ import java.util.ResourceBundle;
  * 
  * <li>{@link #LOGIN}</li>
  * <li>{@link #REGISTER}</li>
+ * <li>{@link #L_MAIN}</li>
+ * <li>{@link #L_MAIN_VIEW}</li>
  * <li>{@link #L_PROFILE}</li>
- * <li>{@link #L_STATUS}</li>
- * <li>{@link #L_RECORD}</li>
  * <li>{@link #L_SEARCH}</li>
- * <li>{@link #L_DETAIL}</li>
+ * <li>{@link #A_MAIN}</li>
+ * <li>{@link #A_MAINVIEW}</li>
  * <li>{@link #A_USERS}</li>
- * <li>{@link #A_ROLES}</li>
  * <li>{@link #A_RESOURCES}</li>
+ * <li>{@link #A_RECURSO_FORM}</li>
  * <li>{@link #A_AUTOR_FORM}</li>
- * <li>{@link #A_EJEMPLAR_FORM}</li>
  * <li>{@link #A_GENERO_FORM}</li>
  * <li>{@link #A_IDIOMA_FORM}</li>
- * <li>{@link #A_RECURSO_FORM}</li>
- * <li>{@link #A_BOOKINGS}</li>
- * <li>{@link #A_LOANS}</li>
- * <li>{@link #A_PENALTIES}</li>
- * <li>{@link #A_COMMENTS}</li>
  *
  * @author CGR-Casa
  */
@@ -55,26 +50,11 @@ public enum FxmlView {
 	 */
 	L_PROFILE("lector.profile.title", "/fxml/lector/ProfileView.fxml"),
 	/**
-	 * Vista de estado actual del lector. 
-	 * Muestra los prestamos, reservar o sanciones vigentes.
-	 */
-	L_STATUS("lector.status.title", "/fxml/lector/StatusView.fxml"),
-	/**
-	 * Vista de histórico del lector. 
-	 * Muestra un listado con todos los prestamos, reservas y sanciones que ha 
-	 * tenido el lector desde que se dió de alta.
-	 */
-	L_RECORD("lector.record.title", "/fxml/lector/RecordView.fxml"), 
-	/**
 	 * Vista de busqueda de recursos del lector.
 	 */
-	L_SEARCH("lector.search.title",	"/fxml/lector/SearchView.fxml"), 
-	/**
-	 * Vista de detalles de un recurso para un lector.
-	 * Aqui puede puntuar o comentar un recurso siempre que lo haya retirado 
-	 * alguna vez.
-	 */
-	L_DETAIL("lector.detail.title", "/fxml/lector/Detail.fxml"),
+	L_SEARCH("lector.search.title",	"/fxml/lector/SearchView.fxml"),
+	L_RECURSO_DETALLES("lector.search.detalles.title",	"/fxml/lector/DetailForm.fxml"),
+
 
 	/* Vistas de Administrador */
 
@@ -97,13 +77,13 @@ public enum FxmlView {
 	 */
 	A_RESOURCES("admin.resources.title", "/fxml/admin/ResourcesView.fxml"), 
 	/**
-	 * Vista del formulario de creación / edición de autores.
+	 * Vista del formulario de creación / edición de recursos.
 	 */
-	A_AUTOR_FORM("admin.resoures.autor.form.title", "/fxml/admin/AutorForm.fxml"),
+	A_RECURSO_FORM("admin.resoures.recurso.form.title", "/fxml/admin/RecursoForm.fxml"),
 	/**
 	 * Vista del formulario de creación / edición de autores.
 	 */
-	A_EJEMPLAR_FORM("admin.resoures.ejemplar.form.title", "/fxml/admin/EjemplarForm.fxml"),
+	A_AUTOR_FORM("admin.resoures.autor.form.title", "/fxml/admin/AutorForm.fxml"),
 	/**
 	 * Vista del formulario de creación / edición de generos.
 	 */
@@ -111,34 +91,7 @@ public enum FxmlView {
 	/**
 	 * Vista del formulario de creación / edición de idiomas.
 	 */
-	A_IDIOMA_FORM("admin.resoures.idioma.form.title", "/fxml/admin/IdiomaForm.fxml"),
-	/**
-	 * Vista del formulario de creación / edición de recursos.
-	 */
-	A_RECURSO_FORM("admin.resoures.recurso.form.title", "/fxml/admin/RecursoForm.fxml"),
-	/**
-	 * Vista de reservas.
-	 * El administrador puede ver las reservas actuales o notificar de recursos 
-	 * disponibles a los usuarios que las han reservado.
-	 */
-	A_BOOKINGS("admin.bookings.title", "/fxml/admin/BookingsView.fxml"), 
-	/**
-	 * Vista de prestamos.
-	 * Se puede registrar prestamos y devoluciones, además se pueden notificar
-	 * retrasos a los lectores.
-	 */
-	A_LOANS("admin.loans.title", "/fxml/admin/Loans.fxml"), 
-	/**
-	 * Vista de sanciones.
-	 * Se pueden crear y editar sanciones.
-	 */
-	A_PENALTIES("admin.penalties.title", "/fxml/admin/Penalties.fxml"), 
-	/**
-	 * Vista de comentarios.
-	 * El administrador puede moderar los comentarios de los lectores.
-	 */
-	A_COMMENTS("admin.comments.title", "/fxml/admin/Comments.fxml")
-	;
+	A_IDIOMA_FORM("admin.resoures.idioma.form.title", "/fxml/admin/IdiomaForm.fxml");
 
 	/**
 	 * Nombre de la propiedad que contiene el literal del título en el fichero de propieades.

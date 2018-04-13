@@ -90,13 +90,6 @@ public class Recurso {
 	private String isbn;
 
 	/**
-	 * Conjunto de copias del recurso.
-	 */
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch= FetchType.EAGER)
-	@JoinColumn(name = "id_recurso")
-	private List<Ejemplar> ejemplares;
-
-	/**
 	 * @return the idRecurso
 	 */
 	public Long getIdRecurso() {
@@ -239,36 +232,6 @@ public class Recurso {
 	}
 
 	/**
-	 * @return the ejemplares
-	 */
-	public List<Ejemplar> getEjemplares() {
-		return ejemplares;
-	}
-
-	/**
-	 * @param ejemplares
-	 *            the ejemplares to set
-	 */
-	public void setEjemplares(List<Ejemplar> ejemplares) {
-		this.ejemplares = ejemplares;
-	}
-
-	public void addEjemplar(Ejemplar ejemplar) {
-		if (this.ejemplares == null) {
-			this.ejemplares = new ArrayList<>();
-		}
-		this.ejemplares.add(ejemplar);
-	}
-	
-	public void deleteEjemplar(Ejemplar ejemplar) {
-		if (this.ejemplares == null) {
-			this.ejemplares = new ArrayList<>();
-		}
-		this.ejemplares.remove(ejemplar);
-		
-	}
-
-	/**
 	 * Constructor por defecto.
 	 */
 	public Recurso() {
@@ -288,7 +251,7 @@ public class Recurso {
 	 * @param iSBisbnN
 	 */
 	public Recurso(String titulo, Set<Genero> generos, Date fechaPublicacion, Idioma idioma, Set<Autor> autores,
-			int numPaginas, String isbn, List<Ejemplar> ejemplares) {
+			int numPaginas, String isbn) {
 		super();
 		this.titulo = titulo;
 		this.generos = generos;
@@ -297,27 +260,12 @@ public class Recurso {
 		this.autores = autores;
 		this.numPaginas = numPaginas;
 		this.isbn = isbn;
-		this.ejemplares = ejemplares;
 	}
 
 	@Override
 	public String toString() {
-//		String ret = "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", generos=" + generos + ", fechaPublicacion="
-//				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", numPaginas=" + numPaginas
-//				+ ", isbn=" + isbn + ", ejemplares=[";
-//		
-//		if (ejemplares != null ) {
-//			for(Ejemplar e : ejemplares) {
-//				ret += e.toStringShort();
-//			}
-//		}
-//		ret +=  "]";
-//		
-//		return ret;
-		
-		
 		return "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", generos=" + generos + ", fechaPublicacion="
 				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", numPaginas=" + numPaginas
-				+ ", isbn=" + isbn + ", ejemplares=" + ejemplares + "]";
+				+ ", isbn=" + isbn + "]";
 	}
 }

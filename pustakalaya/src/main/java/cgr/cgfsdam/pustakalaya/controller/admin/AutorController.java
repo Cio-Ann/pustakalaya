@@ -88,24 +88,6 @@ public class AutorController extends BaseController {
 	}
 
 	/**
-	 * Indica si el autor actual es susceptible de ser eliminado - existe en base de
-	 * datos - no tiene ningún recurso relacionado
-	 * 
-	 * @return boolean true si el autor puede ser borrado, o false en caso contrario
-	 */
-	private boolean isAutorPurgeable() {
-		boolean ret = true;
-
-		if (autor == null || autor.getIdAutor() == null) {
-			ret = false;
-		} else {
-			ret = autorService.countResourcesByAutor(autor) == 0;
-		}
-
-		return ret;
-	}
-
-	/**
 	 * Método que se ejecuta al pulsar el botón salir. Cierra la ventana sin guardar
 	 * información.
 	 * 
@@ -240,6 +222,24 @@ public class AutorController extends BaseController {
 			btnDelete.setDisable(true);
 		}
 
+	}
+	
+	/**
+	 * Indica si el autor actual es susceptible de ser eliminado - existe en base de
+	 * datos - no tiene ningún recurso relacionado
+	 * 
+	 * @return boolean true si el autor puede ser borrado, o false en caso contrario
+	 */
+	private boolean isAutorPurgeable() {
+		boolean ret = true;
+
+		if (autor == null || autor.getIdAutor() == null) {
+			ret = false;
+		} else {
+			ret = autorService.countResourcesByAutor(autor) == 0;
+		}
+
+		return ret;
 	}
 
 }
