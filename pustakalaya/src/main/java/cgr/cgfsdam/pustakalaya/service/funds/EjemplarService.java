@@ -1,8 +1,10 @@
 package cgr.cgfsdam.pustakalaya.service.funds;
 
+import java.util.Date;
 import java.util.List;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
+import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 
 /**
  * Interfaz del servicio de la entidad Ejemplar.
@@ -40,5 +42,14 @@ public interface EjemplarService {
 	 * @param ejemplar Ejemplar entidad a borrar.
 	 */
 	void delete(Ejemplar ejemplar);
+
+	/**
+	 * Recupera el primer ejemplar disponible para un prestamo.
+	 * 
+	 * @param idRecurso Long id del recurso del que se quiere el ejemplar
+	 * @param fecha Date fecha de comprobación del prestamo
+	 * @return Ejemplar ejemplar libre para prestar.
+	 */
+	Ejemplar findFirstFree(Long idRecurso, Date fecha);
 
 }

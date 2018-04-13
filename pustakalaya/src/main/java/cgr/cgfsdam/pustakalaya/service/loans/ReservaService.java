@@ -1,12 +1,17 @@
 package cgr.cgfsdam.pustakalaya.service.loans;
 
+import java.util.Date;
 import java.util.List;
 
+import cgr.cgfsdam.pustakalaya.model.funds.Autor;
+import cgr.cgfsdam.pustakalaya.model.funds.Genero;
+import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.model.loans.EstadoReservaEnum;
 import cgr.cgfsdam.pustakalaya.model.loans.Prestamo;
 import cgr.cgfsdam.pustakalaya.model.loans.Reserva;
 import cgr.cgfsdam.pustakalaya.model.users.Usuario;
+import cgr.cgfsdam.pustakalaya.repository.funds.specifications.RecursoSpecifications;
 
 /**
  * Interfaz del servicio de la entidad Reserva.
@@ -70,4 +75,26 @@ public interface ReservaService {
 	 */
 	void delete(Reserva reserva);
 
+	/**
+	 * Busca reservas por los datos introducidos en el formulario.
+	 * 
+	 * @param estadoReserva
+	 * @param idUsuario
+	 * @param titulo
+	 * @param isbn
+	 * @return List<Reserva> conjunto de reservas que cumplen los criterios de búsqueda
+	 */
+	List<Reserva> findByForm(EstadoReservaEnum estadoReserva, String idUsuario, String titulo, String isbn);
+
+	/**
+	 * Cuenta el número de reservas realizadas al recurso dado que se encuentran en el estado dado y que se han 
+	 * realizado antes de la fecha dada.
+	 * 
+	 * @param recurso Recurso recurso asociado a las reservas a contar
+	 * @param estadoReserva EstadoReservaEnum tipo de reservas a buscar
+	 * @param fechaReserva Date fecha para la que contar las reservas previas
+	 * @return Long numero de reservas que cumplen con los criterios.
+	 */
+	Long countByRecursoAndEstadoReservaAndFechaReservaBefore(Recurso recurso, EstadoReservaEnum estadoReserva, Date fechaReserva);
+	
 }

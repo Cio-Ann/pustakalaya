@@ -1,5 +1,6 @@
 package cgr.cgfsdam.pustakalaya.service.loans.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,18 @@ public class ReservaServiceImpl implements ReservaService {
 
 		reservaRepository.delete(reserva);
 	}
+
+	@Override
+	public List<Reserva> findByForm(EstadoReservaEnum estadoReserva, String idUsuario, String titulo, String isbn) {
+
+		return reservaRepository.findByForm(estadoReserva, idUsuario, titulo, isbn);
+	}
+
+	@Override
+	public Long countByRecursoAndEstadoReservaAndFechaReservaBefore(Recurso recurso, EstadoReservaEnum estadoReserva,
+			Date fechaReserva) {
+		return reservaRepository.countByRecursoAndEstadoReservaAndFechaReservaBefore(recurso, estadoReserva, fechaReserva);
+	}
+	
 
 }

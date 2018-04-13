@@ -1,11 +1,13 @@
 package cgr.cgfsdam.pustakalaya.service.funds.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Ejemplar;
+import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.repository.funds.EjemplarRepository;
 import cgr.cgfsdam.pustakalaya.service.funds.EjemplarService;
 
@@ -38,5 +40,11 @@ public class EjemplarServiceImpl implements EjemplarService {
 	@Override
 	public void delete(Ejemplar ejemplar) {
 		ejemplarRepository.delete(ejemplar);
+	}
+
+	@Override
+	public Ejemplar findFirstFree(Long idRecurso, Date fecha) {
+
+		return ejemplarRepository.findFirstFree(idRecurso, fecha);
 	}
 }
