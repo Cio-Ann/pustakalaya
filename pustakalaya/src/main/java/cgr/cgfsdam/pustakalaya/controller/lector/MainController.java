@@ -12,14 +12,18 @@ import org.springframework.stereotype.Controller;
 import cgr.cgfsdam.pustakalaya.config.SpringFXMLLoader;
 import cgr.cgfsdam.pustakalaya.config.StageManager;
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
+import cgr.cgfsdam.pustakalaya.model.utility.FormObjects;
 import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Controlador de la pantalla principal del usuario lector.
@@ -64,9 +68,18 @@ public class MainController extends BaseController {
 	void handleProfile(ActionEvent event) {
 		clearAllSelectedBtn();
 		setSelectedBtn(btnProfile);
+		
+		try {
 
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_PROFILE.getFxmlFile());
+			FormObjects formData = getFormOjects(FxmlView.L_PROFILE.getFxmlFile());
+			((ProfileController)formData.getController()).setUsuario(this.getUsuario());
+			
+			mainPanel.getChildren().clear();
+			mainPanel.getChildren().add(formData.getParent());
+		} catch (IOException e) {
+			log.info("No se pudo abrir el fichero fxml");
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -74,8 +87,17 @@ public class MainController extends BaseController {
 		clearAllSelectedBtn();
 		setSelectedBtn(btnSearch);
 
-		// carga el panel correspondiente
-		loadChildPanel(FxmlView.L_SEARCH.getFxmlFile());
+		try {
+
+			FormObjects formData = getFormOjects(FxmlView.L_SEARCH.getFxmlFile());
+			((SearchController)formData.getController()).setUsuario(this.getUsuario());
+			
+			mainPanel.getChildren().clear();
+			mainPanel.getChildren().add(formData.getParent());
+		} catch (IOException e) {
+			log.info("No se pudo abrir el fichero fxml");
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -83,6 +105,7 @@ public class MainController extends BaseController {
 		log.info("se pulsó el botón Cambiar de cuenta");
 		// vacia el contexto de seguridad
 		SecurityContextHolder.clearContext();
+//		this.setUsuario(null);
 		// redirige a la pantalla de login
 		stageManager.switchScene(FxmlView.LOGIN);
 	}

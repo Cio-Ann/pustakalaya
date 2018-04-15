@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
 import cgr.cgfsdam.pustakalaya.model.users.Direccion;
 import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
+import cgr.cgfsdam.pustakalaya.model.users.Usuario;
 import cgr.cgfsdam.pustakalaya.service.users.TipoDocumentoService;
 import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 import javafx.collections.FXCollections;
@@ -478,6 +479,14 @@ public class ProfileController extends BaseController {
 			setUsuario(usuarioService.findByUsername(securityUser));
 		}
 	}
+	
+	@Override
+	public void setUsuario(Usuario usuario) {
+		super.setUsuario(usuario);
+		
+		loadUsuarioToView();
+	}
+	
 
 	/**
 	 * Carga la dirección almacenada en el usuario en los campos de la vista destinados a la dirección.

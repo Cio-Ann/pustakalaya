@@ -1,34 +1,34 @@
 package cgr.cgfsdam.pustakalaya;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+//import java.util.Arrays;
+//import java.util.Calendar;
+//import java.util.Date;
+//import java.util.HashSet;
+//import java.util.Set;
 
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.InitializingBean;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Bean;
 
 import cgr.cgfsdam.pustakalaya.config.StageManager;
-import cgr.cgfsdam.pustakalaya.model.funds.Autor;
-import cgr.cgfsdam.pustakalaya.model.funds.Genero;
-import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
-import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
-import cgr.cgfsdam.pustakalaya.model.users.Direccion;
-import cgr.cgfsdam.pustakalaya.model.users.Role;
-import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
-import cgr.cgfsdam.pustakalaya.model.users.Usuario;
-import cgr.cgfsdam.pustakalaya.repository.users.RoleRepository;
-import cgr.cgfsdam.pustakalaya.repository.users.TipoDocumentoRepository;
-import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
-import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
-import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
-import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
-import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
+//import cgr.cgfsdam.pustakalaya.model.funds.Autor;
+//import cgr.cgfsdam.pustakalaya.model.funds.Genero;
+//import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
+//import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
+//import cgr.cgfsdam.pustakalaya.model.users.Direccion;
+//import cgr.cgfsdam.pustakalaya.model.users.Role;
+//import cgr.cgfsdam.pustakalaya.model.users.TipoDocumento;
+//import cgr.cgfsdam.pustakalaya.model.users.Usuario;
+//import cgr.cgfsdam.pustakalaya.repository.users.RoleRepository;
+//import cgr.cgfsdam.pustakalaya.repository.users.TipoDocumentoRepository;
+//import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
+//import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
+//import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
+//import cgr.cgfsdam.pustakalaya.service.funds.RecursoService;
+//import cgr.cgfsdam.pustakalaya.service.users.UsuarioService;
 import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -99,7 +99,7 @@ public class PustakalayaApplication extends Application {
 		String[] args = getParameters().getRaw().stream().toArray(String[]::new);
 		return builder.run(args);
 	}
-
+/*
 	@Autowired
 	RoleRepository			roleRepository;
 	@Autowired
@@ -208,5 +208,5 @@ public class PustakalayaApplication extends Application {
 
 		};
 	}
-
+*/
 }

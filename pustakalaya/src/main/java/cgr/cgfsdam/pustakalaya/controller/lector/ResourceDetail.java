@@ -185,6 +185,8 @@ public class ResourceDetail extends BaseController {
 		txtIdioma.setText(recurso.getIdioma().getNombre());
 		txtFechaPub.setText(MyUtils.dateToShort(recurso.getFechaPublicacion()));
 		txtNumPaginas.setText(String.valueOf(recurso.getNumPaginas()));
+		loadAutores();
+		loadGeneros();
 	}
 
 
