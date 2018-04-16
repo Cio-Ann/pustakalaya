@@ -17,10 +17,16 @@ import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 
+/**
+ * Defición de las especificaciones para la busqueda de recursos por criterio.
+ *
+ * @author CGR-Casa
+ */
 public class RecursoSpecifications {
 
 	public static Specification<Recurso> findByFormData(String titulo, String isbn, Autor autor, Genero genero,
 			Idioma idioma, Date desde, Date hasta) {
+
 		return new Specification<Recurso>() {
 			public Predicate toPredicate(Root<Recurso> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 

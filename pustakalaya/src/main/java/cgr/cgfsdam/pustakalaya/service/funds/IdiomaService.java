@@ -4,6 +4,11 @@ import java.util.List;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 
+/**
+ * Interfaz del servicio de la entidad Idioma
+ *
+ * @author CGR-Casa
+ */
 public interface IdiomaService {
 
 	/**

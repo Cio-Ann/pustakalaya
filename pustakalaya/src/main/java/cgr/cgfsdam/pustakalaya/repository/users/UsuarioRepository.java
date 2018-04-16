@@ -19,6 +19,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	 * @return Usuario con la coincidencia o <code>null</code> en caso contrario
 	 */
 	Usuario findByUsername(String username);
+
 	/**
 	 * Busca un ususario por su email.
 	 * 

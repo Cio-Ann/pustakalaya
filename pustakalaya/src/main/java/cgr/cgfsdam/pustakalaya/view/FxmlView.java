@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
  * <li>{@link #L_MAIN_VIEW}</li>
  * <li>{@link #L_PROFILE}</li>
  * <li>{@link #L_SEARCH}</li>
+ * <li>{@link #L_RECURSO_DETALLES}</li>
  * <li>{@link #A_MAIN}</li>
  * <li>{@link #A_MAINVIEW}</li>
  * <li>{@link #A_USERS}</li>
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 public enum FxmlView {
 
 	/* Vistas de seguridad */
-	
+
 	/**
 	 * Pantalla de ingreso.
 	 */
@@ -36,7 +37,7 @@ public enum FxmlView {
 	REGISTER("login.title.register", "/fxml/Register.fxml"),
 
 	/* Vistas de lector */
-	
+
 	/**
 	 * Pantalla principal del lector.
 	 */
@@ -52,9 +53,11 @@ public enum FxmlView {
 	/**
 	 * Vista de busqueda de recursos del lector.
 	 */
-	L_SEARCH("lector.search.title",	"/fxml/lector/SearchView.fxml"),
-	L_RECURSO_DETALLES("lector.search.detalles.title",	"/fxml/lector/DetailForm.fxml"),
-
+	L_SEARCH("lector.search.title", "/fxml/lector/SearchView.fxml"),
+	/**
+	 * Vista del formulario de detalle de los recursos
+	 */
+	L_RECURSO_DETALLES("lector.search.detalles.title", "/fxml/lector/DetailForm.fxml"),
 
 	/* Vistas de Administrador */
 
@@ -70,12 +73,12 @@ public enum FxmlView {
 	 * Vista de gestión de usuarios del administrador.
 	 * Se puede crear, editar, o eliminar usuarios.
 	 */
-	A_USERS("admin.users.title", "/fxml/admin/UsersView.fxml"), 
+	A_USERS("admin.users.title", "/fxml/admin/UsersView.fxml"),
 	/**
 	 * Vista de gestión de recursos de la biblioteca.
 	 * Se puede crear, editar o dar de baja recursos.
 	 */
-	A_RESOURCES("admin.resources.title", "/fxml/admin/ResourcesView.fxml"), 
+	A_RESOURCES("admin.resources.title", "/fxml/admin/ResourcesView.fxml"),
 	/**
 	 * Vista del formulario de creación / edición de recursos.
 	 */
@@ -109,6 +112,7 @@ public enum FxmlView {
 	 * @param fxmlFile path del fichero de la vista.
 	 */
 	private FxmlView(final String titleKey, final String fxmlFile) {
+
 		this.titleKey = titleKey;
 		this.fxmlFile = fxmlFile;
 	}
@@ -119,6 +123,7 @@ public enum FxmlView {
 	 * @return String título de la vista.
 	 */
 	public String getTitle() {
+
 		return ResourceBundle.getBundle("texts/Bundle").getString(titleKey);
 	}
 
@@ -128,6 +133,7 @@ public enum FxmlView {
 	 * @return String ruta del archivo.
 	 */
 	public String getFxmlFile() {
+
 		return this.fxmlFile;
 	}
 

@@ -4,6 +4,11 @@ import java.util.List;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 
+/**
+ * Interfaz del servicio de la entidad Genero
+ *
+ * @author CGR-Casa
+ */
 public interface GeneroService {
 
 	/**
@@ -36,7 +41,7 @@ public interface GeneroService {
 	 * @return List<Genero> generos persistidos
 	 */
 	List<Genero> findAll();
-	
+
 	/**
 	 * Recupera un genero por su id.
 	 * 

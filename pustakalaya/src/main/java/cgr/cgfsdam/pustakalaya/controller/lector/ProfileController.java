@@ -17,7 +17,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -194,6 +193,7 @@ public class ProfileController extends BaseController {
 	 */
 	@FXML
 	void handleCheckPassword(KeyEvent event) {
+
 		String pass = pPassword.getText();
 		String pass2 = pConfirmPassword.getText() + event.getCharacter();
 		if (!pass2.equals(pass)) {
@@ -212,6 +212,7 @@ public class ProfileController extends BaseController {
 	 */
 	@FXML
 	void handleRestore(ActionEvent event) {
+
 		loadUsuarioToView();
 		clearErrors();
 	}
@@ -223,10 +224,11 @@ public class ProfileController extends BaseController {
 	 */
 	@FXML
 	void handleUpdate(ActionEvent event) {
+
 		loadViewToUsuario();
 
 		usuarioService.saveUsuario(getUsuario());
-		
+
 	}
 
 	/**
@@ -234,6 +236,7 @@ public class ProfileController extends BaseController {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		// carga etiquetas
 		lblUserData.setText(resources.getString("register.label.userdata"));
 		lblUserAddress.setText(resources.getString("register.label.userAddress"));
@@ -283,9 +286,11 @@ public class ProfileController extends BaseController {
 
 	/**
 	 * Método privado para inicializar correctamente el combo del tipo de documento.
+	 * 
 	 * @param resources
 	 */
 	private void initializeComboTipoDocumento(ResourceBundle resources) {
+
 		// establece el texto cuando no hay selección
 		cmbTipoDocumento.setPromptText(resources.getString("register.comboBox.tipoDocumento"));
 
@@ -298,6 +303,7 @@ public class ProfileController extends BaseController {
 				ListCell<TipoDocumento> cell = new ListCell<TipoDocumento>() {
 					@Override
 					protected void updateItem(TipoDocumento item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -317,6 +323,7 @@ public class ProfileController extends BaseController {
 		cmbTipoDocumento.setConverter(new StringConverter<TipoDocumento>() {
 			@Override
 			public String toString(TipoDocumento td) {
+
 				if (td == null) {
 					return "";
 				} else {
@@ -326,6 +333,7 @@ public class ProfileController extends BaseController {
 
 			@Override
 			public TipoDocumento fromString(String nombre) {
+
 				return tipoDocumentoService.findByNombre(nombre);
 			}
 		});
@@ -338,6 +346,7 @@ public class ProfileController extends BaseController {
 	 * Método privado para cargar los tipos de documento de la base de datos en el combo.
 	 */
 	private void loadTipoDocumento() {
+
 		tiposDocumento.clear();
 		tiposDocumento.addAll(tipoDocumentoService.findAll());
 		cmbTipoDocumento.setItems(tiposDocumento);
@@ -347,6 +356,7 @@ public class ProfileController extends BaseController {
 	 * Carga los valores del usuario en memoria(autenticado) en los campos de la vista.
 	 */
 	private void loadUsuarioToView() {
+
 		if (!isEmptyString(getUsuario().getNombre())) {
 			tNombre.clear();
 			tNombre.setText(getUsuario().getNombre());
@@ -392,6 +402,7 @@ public class ProfileController extends BaseController {
 	 * Carga los valores actuales de la vista al usuario en memoria y lo almacena en base de datos.
 	 */
 	private void loadViewToUsuario() {
+
 		// recorro todos los campos
 		if (!isEmptyString(tNombre.getText()) && !tNombre.getText().equals(getUsuario().getNombre())) {
 			getUsuario().setNombre(tNombre.getText());
@@ -429,32 +440,26 @@ public class ProfileController extends BaseController {
 				&& !tTipoVia.getText().equals(getUsuario().getDireccion().getTipoVia())) {
 			getUsuario().getDireccion().setTipoVia(tTipoVia.getText());
 		}
-		if (!isEmptyString(tVia.getText())
-				&& !tVia.getText().equals(getUsuario().getDireccion().getVia())) {
+		if (!isEmptyString(tVia.getText()) && !tVia.getText().equals(getUsuario().getDireccion().getVia())) {
 			getUsuario().getDireccion().setVia(tVia.getText());
 		}
-		if (!isEmptyString(tNumero.getText())
-				&& !tNumero.getText().equals(getUsuario().getDireccion().getNumero())) {
+		if (!isEmptyString(tNumero.getText()) && !tNumero.getText().equals(getUsuario().getDireccion().getNumero())) {
 			getUsuario().getDireccion().setNumero(tNumero.getText());
 		}
-		if (!isEmptyString(tPortal.getText())
-				&& !tPortal.getText().equals(getUsuario().getDireccion().getPortal())) {
+		if (!isEmptyString(tPortal.getText()) && !tPortal.getText().equals(getUsuario().getDireccion().getPortal())) {
 			getUsuario().getDireccion().setPortal(tPortal.getText());
 		}
 		if (!isEmptyString(tEscalera.getText())
 				&& !tEscalera.getText().equals(getUsuario().getDireccion().getEscalera())) {
 			getUsuario().getDireccion().setEscalera(tEscalera.getText());
 		}
-		if (!isEmptyString(tPlanta.getText())
-				&& !tPlanta.getText().equals(getUsuario().getDireccion().getPlanta())) {
+		if (!isEmptyString(tPlanta.getText()) && !tPlanta.getText().equals(getUsuario().getDireccion().getPlanta())) {
 			getUsuario().getDireccion().setPlanta(tPlanta.getText());
 		}
-		if (!isEmptyString(tPuerta.getText())
-				&& !tPuerta.getText().equals(getUsuario().getDireccion().getPuerta())) {
+		if (!isEmptyString(tPuerta.getText()) && !tPuerta.getText().equals(getUsuario().getDireccion().getPuerta())) {
 			getUsuario().getDireccion().setPuerta(tPuerta.getText());
 		}
-		if (!isEmptyString(tCP.getText())
-				&& !tCP.getText().equals(getUsuario().getDireccion().getCp())) {
+		if (!isEmptyString(tCP.getText()) && !tCP.getText().equals(getUsuario().getDireccion().getCp())) {
 			getUsuario().getDireccion().setCp(tCP.getText());
 		}
 		if (!isEmptyString(tPoblacion.getText())
@@ -471,6 +476,7 @@ public class ProfileController extends BaseController {
 	 * Carga el usuario del contexto de seguridad de Spring.
 	 */
 	private void loadUsuarioFromSecurity() {
+
 		if (getUsuario() == null) {
 			log.info("No existe usuario en el controller");
 			String securityUser = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -479,19 +485,20 @@ public class ProfileController extends BaseController {
 			setUsuario(usuarioService.findByUsername(securityUser));
 		}
 	}
-	
+
 	@Override
 	public void setUsuario(Usuario usuario) {
+
 		super.setUsuario(usuario);
-		
+
 		loadUsuarioToView();
 	}
-	
 
 	/**
 	 * Carga la dirección almacenada en el usuario en los campos de la vista destinados a la dirección.
 	 */
 	private void loadDireccionToView() {
+
 		Direccion currentAddress = getUsuario().getDireccion();
 
 		if (!isEmptyString(currentAddress.getTipoVia())) {
@@ -541,6 +548,7 @@ public class ProfileController extends BaseController {
 	 * Elimina los mensajes de error de la vista.
 	 */
 	private void clearErrors() {
+
 		lblPswError.setText("");
 		lblValidationError.setText("");
 	}
@@ -552,14 +560,17 @@ public class ProfileController extends BaseController {
 	 * @return boolean <code>true</code> si la cadena esta vacio, o <code>false</code> en caso contrario.
 	 */
 	private boolean isEmptyString(String value) {
+
 		return value == null || value.isEmpty();
 	}
 
 	/**
 	 * Util para evaluar si el tipo de documento del usuario en memoria es núlo o está vacio.
+	 * 
 	 * @return boolean <code>true</code> si el TipoDocumento está vacio, o <code>false</code> en caso contrario.
 	 */
 	private boolean isEmptyTipoDocumento() {
+
 		return getUsuario().getTipoDocumento() == null || isEmptyString(getUsuario().getTipoDocumento().getNombre());
 	}
 

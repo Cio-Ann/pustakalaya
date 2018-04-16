@@ -28,41 +28,44 @@ public class UsuarioServiceImpl implements UsuarioService {
 	 * Repositorio de usuarios.
 	 */
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioRepository	  usuarioRepository;
 	/**
 	 * Repositorio de roles.
 	 */
 	@Autowired
-	private RoleRepository roleRepository;
+	private RoleRepository		  roleRepository;
 	/**
 	 * Encriptador de passwords.
 	 */
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Override
 	public Usuario findByUsername(String username) {
+
 		return usuarioRepository.findByUsername(username);
 	}
-	
+
 	@Override
 	public Usuario findByEmail(String email) {
+
 		return usuarioRepository.findByEmail(email);
 	}
 
 	@Override
 	public void saveUsuario(Usuario usuario) {
+
 		usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
 		usuario.setActive(1);
 		if (usuario.getRoles() == null) {
 			Role userRole = roleRepository.findByRole("LECTOR");
-			usuario.setRoles(new HashSet<Role>(Arrays.asList(userRole)));			
+			usuario.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		}
-		
+
 		if (usuario.getFechaAlta() == null) {
 			usuario.setFechaAlta(new Date());
 		}
-		
+
 		if (usuario.getFechaVigor() == null) {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.YEAR, 1);
@@ -74,11 +77,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public List<Usuario> findAll() {
+
 		return usuarioRepository.findAll();
 	}
 
 	@Override
 	public void saveRawUsuario(Usuario usuario) {
+
 		usuarioRepository.save(usuario);
 	}
 

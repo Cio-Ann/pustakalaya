@@ -18,12 +18,9 @@ import cgr.cgfsdam.pustakalaya.view.FxmlView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * Controlador de la pantalla principal del usuario lector.
@@ -32,7 +29,7 @@ import javafx.stage.Stage;
  */
 @Controller
 public class MainController extends BaseController {
-	
+
 	@Autowired
 	SpringFXMLLoader fxmlLoader;
 
@@ -48,7 +45,7 @@ public class MainController extends BaseController {
 
 	@FXML
 	private Label username;
-	
+
 	@FXML
 	private Button btnProfile;
 
@@ -57,7 +54,7 @@ public class MainController extends BaseController {
 
 	@FXML
 	private Button btnChangeAccount;
-	
+
 	@FXML
 	private Button btnExit;
 
@@ -66,14 +63,15 @@ public class MainController extends BaseController {
 
 	@FXML
 	void handleProfile(ActionEvent event) {
+
 		clearAllSelectedBtn();
 		setSelectedBtn(btnProfile);
-		
+
 		try {
 
 			FormObjects formData = getFormOjects(FxmlView.L_PROFILE.getFxmlFile());
-			((ProfileController)formData.getController()).setUsuario(this.getUsuario());
-			
+			((ProfileController) formData.getController()).setUsuario(this.getUsuario());
+
 			mainPanel.getChildren().clear();
 			mainPanel.getChildren().add(formData.getParent());
 		} catch (IOException e) {
@@ -84,14 +82,15 @@ public class MainController extends BaseController {
 
 	@FXML
 	void handleSearch(ActionEvent event) {
+
 		clearAllSelectedBtn();
 		setSelectedBtn(btnSearch);
 
 		try {
 
 			FormObjects formData = getFormOjects(FxmlView.L_SEARCH.getFxmlFile());
-			((SearchController)formData.getController()).setUsuario(this.getUsuario());
-			
+			((SearchController) formData.getController()).setUsuario(this.getUsuario());
+
 			mainPanel.getChildren().clear();
 			mainPanel.getChildren().add(formData.getParent());
 		} catch (IOException e) {
@@ -102,16 +101,18 @@ public class MainController extends BaseController {
 
 	@FXML
 	void handleChangeAccount(ActionEvent event) {
+
 		log.info("se pulsó el botón Cambiar de cuenta");
 		// vacia el contexto de seguridad
 		SecurityContextHolder.clearContext();
-//		this.setUsuario(null);
+		// this.setUsuario(null);
 		// redirige a la pantalla de login
 		stageManager.switchScene(FxmlView.LOGIN);
 	}
 
 	@FXML
 	void handleExit(ActionEvent event) {
+
 		log.info("se pulsó el botón salir");
 		if (showConfirmation(resourceBundle.getString("app.exit.title"), resourceBundle.getString("app.exit.header"),
 				resourceBundle.getString("app.exit.text"))) {
@@ -149,6 +150,7 @@ public class MainController extends BaseController {
 	 *            String ruta al archivo fxml a cargar.
 	 */
 	private void loadChildPanel(String path) {
+
 		AnchorPane newLoadedPane;
 		try {
 			newLoadedPane = (AnchorPane) getChildPane(path);
@@ -165,6 +167,7 @@ public class MainController extends BaseController {
 	 * Elimina la clase de boton seleccionado de los botones de navegación.
 	 */
 	private void clearAllSelectedBtn() {
+
 		btnProfile.getStyleClass().remove("menu-button-on");
 		btnProfile.getStyleClass().add("menu-button-off");
 		btnProfile.setDisable(false);
@@ -188,6 +191,7 @@ public class MainController extends BaseController {
 	 * @param button Button to apply new style;
 	 */
 	private void setSelectedBtn(Button button) {
+
 		button.getStyleClass().add("menu-button-on");
 		button.setDisable(true);
 	}

@@ -16,17 +16,19 @@ import cgr.cgfsdam.pustakalaya.service.users.RoleService;
  */
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
 
 	@Override
 	public Role findByRole(String role) {
+
 		return roleRepository.findByRole(role);
 	}
 
 	@Override
 	public List<Role> findAll() {
+
 		return roleRepository.findAll();
 	}
 

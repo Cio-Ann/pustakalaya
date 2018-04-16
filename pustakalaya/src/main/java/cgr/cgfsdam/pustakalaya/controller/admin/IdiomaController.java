@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
-import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.service.funds.IdiomaService;
 import cgr.cgfsdam.pustakalaya.utils.MyUtils;
@@ -65,6 +64,7 @@ public class IdiomaController extends BaseController {
 
 	@FXML
 	void handleDelete(ActionEvent event) {
+
 		if (isIdiomaPurgeable()) {
 			if (showConfirmation(resourceBundle.getString("admin.idioma.delete.confirm.title"),
 					resourceBundle.getString("admin.idioma.delete.confirm.header"),
@@ -77,11 +77,13 @@ public class IdiomaController extends BaseController {
 
 	@FXML
 	void handleExit(ActionEvent event) {
+
 		closeDialog(event);
 	}
 
 	@FXML
 	void handleSave(ActionEvent event) {
+
 		if (validateGenero()) {
 			saveIdioma();
 			sendAlert(AlertType.INFORMATION, resourceBundle.getString("admin.idioma.save.success.title"),
@@ -93,6 +95,7 @@ public class IdiomaController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		lblTitle.setText(resources.getString("admin.idioma.title"));
 		lblNombre.setText(resources.getString("admin.idioma.label.nombre"));
 		lblDescripcion.setText(resources.getString("admin.idioma.label.descripcion"));
@@ -110,6 +113,7 @@ public class IdiomaController extends BaseController {
 	 * @param event ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
+
 		final Node source = (Node) event.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
@@ -121,6 +125,7 @@ public class IdiomaController extends BaseController {
 	 * @param genero Genero objeto a guardar
 	 */
 	public void setIdioma(Idioma idioma) {
+
 		this.idioma = idioma;
 		sendEntityToForm();
 	}
@@ -131,6 +136,7 @@ public class IdiomaController extends BaseController {
 	 * @return
 	 */
 	private boolean validateGenero() {
+
 		boolean ret = true;
 		lblError.setText("");
 
@@ -156,6 +162,7 @@ public class IdiomaController extends BaseController {
 	 * Guarda el idioma del formulario en el formulario
 	 */
 	private void saveIdioma() {
+
 		idioma.setNombre(txtNombre.getText());
 		idioma.setDescripcion(txtDescripcion.getText());
 
@@ -164,11 +171,13 @@ public class IdiomaController extends BaseController {
 
 	/**
 	 * Verifica si el elemento actual se puede o no eliminar.
+	 * 
 	 * @return boolean true si el elemento se puede borar, o false si está relacionado con algún recurso
 	 */
 	private boolean isIdiomaPurgeable() {
+
 		boolean ret = true;
-		if(idioma == null || idioma.getIdIdioma() == null) {
+		if (idioma == null || idioma.getIdIdioma() == null) {
 			ret = false;
 		} else {
 			ret = idiomaService.countResourcesByIdioma(idioma) == 0;
@@ -180,12 +189,13 @@ public class IdiomaController extends BaseController {
 	 * Traslada los datos de la entidad al formulario.
 	 */
 	private void sendEntityToForm() {
+
 		if (idioma == null) {
 			idioma = new Idioma();
 		}
 		txtNombre.setText(idioma.getNombre());
 		txtDescripcion.setText(idioma.getDescripcion());
-		
+
 		if (isIdiomaPurgeable()) {
 			btnDelete.setDisable(false);
 		} else {

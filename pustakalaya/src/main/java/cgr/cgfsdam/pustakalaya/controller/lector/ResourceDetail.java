@@ -10,8 +10,6 @@ import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 import cgr.cgfsdam.pustakalaya.utils.MyUtils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -24,64 +22,66 @@ import javafx.stage.Stage;
 
 @Controller
 public class ResourceDetail extends BaseController {
-	
+
 	private Recurso recurso;
 
-    @FXML
-    private Label lblFormTitle;
+	@FXML
+	private Label lblFormTitle;
 
-    @FXML
-    private Label lblTitulo;
+	@FXML
+	private Label lblTitulo;
 
-    @FXML
-    private TextField txtTitulo;
+	@FXML
+	private TextField txtTitulo;
 
-    @FXML
-    private Label lblIsbn;
+	@FXML
+	private Label lblIsbn;
 
-    @FXML
-    private TextField txtISBN;
+	@FXML
+	private TextField txtISBN;
 
-    @FXML
-    private Label lblIdioma;
+	@FXML
+	private Label lblIdioma;
 
-    @FXML
-    private TextField txtIdioma;
+	@FXML
+	private TextField txtIdioma;
 
-    @FXML
-    private Label lblFechaPub;
+	@FXML
+	private Label lblFechaPub;
 
-    @FXML
-    private TextField txtFechaPub;
+	@FXML
+	private TextField txtFechaPub;
 
-    @FXML
-    private Label lblNumPaginas;
+	@FXML
+	private Label lblNumPaginas;
 
-    @FXML
-    private TextField txtNumPaginas;
+	@FXML
+	private TextField txtNumPaginas;
 
-    @FXML
-    private Label lblAutores;
+	@FXML
+	private Label lblAutores;
 
-    @FXML
-    private Label lblGeneros;
+	@FXML
+	private Label lblGeneros;
 
-    @FXML
-    private ListView<Autor> listAutores;
+	@FXML
+	private ListView<Autor> listAutores;
 
-    @FXML
-    private ListView<Genero> listGeneros;
+	@FXML
+	private ListView<Genero> listGeneros;
 
-    @FXML
-    private Button btnBack;
+	@FXML
+	private Button btnBack;
 
-    @FXML
-    void handleBack(ActionEvent event) {
-    	closeDialog(event);
-    }
+	@FXML
+	void handleBack(ActionEvent event) {
+
+		closeDialog(event);
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		if (recurso == null) {
 			recurso = new Recurso();
 		}
@@ -95,9 +95,9 @@ public class ResourceDetail extends BaseController {
 		lblAutores.setText(resources.getString("lector.detail.form.autores.label"));
 		lblGeneros.setText(resources.getString("lector.detail.form.generos.label"));
 		btnBack.setText(resources.getString("lector.detail.form.volver.button"));
-		
+
 		initializeListas();
-		
+
 	}
 
 	private void initializeListas() {
@@ -121,7 +121,7 @@ public class ResourceDetail extends BaseController {
 				}
 			};
 		});
-		
+
 		loadAutores();
 
 		listGeneros.setCellFactory(column -> {
@@ -147,8 +147,9 @@ public class ResourceDetail extends BaseController {
 	 * Carga los autores del recurso actual en la lista de autores.
 	 */
 	private void loadAutores() {
+
 		listAutores.getItems().clear();
-		if(recurso != null && recurso.getAutores() != null) {
+		if (recurso != null && recurso.getAutores() != null) {
 			listAutores.getItems().addAll(recurso.getAutores());
 		}
 	}
@@ -157,12 +158,12 @@ public class ResourceDetail extends BaseController {
 	 * Carga los generos del recurso actual en la lista de generos.
 	 */
 	private void loadGeneros() {
+
 		listGeneros.getItems().clear();
-		if(recurso != null && recurso.getGeneros() != null) {
+		if (recurso != null && recurso.getGeneros() != null) {
 			listGeneros.getItems().addAll(recurso.getGeneros());
 		}
 	}
-
 
 	/**
 	 * Metodo para cerrar la ventana.
@@ -176,10 +177,11 @@ public class ResourceDetail extends BaseController {
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
 	}
-	
+
 	public void setRecurso(Recurso recurso) {
+
 		this.recurso = recurso;
-		
+
 		txtTitulo.setText(recurso.getTitulo());
 		txtISBN.setText(recurso.getIsbn());
 		txtIdioma.setText(recurso.getIdioma().getNombre());
@@ -188,6 +190,5 @@ public class ResourceDetail extends BaseController {
 		loadAutores();
 		loadGeneros();
 	}
-
 
 }

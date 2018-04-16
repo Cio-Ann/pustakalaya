@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
-import cgr.cgfsdam.pustakalaya.controller.admin.RecursoController;
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
@@ -490,42 +489,42 @@ public class SearchController extends BaseController {
 			};
 		});
 
-//		colAction.setCellFactory(column -> {
-//			return new TableCell<Recurso, Boolean>() {
-//
-//				Button btnDetalles = new Button();
-//
-//				@Override
-//				protected void updateItem(Boolean item, boolean empty) {
-//
-//					super.updateItem(item, empty);
-//
-//					log.info("Actualiza celda de action -> item = " + item + "/empty = " + empty);
-//
-//					if (item == null || empty) {
-//						setGraphic(null);
-//						setText(null);
-//					} else {
-//						Recurso currentRecurso = getTableView().getItems().get(getIndex());
-//
-//						btnDetalles
-//								.setText(resourceBundle.getString("lector.searcView.resultados.table.action.detalles"));
-//						btnDetalles.getStyleClass().add("btnBlue");
-//						btnDetalles.getStyleClass().add("btn");
-//						btnDetalles.setStyle("-fx-min-width:0");
-//						btnDetalles.setOnAction(e -> {
-//							showResourceDetails(currentRecurso);
-//						});
-//
-//						setGraphic(btnDetalles);
-//						setAlignment(Pos.CENTER);
-//						setText(null);
-//
-//					}
-//
-//				}
-//			};
-//		});
+		// colAction.setCellFactory(column -> {
+		// return new TableCell<Recurso, Boolean>() {
+		//
+		// Button btnDetalles = new Button();
+		//
+		// @Override
+		// protected void updateItem(Boolean item, boolean empty) {
+		//
+		// super.updateItem(item, empty);
+		//
+		// log.info("Actualiza celda de action -> item = " + item + "/empty = " + empty);
+		//
+		// if (item == null || empty) {
+		// setGraphic(null);
+		// setText(null);
+		// } else {
+		// Recurso currentRecurso = getTableView().getItems().get(getIndex());
+		//
+		// btnDetalles
+		// .setText(resourceBundle.getString("lector.searcView.resultados.table.action.detalles"));
+		// btnDetalles.getStyleClass().add("btnBlue");
+		// btnDetalles.getStyleClass().add("btn");
+		// btnDetalles.setStyle("-fx-min-width:0");
+		// btnDetalles.setOnAction(e -> {
+		// showResourceDetails(currentRecurso);
+		// });
+		//
+		// setGraphic(btnDetalles);
+		// setAlignment(Pos.CENTER);
+		// setText(null);
+		//
+		// }
+		//
+		// }
+		// };
+		// });
 
 		colAction.setCellFactory(column -> {
 			return new TableCell<Recurso, Boolean>() {
@@ -543,23 +542,22 @@ public class SearchController extends BaseController {
 					} else {
 						Recurso currentRecurso = getTableView().getItems().get(getIndex());
 
-						
 						btnReservar.setDisable(false);
-						btnReservar.setText(resourceBundle.getString("lector.searcView.resultados.table.action.detalles"));
+						btnReservar
+								.setText(resourceBundle.getString("lector.searcView.resultados.table.action.detalles"));
 
 						btnReservar.getStyleClass().add("btnBlue");
 						btnReservar.getStyleClass().add("btn");
 						btnReservar.setStyle("-fx-min-width:0");
 						btnReservar.setOnAction(e -> {
-								showResourceDetails(currentRecurso);
+							showResourceDetails(currentRecurso);
 						});
 
 						setGraphic(btnReservar);
 						setAlignment(Pos.CENTER);
 						setText(null);
-						
+
 					}
-					
 
 				}
 			};
@@ -668,7 +666,7 @@ public class SearchController extends BaseController {
 
 			Stage form = new Stage();
 			form.setTitle(FxmlView.L_RECURSO_DETALLES.getTitle());
-//			form.setTitle(resourceBundle.getString("lector.search.detalles.title"));
+			// form.setTitle(resourceBundle.getString("lector.search.detalles.title"));
 			form.setScene(new Scene(formData.getParent()));
 			form.initModality(Modality.APPLICATION_MODAL);
 			form.showAndWait();

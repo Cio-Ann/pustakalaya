@@ -1,9 +1,6 @@
 package cgr.cgfsdam.pustakalaya.controller.admin;
 
 import java.net.URL;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -280,18 +277,20 @@ public class UsersController extends BaseController {
 	private Label lblErrorStatus;
 
 	/* Elementos para gestión de listados */
-	private ObservableList<Usuario> usuarios;
-	private FilteredList<Usuario> filteredUsuarios;
+	private ObservableList<Usuario>		  usuarios;
+	private FilteredList<Usuario>		  filteredUsuarios;
 	private ObservableList<TipoDocumento> tiposDocumento = FXCollections.observableArrayList();
-	private ObservableList<Role> roles = FXCollections.observableArrayList();
+	private ObservableList<Role>		  roles			 = FXCollections.observableArrayList();
 
 	@FXML
 	void handleClearSearch(ActionEvent event) {
+
 		clearView();
 	}
 
 	@FXML
 	void handleEdit(ActionEvent event) {
+
 		usuarioActual = UsersList.getSelectionModel().getSelectedItem();
 		if (usuarioActual != null) {
 			readUsuario();
@@ -305,6 +304,7 @@ public class UsersController extends BaseController {
 
 	@FXML
 	void handleNew(ActionEvent event) {
+
 		usuarioActual = new Usuario();
 		usuarioActual.setFechaAlta(new Date());
 		readUsuario();
@@ -313,16 +313,17 @@ public class UsersController extends BaseController {
 
 	@FXML
 	void handleSave(ActionEvent event) {
+
 		readForm();
 		if (isValidUsuario()) {
 			log.info("Se guardaría el usuario ->\n" + usuarioActual.toString());
-			
+
 			usuarioService.saveRawUsuario(usuarioActual);
-			
+
 			sendAlert(AlertType.INFORMATION, resourceBundle.getString("admin.users.save.success.title"),
 					resourceBundle.getString("admin.users.save.success.header"),
 					resourceBundle.getString("admin.users.save.success.msg"));
-			
+
 			clearView();
 		} else {
 			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.users.save.error.title"),
@@ -333,6 +334,7 @@ public class UsersController extends BaseController {
 
 	@FXML
 	void handleCheckPassword(KeyEvent event) {
+
 		String pass = pPassword.getText();
 		String pass2 = pConfirmPassword.getText() + event.getCharacter();
 		if (!pass2.equals(pass)) {
@@ -420,6 +422,7 @@ public class UsersController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeComboRole(ResourceBundle resources) {
+
 		cmbRol.setPromptText(resources.getString("register.combo.role.placeholder"));
 
 		cmbRol.setCellFactory(new Callback<ListView<Role>, ListCell<Role>>() {
@@ -429,6 +432,7 @@ public class UsersController extends BaseController {
 				ListCell<Role> cell = new ListCell<Role>() {
 					@Override
 					protected void updateItem(Role item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -446,6 +450,7 @@ public class UsersController extends BaseController {
 		cmbRol.setConverter(new StringConverter<Role>() {
 			@Override
 			public String toString(Role role) {
+
 				if (role == null) {
 					return "";
 				} else {
@@ -455,6 +460,7 @@ public class UsersController extends BaseController {
 
 			@Override
 			public Role fromString(String nombre) {
+
 				return roleService.findByRole(nombre);
 			}
 		});
@@ -466,6 +472,7 @@ public class UsersController extends BaseController {
 	 * Método privado que carga los roles de base de datos en el combo.
 	 */
 	private void loadRoles() {
+
 		roles.clear();
 		roles.addAll(roleService.findAll());
 		cmbRol.setItems(roles);
@@ -477,6 +484,7 @@ public class UsersController extends BaseController {
 	 * @param resources
 	 */
 	private void initializeComboTipoDocumento(ResourceBundle resources) {
+
 		// establece el texto cuando no hay selección
 		cmbTipoDocumento.setPromptText(resources.getString("register.comboBox.tipoDocumento"));
 
@@ -489,6 +497,7 @@ public class UsersController extends BaseController {
 				ListCell<TipoDocumento> cell = new ListCell<TipoDocumento>() {
 					@Override
 					protected void updateItem(TipoDocumento item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -508,6 +517,7 @@ public class UsersController extends BaseController {
 		cmbTipoDocumento.setConverter(new StringConverter<TipoDocumento>() {
 			@Override
 			public String toString(TipoDocumento td) {
+
 				if (td == null) {
 					return "";
 				} else {
@@ -517,6 +527,7 @@ public class UsersController extends BaseController {
 
 			@Override
 			public TipoDocumento fromString(String nombre) {
+
 				return tipoDocumentoService.findByNombre(nombre);
 			}
 		});
@@ -530,6 +541,7 @@ public class UsersController extends BaseController {
 	 * combo.
 	 */
 	private void loadTipoDocumento() {
+
 		tiposDocumento.clear();
 		tiposDocumento.addAll(tipoDocumentoService.findAll());
 		cmbTipoDocumento.setItems(tiposDocumento);
@@ -539,6 +551,7 @@ public class UsersController extends BaseController {
 	 * Método que inicializa la lista de usuarios y la vincula con los filtros de búsqueda.
 	 */
 	private void initializeUsuarioList() {
+
 		// inicia el observable list
 		usuarios = FXCollections.observableArrayList();
 		usuarios.clear();
@@ -565,8 +578,10 @@ public class UsersController extends BaseController {
 
 			@Override
 			public ListCell<Usuario> call(ListView<Usuario> param) {
+
 				ListCell<Usuario> cell = new ListCell<Usuario>() {
 					protected void updateItem(Usuario item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -593,6 +608,7 @@ public class UsersController extends BaseController {
 	 *         false si no lo hace
 	 */
 	private boolean testFilteredUser(Usuario usuario) {
+
 		String entradaNombre = txtSearchNombre.getText().toLowerCase();
 		String entradaAp1 = txtSearchApellido1.getText().toLowerCase();
 		String entradaAp2 = txtSearchApellido2.getText().toLowerCase();
@@ -616,6 +632,7 @@ public class UsersController extends BaseController {
 	 * Metodo que lee los datos del formulario y los traslada al usuario en memoria.
 	 */
 	private void readForm() {
+
 		if (usuarioActual != null) {
 			// datos de usuario
 			usuarioActual.setNombre(txtNombre.getText());
@@ -674,6 +691,7 @@ public class UsersController extends BaseController {
 	 * Metodo que lee los datos del usuario en memoria y los traslada al formulario.
 	 */
 	private void readUsuario() {
+
 		if (usuarioActual != null) {
 			// user data
 			txtNombre.setText(usuarioActual.getNombre());
@@ -722,14 +740,14 @@ public class UsersController extends BaseController {
 				cmbRol.getSelectionModel().clearSelection();
 				cmbRol.setValue(null);
 			}
-			
+
 			if (usuarioActual.getFechaAlta() != null) {
 				dpFechaAlta.setValue(MyUtils.fromDateToLocal(usuarioActual.getFechaAlta()));
 			} else {
 				dpFechaAlta.getEditor().clear();
 				dpFechaAlta.setValue(null);
 			}
-			
+
 			if (usuarioActual.getFechaVigor() != null) {
 				dpFechaVigor.setValue(MyUtils.fromDateToLocal(usuarioActual.getFechaVigor()));
 			} else {
@@ -786,6 +804,7 @@ public class UsersController extends BaseController {
 	 * @return
 	 */
 	private boolean isValidUsuario() {
+
 		String errorDataMsg = "";
 		String errorAddressMsg = "";
 		String errorStatusMsg = "";
@@ -838,9 +857,9 @@ public class UsersController extends BaseController {
 				isValido = false;
 			}
 		}
-		
+
 		lblErrorAddress.setText(errorAddressMsg);
-		
+
 		// check status
 		if (usuarioActual.getRoles() == null) {
 			errorStatusMsg += resourceBundle.getString("user.validation.roleError");
@@ -877,23 +896,24 @@ public class UsersController extends BaseController {
 	 *         <code>false</code> en caso contrario.
 	 */
 	private boolean isEmptyString(String value) {
+
 		return value == null || value.isEmpty();
 	}
-	
+
 	/**
 	 * Método que limpia todos los campos del formulario, así como el usuario en memoria y los campos de filtrado.
 	 */
 	private void clearView() {
+
 		txtSearchNombre.setText("");
 		txtSearchApellido1.setText("");
 		txtSearchApellido2.setText("");
 		usuarioActual = null;
-		
+
 		initializeUsuarioList();
-//		UsersList.getSelectionModel().clearSelection();
+		// UsersList.getSelectionModel().clearSelection();
 		readUsuario();
 		btnSave.setDisable(true);
 	}
-
 
 }

@@ -7,15 +7,13 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Value;
-
 /**
  * Clase con metodos estático para operaciones comunes.
  *
  * @author CGR-Casa
  */
 public class MyUtils {
-	
+
 	/**
 	 * Método que indica si una String es nula o vacia.
 	 * 
@@ -23,9 +21,10 @@ public class MyUtils {
 	 * @return boolean true si la cadena está vacia.
 	 */
 	public static boolean isEmptyString(String text) {
+
 		return text == null || text.isEmpty();
 	}
-	
+
 	/**
 	 * Método que devuelve el año correspondiente a la fecha recibida.
 	 * 
@@ -33,17 +32,18 @@ public class MyUtils {
 	 * @return int año correspondiente a la fecha.
 	 */
 	public static int getYear(Date fecha) {
+
 		int ret = -1;
 		if (fecha != null) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(fecha);
-			
+
 			ret = calendar.get(Calendar.YEAR);
 		}
 
 		return ret;
 	}
-	
+
 	/**
 	 * Devuelve el Date equivalente al LocalDate recibido.
 	 * 
@@ -51,12 +51,13 @@ public class MyUtils {
 	 * @return Date fecha transformada
 	 */
 	public static Date fromLocalToDate(LocalDate localDate) {
+
 		if (null != localDate)
 			return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		else 
+		else
 			return null;
 	}
-	
+
 	/**
 	 * Devuelve el LocalDate equivalente al Date recibido.
 	 * 
@@ -64,9 +65,10 @@ public class MyUtils {
 	 * @return LocalDate fecha transformada
 	 */
 	public static LocalDate fromDateToLocal(Date date) {
+
 		if (null != date)
-			return LocalDate.from( Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
-		else 
+			return LocalDate.from(Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()));
+		else
 			return null;
 	}
 
@@ -77,8 +79,9 @@ public class MyUtils {
 	 * @return String fecha formateada
 	 */
 	public static String dateToShort(Date fecha) {
+
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		
+
 		return format.format(fecha);
 	}
 

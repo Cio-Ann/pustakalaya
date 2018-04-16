@@ -25,7 +25,7 @@ public class Idioma {
 	/**
 	 * Nombre.
 	 */
-	@Column(nullable=false, unique=true)
+	@Column(nullable = false, unique = true)
 	private String nombre;
 
 	/**
@@ -37,6 +37,7 @@ public class Idioma {
 	 * @return the idIdioma
 	 */
 	public Long getIdIdioma() {
+
 		return idIdioma;
 	}
 
@@ -45,6 +46,7 @@ public class Idioma {
 	 *            the idIdioma to set
 	 */
 	public void setIdIdioma(Long idIdioma) {
+
 		this.idIdioma = idIdioma;
 	}
 
@@ -52,6 +54,7 @@ public class Idioma {
 	 * @return the nombre
 	 */
 	public String getNombre() {
+
 		return nombre;
 	}
 
@@ -60,6 +63,7 @@ public class Idioma {
 	 *            the nombre to set
 	 */
 	public void setNombre(String nombre) {
+
 		this.nombre = nombre;
 	}
 
@@ -67,6 +71,7 @@ public class Idioma {
 	 * @return the descripcion
 	 */
 	public String getDescripcion() {
+
 		return descripcion;
 	}
 
@@ -75,6 +80,7 @@ public class Idioma {
 	 *            the descripcion to set
 	 */
 	public void setDescripcion(String descripcion) {
+
 		this.descripcion = descripcion;
 	}
 
@@ -82,6 +88,7 @@ public class Idioma {
 	 * Constructor por defecto.
 	 */
 	public Idioma() {
+
 	}
 
 	/**
@@ -91,6 +98,7 @@ public class Idioma {
 	 * @param descripcion
 	 */
 	public Idioma(String nombre, String descripcion) {
+
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -98,6 +106,7 @@ public class Idioma {
 
 	@Override
 	public String toString() {
+
 		return "Idioma [idIdioma=" + idIdioma + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
 

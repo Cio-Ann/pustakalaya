@@ -27,7 +27,7 @@ import javafx.scene.layout.AnchorPane;
  * @author CGR-Casa
  */
 @Controller("AdminMainController")
-public class MainController  extends BaseController{
+public class MainController extends BaseController {
 
 	@Autowired
 	SpringFXMLLoader fxmlLoader;
@@ -41,59 +41,64 @@ public class MainController  extends BaseController{
 	@Lazy
 	@Autowired
 	private StageManager stageManager;
-	
+
 	@FXML
 	private Label username;
 
-    @FXML
-    private Button btnUsers;
+	@FXML
+	private Button btnUsers;
 
-    @FXML
-    private Button btnFunds;
+	@FXML
+	private Button btnFunds;
 
-    @FXML
-    private Button btnChangeAccount;
+	@FXML
+	private Button btnChangeAccount;
 
-    @FXML
-    private Button btnExit;
+	@FXML
+	private Button btnExit;
 
-    @FXML
-    private AnchorPane mainPanel;
+	@FXML
+	private AnchorPane mainPanel;
 
-    @FXML
-    void handleUsers(ActionEvent event) {
+	@FXML
+	void handleUsers(ActionEvent event) {
+
 		clearAllSelectedBtn();
 		setSelectedBtn(btnUsers);
 
 		loadChildPanel(FxmlView.A_USERS.getFxmlFile());
-    }
+	}
 
-    @FXML
-    void handleFunds(ActionEvent event) {
+	@FXML
+	void handleFunds(ActionEvent event) {
+
 		clearAllSelectedBtn();
 		setSelectedBtn(btnFunds);
 
 		loadChildPanel(FxmlView.A_RESOURCES.getFxmlFile());
-    }
+	}
 
-    @FXML
-    void handleChangeAccount(ActionEvent event) {
+	@FXML
+	void handleChangeAccount(ActionEvent event) {
+
 		// vacia el contexto de seguridad
 		SecurityContextHolder.clearContext();
 		// redirige a la pantalla de login
 		stageManager.switchScene(FxmlView.LOGIN);
-    }
+	}
 
-    @FXML
-    void handleExit(ActionEvent event) {
+	@FXML
+	void handleExit(ActionEvent event) {
+
 		if (showConfirmation(resourceBundle.getString("app.exit.title"), resourceBundle.getString("app.exit.header"),
 				resourceBundle.getString("app.exit.text"))) {
 			Platform.exit();
 		}
-    }
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
 			String securityUser = SecurityContextHolder.getContext().getAuthentication().getName();
 			log.info("El usuario autenticado es: " + securityUser);
@@ -112,7 +117,7 @@ public class MainController  extends BaseController{
 			log.info("El usuario no está autenticado");
 			stageManager.switchScene(FxmlView.LOGIN);
 		}
-		
+
 	}
 
 	/**
@@ -122,6 +127,7 @@ public class MainController  extends BaseController{
 	 *            String ruta al archivo fxml a cargar.
 	 */
 	private void loadChildPanel(String path) {
+
 		AnchorPane newLoadedPane;
 		try {
 			newLoadedPane = (AnchorPane) getChildPane(path);
@@ -138,6 +144,7 @@ public class MainController  extends BaseController{
 	 * Elimina la clase de boton seleccionado de los botones de navegación.
 	 */
 	private void clearAllSelectedBtn() {
+
 		btnUsers.getStyleClass().remove("menu-button-on");
 		btnUsers.getStyleClass().add("menu-button-off");
 		btnUsers.setDisable(false);
@@ -161,6 +168,7 @@ public class MainController  extends BaseController{
 	 * @param button Button to apply new style;
 	 */
 	private void setSelectedBtn(Button button) {
+
 		button.getStyleClass().add("menu-button-on");
 		button.setDisable(true);
 	}

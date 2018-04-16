@@ -7,21 +7,18 @@ import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javafx.application.Platform;
+import cgr.cgfsdam.pustakalaya.controller.BaseController;
+import cgr.cgfsdam.pustakalaya.model.funds.Autor;
+import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
+import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import cgr.cgfsdam.pustakalaya.controller.BaseController;
-import cgr.cgfsdam.pustakalaya.model.funds.Autor;
-import cgr.cgfsdam.pustakalaya.repository.funds.AutorRepository;
-import cgr.cgfsdam.pustakalaya.service.funds.AutorService;
-import cgr.cgfsdam.pustakalaya.utils.MyUtils;
 
 /**
  * Controlador para el formulario de creación / edición de autores.
@@ -75,6 +72,7 @@ public class AutorController extends BaseController {
 	 */
 	@FXML
 	void handleDelete(ActionEvent event) {
+
 		log.info("se pulsó el botón borrar");
 
 		if (isAutorPurgeable()) {
@@ -96,6 +94,7 @@ public class AutorController extends BaseController {
 	 */
 	@FXML
 	void handleExit(ActionEvent event) {
+
 		log.info("se pulsó el botón salir");
 		closeDialog(event);
 	}
@@ -110,6 +109,7 @@ public class AutorController extends BaseController {
 	 */
 	@FXML
 	void handleSave(ActionEvent event) {
+
 		log.info("se pulsó el botón guardar");
 		if (validateAutor()) {
 			saveAutor();
@@ -126,6 +126,7 @@ public class AutorController extends BaseController {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		lblTitle.setText(resources.getString("admin.autor.title"));
 		lblNombre.setText(resources.getString("admin.autor.label.nombre"));
 		lblApellidos.setText(resources.getString("admin.autor.label.apellidos"));
@@ -141,6 +142,7 @@ public class AutorController extends BaseController {
 	 * @param autor
 	 */
 	public void setAutor(Autor autor) {
+
 		this.autor = autor;
 		sendEntityToForm();
 	}
@@ -152,6 +154,7 @@ public class AutorController extends BaseController {
 	 *            ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
+
 		final Node source = (Node) event.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
@@ -165,6 +168,7 @@ public class AutorController extends BaseController {
 	 *         contrario
 	 */
 	private boolean validateAutor() {
+
 		boolean ret = true;
 		lblError.setText("");
 
@@ -197,6 +201,7 @@ public class AutorController extends BaseController {
 	 * Metodo que guarda el autor si es valido.
 	 */
 	private void saveAutor() {
+
 		if (autor == null) {
 			autor = new Autor();
 		}
@@ -210,12 +215,13 @@ public class AutorController extends BaseController {
 	 * Traslada los datos de la entidad al formulario.
 	 */
 	private void sendEntityToForm() {
+
 		if (autor == null) {
 			autor = new Autor();
 		}
 		txtNombre.setText(autor.getNombre());
 		txtApellidos.setText(autor.getApellidos());
-		
+
 		if (isAutorPurgeable()) {
 			btnDelete.setDisable(false);
 		} else {
@@ -223,7 +229,7 @@ public class AutorController extends BaseController {
 		}
 
 	}
-	
+
 	/**
 	 * Indica si el autor actual es susceptible de ser eliminado - existe en base de
 	 * datos - no tiene ningún recurso relacionado
@@ -231,6 +237,7 @@ public class AutorController extends BaseController {
 	 * @return boolean true si el autor puede ser borrado, o false en caso contrario
 	 */
 	private boolean isAutorPurgeable() {
+
 		boolean ret = true;
 
 		if (autor == null || autor.getIdAutor() == null) {

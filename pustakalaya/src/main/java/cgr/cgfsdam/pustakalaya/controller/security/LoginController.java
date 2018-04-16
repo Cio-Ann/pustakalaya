@@ -51,7 +51,7 @@ public class LoginController implements Initializable {
 
 	@Autowired
 	AuthenticationManager autenticationManager;
-	
+
 	@Autowired
 	ResourceBundle resourceBundle;
 
@@ -61,6 +61,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		lblLogin.setText(resources.getString("login.label"));
 		username.setPromptText(resources.getString("login.username.placeholder"));
 		password.setPromptText(resources.getString("login.password.placeholder"));
@@ -77,6 +78,7 @@ public class LoginController implements Initializable {
 	 */
 	@FXML
 	private void login(ActionEvent event) throws IOException {
+
 		// recupera los valores introducidos
 		String userName = getUsername();
 		String userPassword = getPassword();
@@ -104,6 +106,7 @@ public class LoginController implements Initializable {
 	 */
 	@FXML
 	private void register(ActionEvent event) throws IOException {
+
 		stageManager.switchScene(FxmlView.REGISTER);
 	}
 
@@ -114,6 +117,7 @@ public class LoginController implements Initializable {
 	 *         <code>false</code> en caso contrario.
 	 */
 	private boolean isRoleAdmin() {
+
 		return isRole("ROLE_ADMIN");
 	}
 
@@ -124,6 +128,7 @@ public class LoginController implements Initializable {
 	 *         <code>false</code> en caso contrario.
 	 */
 	private boolean isRoleLector() {
+
 		return isRole("ROLE_LECTOR");
 	}
 
@@ -137,6 +142,7 @@ public class LoginController implements Initializable {
 	 *         <code>false</code> en caso contrario.
 	 */
 	private boolean isRole(String role) {
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		boolean hasUserRole = authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals(role));
@@ -152,6 +158,7 @@ public class LoginController implements Initializable {
 	 *            Exception excepción que ha producido el error de autenticación.
 	 */
 	private void showNotAllowedMessage(Exception e) {
+
 		log.info("Intento fallido de login, user = " + getUsername() + ", password= " + getPassword());
 		log.error(e.getLocalizedMessage());
 
@@ -164,6 +171,7 @@ public class LoginController implements Initializable {
 	 * @return String password introducido por el usuario.
 	 */
 	public String getPassword() {
+
 		return password.getText().trim();
 	}
 
@@ -173,6 +181,7 @@ public class LoginController implements Initializable {
 	 * @return String nombre de usuario.
 	 */
 	public String getUsername() {
+
 		return username.getText().trim();
 	}
 

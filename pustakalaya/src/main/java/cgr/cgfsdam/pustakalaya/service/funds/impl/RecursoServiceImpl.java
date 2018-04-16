@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cgr.cgfsdam.pustakalaya.model.funds.Autor;
-import cgr.cgfsdam.pustakalaya.model.funds.EstadoEnum;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;

@@ -10,7 +10,7 @@ import cgr.cgfsdam.pustakalaya.model.users.Usuario;
  * @author CGR-Casa
  */
 public interface UsuarioService {
-	
+
 	/**
 	 * Recupera un Usuario por su username.
 	 * 
@@ -18,6 +18,7 @@ public interface UsuarioService {
 	 * @return Usuario objeto coincidente o <code>null</code> en caso contrario
 	 */
 	public Usuario findByUsername(String username);
+
 	/**
 	 * Recupera un Usuario por su email
 	 * 
@@ -25,6 +26,7 @@ public interface UsuarioService {
 	 * @return Usuario object matching email field or null.
 	 */
 	public Usuario findByEmail(String email);
+
 	/**
 	 * Guarda un usuario en base de datos.
 	 * Valida si todos los campos están completados correctamente y rellena los campos obligatorios que falten.
@@ -32,7 +34,7 @@ public interface UsuarioService {
 	 * @param usuario Usuario instancia a guardar.
 	 */
 	public void saveUsuario(Usuario usuario);
-	
+
 	/**
 	 * Guarda un usuario en base de datos.
 	 * Almacena el usuario en base de datos tal y como lo recibe del controlador.
@@ -40,7 +42,7 @@ public interface UsuarioService {
 	 * @param usuario Usuario instancia a guardar.
 	 */
 	public void saveRawUsuario(Usuario usuario);
-	
+
 	/**
 	 * Recupera todos los usuarios de base de datos.
 	 * 

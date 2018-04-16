@@ -1,7 +1,5 @@
 package cgr.cgfsdam.pustakalaya.repository.users;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +19,5 @@ public interface TipoDocumentoRepository extends JpaRepository<TipoDocumento, Lo
 	 * @return TipoDocumento tipo de documento que coincide con el nombre o <code>null</code> en caso contrario
 	 */
 	TipoDocumento findByNombre(String nombre);
-	
+
 }

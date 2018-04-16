@@ -14,7 +14,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class TipoDocumento {
-	
+
 	/**
 	 * Identificador del tipo de documento.
 	 */
@@ -28,7 +28,7 @@ public class TipoDocumento {
 	 */
 	@Column(nullable = false)
 	private String nombre;
-	
+
 	/**
 	 * Descripción del tipo de documento.
 	 */
@@ -38,6 +38,7 @@ public class TipoDocumento {
 	 * @return the idTipoDocumento
 	 */
 	public long getIdTipoDocumento() {
+
 		return idTipoDocumento;
 	}
 
@@ -46,6 +47,7 @@ public class TipoDocumento {
 	 *            the idTipoDocumento to set
 	 */
 	public void setIdTipoDocumento(long idTipoDocumento) {
+
 		this.idTipoDocumento = idTipoDocumento;
 	}
 
@@ -53,6 +55,7 @@ public class TipoDocumento {
 	 * @return the nombre
 	 */
 	public String getNombre() {
+
 		return nombre;
 	}
 
@@ -61,6 +64,7 @@ public class TipoDocumento {
 	 *            the nombre to set
 	 */
 	public void setNombre(String nombre) {
+
 		this.nombre = nombre;
 	}
 
@@ -68,6 +72,7 @@ public class TipoDocumento {
 	 * @return the descripcion
 	 */
 	public String getDescripcion() {
+
 		return descripcion;
 	}
 
@@ -76,6 +81,7 @@ public class TipoDocumento {
 	 *            the descripcion to set
 	 */
 	public void setDescripcion(String descripcion) {
+
 		this.descripcion = descripcion;
 	}
 
@@ -83,6 +89,7 @@ public class TipoDocumento {
 	 * Constructor por defecto.
 	 */
 	public TipoDocumento() {
+
 	}
 
 	/**
@@ -92,12 +99,14 @@ public class TipoDocumento {
 	 * @param descripcion
 	 */
 	public TipoDocumento(String nombre, String descripcion) {
+
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
 
 	@Override
 	public String toString() {
+
 		return "TipoDocumento [idTipoDocumento=" + idTipoDocumento + ", nombre=" + nombre + ", descripcion="
 				+ descripcion + "]";
 	}

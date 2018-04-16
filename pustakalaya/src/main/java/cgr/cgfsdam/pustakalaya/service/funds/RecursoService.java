@@ -8,6 +8,11 @@ import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.model.funds.Idioma;
 import cgr.cgfsdam.pustakalaya.model.funds.Recurso;
 
+/**
+ * Interfaz del servicio de la entidad Recurso
+ *
+ * @author CGR-Casa
+ */
 public interface RecursoService {
 
 	/**

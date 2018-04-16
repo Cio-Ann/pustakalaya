@@ -16,42 +16,49 @@ import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
  */
 @Service("generoService")
 public class GeneroServiceImpl implements GeneroService {
-	
+
 	@Autowired
 	GeneroRepository generoRepository;
-	
+
 	@Override
 	public List<Genero> findByNombreIgnoreCase(String nombre) {
+
 		return generoRepository.findByNombreIgnoreCase(nombre);
 	}
 
 	@Override
 	public List<Genero> findByNombreAndDescripcionAllIgnoreCase(String nombre, String descripcion) {
+
 		return generoRepository.findByNombreAndDescripcionAllIgnoreCase(nombre, descripcion);
 	}
 
 	@Override
 	public void save(Genero genero) {
+
 		generoRepository.save(genero);
 	}
 
 	@Override
 	public List<Genero> findAll() {
+
 		return generoRepository.findAll();
 	}
 
 	@Override
 	public Genero findById(Long idGenero) {
+
 		return generoRepository.findOne(idGenero);
 	}
 
 	@Override
 	public void delete(Genero genero) {
+
 		generoRepository.delete(genero);
 	}
 
 	@Override
 	public Long countResourcesByGenero(Genero genero) {
+
 		return generoRepository.countResourcesByGenero(genero);
 	}
 

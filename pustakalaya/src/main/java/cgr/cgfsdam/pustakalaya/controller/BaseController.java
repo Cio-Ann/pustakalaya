@@ -14,8 +14,8 @@ import cgr.cgfsdam.pustakalaya.model.utility.FormObjects;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 
 /**
@@ -28,9 +28,9 @@ import javafx.scene.layout.Pane;
 public abstract class BaseController implements Initializable {
 
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
-	
+
 	private Usuario usuario;
-	
+
 	@Autowired
 	private ApplicationContext appContext;
 
@@ -43,6 +43,7 @@ public abstract class BaseController implements Initializable {
 	 * @return Usuario usuario almacenado en el controlador.
 	 */
 	public Usuario getUsuario() {
+
 		return usuario;
 	}
 
@@ -52,6 +53,7 @@ public abstract class BaseController implements Initializable {
 	 * @param usuario Usuario a almacenar en el controlador.
 	 */
 	public void setUsuario(Usuario usuario) {
+
 		log.info("Se establece el usuario en la clase " + this.getClass().getSimpleName());
 		this.usuario = usuario;
 	}
@@ -64,29 +66,28 @@ public abstract class BaseController implements Initializable {
 	 * @throws IOException si no se encuentra o no se tiene acceso al fichero indicado.
 	 */
 	public Pane getChildPane(String path) throws IOException {
+
 		FXMLLoader loader = new FXMLLoader();
-        loader.setControllerFactory(appContext::getBean); //Spring now FXML Controller Factory
-        loader.setResources(resourceBundle);
-        loader.setLocation(getClass().getResource(path));
-        return loader.load();
+		loader.setControllerFactory(appContext::getBean); // Spring now FXML Controller Factory
+		loader.setResources(resourceBundle);
+		loader.setLocation(getClass().getResource(path));
+		return loader.load();
 	}
 
 	public FormObjects getFormOjects(String path) throws IOException {
+
 		FormObjects ret = new FormObjects();
-		
+
 		FXMLLoader loader = new FXMLLoader();
-        loader.setControllerFactory(appContext::getBean); //Spring now FXML Controller Factory
-        loader.setResources(resourceBundle);
-        loader.setLocation(getClass().getResource(path));
-        
-        ret.setParent(loader.load());
-        ret.setController(loader.getController());
-        return ret;
+		loader.setControllerFactory(appContext::getBean); // Spring now FXML Controller Factory
+		loader.setResources(resourceBundle);
+		loader.setLocation(getClass().getResource(path));
+
+		ret.setParent(loader.load());
+		ret.setController(loader.getController());
+		return ret;
 	}
-	
-	
-	
-	
+
 	/**
 	 * Método para mostrar un popup de confirmación y recoger la respuesta del usuario.
 	 * 
@@ -96,6 +97,7 @@ public abstract class BaseController implements Initializable {
 	 * @return boolean <code>true</code> si el usuario acepta, <code>false</code> en caso contrario.
 	 */
 	protected boolean showConfirmation(String title, String header, String contextText) {
+
 		boolean ret = false;
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -114,11 +116,12 @@ public abstract class BaseController implements Initializable {
 	 * Método para mostrar un mensaje de alerta al usuario.
 	 * 
 	 * @param tipo AlertType tipo de alerta a mostrar.
-	 * @param title String  título del popup.
+	 * @param title String título del popup.
 	 * @param header String cabecera del popup.
 	 * @param contextText String mensaje a mostrar.
 	 */
 	protected void sendAlert(AlertType tipo, String title, String header, String contextText) {
+
 		Alert alert = new Alert(tipo);
 		alert.setTitle(title);
 		alert.setHeaderText(header);

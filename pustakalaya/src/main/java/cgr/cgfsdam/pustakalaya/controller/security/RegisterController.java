@@ -34,7 +34,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -216,6 +215,7 @@ public class RegisterController implements Initializable {
 	 */
 	@FXML
 	void handleCheckPass(KeyEvent event) {
+
 		String pass = pPassword.getText();
 		String pass2 = pConfirmPassword.getText() + event.getCharacter();
 		if (!pass2.equals(pass)) {
@@ -235,6 +235,7 @@ public class RegisterController implements Initializable {
 	 */
 	@FXML
 	void handleRegister(ActionEvent event) {
+
 		log.info("se pulsó el botón registrarse");
 
 		String validationErrors = validateFields();
@@ -260,6 +261,7 @@ public class RegisterController implements Initializable {
 	 */
 	@FXML
 	void handleExit(ActionEvent event) {
+
 		log.info("se pulsó el botón salir");
 		if (showConfirmation(resourceBundle.getString("app.exit.title"), resourceBundle.getString("app.exit.header"),
 				resourceBundle.getString("app.exit.text"))) {
@@ -276,6 +278,7 @@ public class RegisterController implements Initializable {
 	 */
 	@FXML
 	void handleBack(ActionEvent event) {
+
 		log.info("se pulsó el botón volver");
 		stageManager.switchScene(FxmlView.LOGIN);
 	}
@@ -285,6 +288,7 @@ public class RegisterController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		lblTitle.setText(resources.getString("register.label.title"));
 		lblUserData.setText(resources.getString("register.label.userdata"));
 		lblUserAddress.setText(resources.getString("register.label.userAddress"));
@@ -333,6 +337,7 @@ public class RegisterController implements Initializable {
 	 * @param resources
 	 */
 	private void initializeComboTipoDocumento(ResourceBundle resources) {
+
 		// establece el texto cuando no hay selección
 		cbTipoDocumento.setPromptText(resources.getString("register.comboBox.tipoDocumento"));
 
@@ -345,6 +350,7 @@ public class RegisterController implements Initializable {
 				ListCell<TipoDocumento> cell = new ListCell<TipoDocumento>() {
 					@Override
 					protected void updateItem(TipoDocumento item, boolean empty) {
+
 						super.updateItem(item, empty);
 
 						if (item != null) {
@@ -364,6 +370,7 @@ public class RegisterController implements Initializable {
 		cbTipoDocumento.setConverter(new StringConverter<TipoDocumento>() {
 			@Override
 			public String toString(TipoDocumento td) {
+
 				if (td == null) {
 					return "";
 				} else {
@@ -373,6 +380,7 @@ public class RegisterController implements Initializable {
 
 			@Override
 			public TipoDocumento fromString(String nombre) {
+
 				return tipoDocumentoService.findByNombre(nombre);
 			}
 		});
@@ -385,6 +393,7 @@ public class RegisterController implements Initializable {
 	 * Método para cargar los valores del combo de TipoDocumento.
 	 */
 	private void loadTipoDocumento() {
+
 		tiposDocumento.clear();
 		tiposDocumento.addAll(tipoDocumentoService.findAll());
 
@@ -404,6 +413,7 @@ public class RegisterController implements Initializable {
 	 *            String mensaje a mostrar en la alerta.
 	 */
 	private void sendAlert(AlertType tipo, String title, String header, String contextText) {
+
 		Alert alert = new Alert(tipo);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
@@ -425,6 +435,7 @@ public class RegisterController implements Initializable {
 	 *         en caso contrario.
 	 */
 	private boolean showConfirmation(String Title, String header, String contextText) {
+
 		boolean ret = false;
 
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -446,6 +457,7 @@ public class RegisterController implements Initializable {
 	 *         correctamente completados, <code>false</code> en caso contrario.
 	 */
 	private String validateFields() {
+
 		String ret = "";
 
 		ret += validateNombre();
@@ -461,9 +473,11 @@ public class RegisterController implements Initializable {
 
 	/**
 	 * Valida el campo de nombre
+	 * 
 	 * @return String mensaje de error si no se ha rellenado.
 	 */
 	private String validateNombre() {
+
 		String nombre = tNombre.getText().trim();
 
 		if (nombre.isEmpty()) {
@@ -475,9 +489,11 @@ public class RegisterController implements Initializable {
 
 	/**
 	 * Valida el campo de primer apellido
+	 * 
 	 * @return String mensaje de error si no se ha rellenado.
 	 */
 	private String validateApellido1() {
+
 		String apellido = tApellido1.getText().trim();
 
 		if (apellido.isEmpty()) {
@@ -489,9 +505,11 @@ public class RegisterController implements Initializable {
 
 	/**
 	 * Valida el tipo de documento.
+	 * 
 	 * @return String mensaje de error si no se ha seleccionado.
 	 */
 	private String validateTipoDocumento() {
+
 		if (cbTipoDocumento.getValue() == null || cbTipoDocumento.getValue().getNombre().isEmpty()) {
 			return resourceBundle.getString("user.validation.tipoDocumentoError");
 		} else {
@@ -501,9 +519,11 @@ public class RegisterController implements Initializable {
 
 	/**
 	 * Valida el documento.
+	 * 
 	 * @return String mensaje de error si no se ha rellenado.
 	 */
 	private String validateDocumento() {
+
 		String doc = tDocumento.getText().trim();
 
 		if (doc.isEmpty()) {
@@ -515,9 +535,11 @@ public class RegisterController implements Initializable {
 
 	/**
 	 * Valida en username.
+	 * 
 	 * @return String mensaje de error si no se ha rellenado o ya existe en el sistema.
 	 */
 	private String validateUsername() {
+
 		String username = tUsername.getText().trim();
 
 		if (username.isEmpty()) {
@@ -534,9 +556,11 @@ public class RegisterController implements Initializable {
 
 	/**
 	 * Valida la contraseña.
+	 * 
 	 * @return String mensaje de error si no se ha rellenado o no coinciden los campos de contraseña y confirmación.
 	 */
 	private String validatePassword() {
+
 		String p = pPassword.getText().trim();
 
 		if (p.isEmpty()) {
@@ -554,9 +578,11 @@ public class RegisterController implements Initializable {
 
 	/**
 	 * Valida el campo email.
+	 * 
 	 * @return String mensaje de error si no se ha rellenado o ya está registrado en el sistema.
 	 */
 	private String validateEmail() {
+
 		String email = tEmail.getText().trim();
 
 		if (email.isEmpty()) {
@@ -572,9 +598,10 @@ public class RegisterController implements Initializable {
 	}
 
 	/**
-	 * Almacena el usuario en base de datos	
+	 * Almacena el usuario en base de datos
 	 */
 	private void saveUser() {
+
 		Usuario user = new Usuario();
 
 		// user data

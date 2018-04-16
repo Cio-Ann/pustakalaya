@@ -1,9 +1,7 @@
 package cgr.cgfsdam.pustakalaya.model.funds;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,11 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import cgr.cgfsdam.pustakalaya.model.users.Direccion;
 
 /**
  * Clase que representa la entidad Recurso.
@@ -51,8 +46,9 @@ public class Recurso {
 	/**
 	 * Generos a los que pertenece el recurso.
 	 */
-	@ManyToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
-	@JoinTable(name = "recurso_genero", joinColumns = @JoinColumn(name = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_genero"))
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinTable(name = "recurso_genero", joinColumns = @JoinColumn(name = "id_recurso"),
+			inverseJoinColumns = @JoinColumn(name = "id_genero"))
 	private Set<Genero> generos;
 
 	/**
@@ -67,16 +63,15 @@ public class Recurso {
 	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_idioma")
 	private Idioma idioma;
-	
+
 	/**
 	 * Conjunto de autores participantes en la creación del recurso.
 	 */
-//	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "recursos")
-	
-	
-	
-	@ManyToMany(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
-	@JoinTable(name = "recurso_autor", joinColumns = @JoinColumn(name = "id_recurso"), inverseJoinColumns = @JoinColumn(name = "id_autor"))
+	// @ManyToMany(fetch = FetchType.EAGER, mappedBy = "recursos")
+
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinTable(name = "recurso_autor", joinColumns = @JoinColumn(name = "id_recurso"),
+			inverseJoinColumns = @JoinColumn(name = "id_autor"))
 	private Set<Autor> autores;
 
 	/**
@@ -93,6 +88,7 @@ public class Recurso {
 	 * @return the idRecurso
 	 */
 	public Long getIdRecurso() {
+
 		return idRecurso;
 	}
 
@@ -101,6 +97,7 @@ public class Recurso {
 	 *            the idRecurso to set
 	 */
 	public void setIdRecurso(Long idRecurso) {
+
 		this.idRecurso = idRecurso;
 	}
 
@@ -108,6 +105,7 @@ public class Recurso {
 	 * @return the titulo
 	 */
 	public String getTitulo() {
+
 		return titulo;
 	}
 
@@ -116,6 +114,7 @@ public class Recurso {
 	 *            the titulo to set
 	 */
 	public void setTitulo(String titulo) {
+
 		this.titulo = titulo;
 	}
 
@@ -123,6 +122,7 @@ public class Recurso {
 	 * @return the generos
 	 */
 	public Set<Genero> getGeneros() {
+
 		return generos;
 	}
 
@@ -131,6 +131,7 @@ public class Recurso {
 	 *            the generos to set
 	 */
 	public void setGeneros(Set<Genero> generos) {
+
 		this.generos = generos;
 	}
 
@@ -138,6 +139,7 @@ public class Recurso {
 	 * @param genero
 	 */
 	public void addGeneros(Genero genero) {
+
 		if (this.generos == null) {
 			generos = new HashSet<>();
 		}
@@ -148,6 +150,7 @@ public class Recurso {
 	 * @return the fechaPublicacion
 	 */
 	public Date getFechaPublicacion() {
+
 		return fechaPublicacion;
 	}
 
@@ -156,6 +159,7 @@ public class Recurso {
 	 *            the fechaPublicacion to set
 	 */
 	public void setFechaPublicacion(Date fechaPublicacion) {
+
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
@@ -163,6 +167,7 @@ public class Recurso {
 	 * @return the idioma
 	 */
 	public Idioma getIdioma() {
+
 		return idioma;
 	}
 
@@ -171,6 +176,7 @@ public class Recurso {
 	 *            the idioma to set
 	 */
 	public void setIdioma(Idioma idioma) {
+
 		this.idioma = idioma;
 	}
 
@@ -178,6 +184,7 @@ public class Recurso {
 	 * @return the autores
 	 */
 	public Set<Autor> getAutores() {
+
 		return autores;
 	}
 
@@ -186,6 +193,7 @@ public class Recurso {
 	 *            the autores to set
 	 */
 	public void setAutores(Set<Autor> autores) {
+
 		this.autores = autores;
 	}
 
@@ -195,6 +203,7 @@ public class Recurso {
 	 * @param autor
 	 */
 	public void addAutores(Autor autor) {
+
 		if (this.autores == null) {
 			autores = new HashSet<>();
 		}
@@ -205,6 +214,7 @@ public class Recurso {
 	 * @return the isbn
 	 */
 	public String getIsbn() {
+
 		return isbn;
 	}
 
@@ -213,6 +223,7 @@ public class Recurso {
 	 *            the isbn to set
 	 */
 	public void setIsbn(String isbn) {
+
 		this.isbn = isbn;
 	}
 
@@ -220,6 +231,7 @@ public class Recurso {
 	 * @return the numPaginas
 	 */
 	public int getNumPaginas() {
+
 		return numPaginas;
 	}
 
@@ -228,6 +240,7 @@ public class Recurso {
 	 *            the numPaginas to set
 	 */
 	public void setNumPaginas(int numPaginas) {
+
 		this.numPaginas = numPaginas;
 	}
 
@@ -235,6 +248,7 @@ public class Recurso {
 	 * Constructor por defecto.
 	 */
 	public Recurso() {
+
 		generos = new HashSet<>();
 		autores = new HashSet<>();
 	}
@@ -252,6 +266,7 @@ public class Recurso {
 	 */
 	public Recurso(String titulo, Set<Genero> generos, Date fechaPublicacion, Idioma idioma, Set<Autor> autores,
 			int numPaginas, String isbn) {
+
 		super();
 		this.titulo = titulo;
 		this.generos = generos;
@@ -264,6 +279,7 @@ public class Recurso {
 
 	@Override
 	public String toString() {
+
 		return "Recurso [idRecurso=" + idRecurso + ", titulo=" + titulo + ", generos=" + generos + ", fechaPublicacion="
 				+ fechaPublicacion + ", idioma=" + idioma + ", autores=" + autores + ", numPaginas=" + numPaginas
 				+ ", isbn=" + isbn + "]";

@@ -18,14 +18,14 @@ public interface TipoDocumentoService {
 	 * @return TipoDocumento objeto.
 	 */
 	public TipoDocumento findByNombre(String nombre);
-	
+
 	/**
 	 * Devuelve un listado con todos los TipoDocumento del repositorio.
 	 * 
 	 * @return List<TipoDocumento> todos los TipoDocumento
 	 */
 	public List<TipoDocumento> findAll();
-	
+
 	/**
 	 * Devuelve una lista con los nombres de todos los TipoDocumento.
 	 * 

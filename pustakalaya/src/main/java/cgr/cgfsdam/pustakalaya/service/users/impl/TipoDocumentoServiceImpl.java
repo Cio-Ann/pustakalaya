@@ -17,7 +17,7 @@ import cgr.cgfsdam.pustakalaya.service.users.TipoDocumentoService;
  */
 @Service("tipoDocumentoService")
 public class TipoDocumentoServiceImpl implements TipoDocumentoService {
-	
+
 	/**
 	 * Repositorio de TipoDocumento.
 	 */
@@ -26,16 +26,19 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService {
 
 	@Override
 	public TipoDocumento findByNombre(String nombre) {
+
 		return tipoDocumentoRepository.findByNombre(nombre);
 	}
 
 	@Override
 	public List<TipoDocumento> findAll() {
+
 		return tipoDocumentoRepository.findAll();
 	}
-	
+
 	@Override
 	public List<String> findAllNombres() {
+
 		List<TipoDocumento> tiposDocumento = tipoDocumentoRepository.findAll();
 
 		List<String> allNames = tiposDocumento.stream().map(TipoDocumento::getNombre).collect(Collectors.toList());

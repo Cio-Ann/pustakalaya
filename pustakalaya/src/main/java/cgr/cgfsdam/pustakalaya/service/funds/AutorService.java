@@ -17,7 +17,7 @@ public interface AutorService {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByNombreAllIgnoreCase(String nombre);
-	
+
 	/**
 	 * Busca autores cuyo nombre contenga la cadena de busqueda.
 	 * 
@@ -25,7 +25,7 @@ public interface AutorService {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByNombreContainingAllIgnoreCase(String nombre);
-	
+
 	/**
 	 * Busca autores por sus apellidos exactos.
 	 * 
@@ -33,7 +33,7 @@ public interface AutorService {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByApellidosAllIgnoreCase(String apellidos);
-	
+
 	/**
 	 * Busca autores cuyos apellidos contengan el texto dado.
 	 * 
@@ -41,7 +41,7 @@ public interface AutorService {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByApellidosContainingAllIgnoreCase(String apellidos);
-	
+
 	/**
 	 * Busca autores cuyos nombre y apellidos coincidan con las cadenas dadas.
 	 * 
@@ -59,7 +59,7 @@ public interface AutorService {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByNombreContainingAndApellidosContainingAllIgnoreCase(String nombre, String apellidos);
-	
+
 	/**
 	 * Guarda un autor en base de datos.
 	 * 
@@ -70,9 +70,10 @@ public interface AutorService {
 
 	/**
 	 * Recupera toda la lista de autores de bbdd
+	 * 
 	 * @return
 	 */
-	List<Autor>  findAll();
+	List<Autor> findAll();
 
 	/**
 	 * Recupera un autor por su id.

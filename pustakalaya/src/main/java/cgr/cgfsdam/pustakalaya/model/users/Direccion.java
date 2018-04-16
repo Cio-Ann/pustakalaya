@@ -76,6 +76,7 @@ public class Direccion {
 	 * @return the iddireccion
 	 */
 	public Integer getIddireccion() {
+
 		return iddireccion;
 	}
 
@@ -84,6 +85,7 @@ public class Direccion {
 	 *            the iddireccion to set
 	 */
 	public void setIddireccion(Integer iddireccion) {
+
 		this.iddireccion = iddireccion;
 	}
 
@@ -91,6 +93,7 @@ public class Direccion {
 	 * @return the tipoVia
 	 */
 	public String getTipoVia() {
+
 		return tipoVia;
 	}
 
@@ -99,6 +102,7 @@ public class Direccion {
 	 *            the tipoVia to set
 	 */
 	public void setTipoVia(String tipoVia) {
+
 		this.tipoVia = tipoVia;
 	}
 
@@ -106,6 +110,7 @@ public class Direccion {
 	 * @return the via
 	 */
 	public String getVia() {
+
 		return via;
 	}
 
@@ -114,6 +119,7 @@ public class Direccion {
 	 *            the via to set
 	 */
 	public void setVia(String via) {
+
 		this.via = via;
 	}
 
@@ -121,6 +127,7 @@ public class Direccion {
 	 * @return the numero
 	 */
 	public String getNumero() {
+
 		return numero;
 	}
 
@@ -129,6 +136,7 @@ public class Direccion {
 	 *            the numero to set
 	 */
 	public void setNumero(String numero) {
+
 		this.numero = numero;
 	}
 
@@ -136,6 +144,7 @@ public class Direccion {
 	 * @return the portal
 	 */
 	public String getPortal() {
+
 		return portal;
 	}
 
@@ -144,6 +153,7 @@ public class Direccion {
 	 *            the portal to set
 	 */
 	public void setPortal(String portal) {
+
 		this.portal = portal;
 	}
 
@@ -151,6 +161,7 @@ public class Direccion {
 	 * @return the escalera
 	 */
 	public String getEscalera() {
+
 		return escalera;
 	}
 
@@ -159,6 +170,7 @@ public class Direccion {
 	 *            the escalera to set
 	 */
 	public void setEscalera(String escalera) {
+
 		this.escalera = escalera;
 	}
 
@@ -166,6 +178,7 @@ public class Direccion {
 	 * @return the planta
 	 */
 	public String getPlanta() {
+
 		return planta;
 	}
 
@@ -174,6 +187,7 @@ public class Direccion {
 	 *            the planta to set
 	 */
 	public void setPlanta(String planta) {
+
 		this.planta = planta;
 	}
 
@@ -181,6 +195,7 @@ public class Direccion {
 	 * @return the puerta
 	 */
 	public String getPuerta() {
+
 		return puerta;
 	}
 
@@ -189,6 +204,7 @@ public class Direccion {
 	 *            the puerta to set
 	 */
 	public void setPuerta(String puerta) {
+
 		this.puerta = puerta;
 	}
 
@@ -196,6 +212,7 @@ public class Direccion {
 	 * @return the municipio
 	 */
 	public String getMunicipio() {
+
 		return municipio;
 	}
 
@@ -204,6 +221,7 @@ public class Direccion {
 	 *            the municipio to set
 	 */
 	public void setMunicipio(String municipio) {
+
 		this.municipio = municipio;
 	}
 
@@ -211,6 +229,7 @@ public class Direccion {
 	 * @return the provincia
 	 */
 	public String getProvincia() {
+
 		return provincia;
 	}
 
@@ -219,6 +238,7 @@ public class Direccion {
 	 *            the provincia to set
 	 */
 	public void setProvincia(String provincia) {
+
 		this.provincia = provincia;
 	}
 
@@ -226,6 +246,7 @@ public class Direccion {
 	 * @return the cp
 	 */
 	public String getCp() {
+
 		return cp;
 	}
 
@@ -234,6 +255,7 @@ public class Direccion {
 	 *            the cp to set
 	 */
 	public void setCp(String cp) {
+
 		this.cp = cp;
 	}
 
@@ -241,6 +263,7 @@ public class Direccion {
 	 * Constructor por defecto.
 	 */
 	public Direccion() {
+
 	}
 
 	/**
@@ -259,6 +282,7 @@ public class Direccion {
 	 */
 	public Direccion(String tipoVia, String via, String numero, String portal, String escalera, String planta,
 			String puerta, String municipio, String provincia, String cp) {
+
 		this.tipoVia = tipoVia;
 		this.via = via;
 		this.numero = numero;
@@ -273,6 +297,7 @@ public class Direccion {
 
 	@Override
 	public String toString() {
+
 		return "Direccion [iddireccion=" + iddireccion + ", tipoVia=" + tipoVia + ", via=" + via + ", numero=" + numero
 				+ ", portal=" + portal + ", escalera=" + escalera + ", planta=" + planta + ", puerta=" + puerta
 				+ ", municipio=" + municipio + ", provincia=" + provincia + ", cp=" + cp + "]";

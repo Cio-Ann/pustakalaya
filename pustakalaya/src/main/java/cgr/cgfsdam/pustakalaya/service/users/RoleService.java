@@ -10,7 +10,7 @@ import cgr.cgfsdam.pustakalaya.model.users.Role;
  * @author CGR-Casa
  */
 public interface RoleService {
-	
+
 	/**
 	 * Encuentra un Role por su nombre.
 	 * 
@@ -18,9 +18,10 @@ public interface RoleService {
 	 * @return Role objeto
 	 */
 	public Role findByRole(String role);
-	
+
 	/**
 	 * Devuelve una lista con todos los roles de base de datos.
+	 * 
 	 * @return List<Role> todos los Role
 	 */
 	public List<Role> findAll();

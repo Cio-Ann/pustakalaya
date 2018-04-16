@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import cgr.cgfsdam.pustakalaya.controller.BaseController;
-import cgr.cgfsdam.pustakalaya.model.funds.Autor;
 import cgr.cgfsdam.pustakalaya.model.funds.Genero;
 import cgr.cgfsdam.pustakalaya.service.funds.GeneroService;
 import cgr.cgfsdam.pustakalaya.utils.MyUtils;
@@ -73,6 +72,7 @@ public class GeneroController extends BaseController {
 	 */
 	@FXML
 	void handleDelete(ActionEvent event) {
+
 		if (isGeneroPurgeable()) {
 			if (showConfirmation(resourceBundle.getString("admin.genero.delete.confirm.title"),
 					resourceBundle.getString("admin.genero.delete.confirm.header"),
@@ -85,11 +85,13 @@ public class GeneroController extends BaseController {
 
 	@FXML
 	void handleExit(ActionEvent event) {
+
 		closeDialog(event);
 	}
 
 	@FXML
 	void handleSave(ActionEvent event) {
+
 		if (validateGenero()) {
 			saveGenero();
 			sendAlert(AlertType.INFORMATION, resourceBundle.getString("admin.genero.save.success.title"),
@@ -101,6 +103,7 @@ public class GeneroController extends BaseController {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		lblTitle.setText(resources.getString("admin.genero.title"));
 		lblNombre.setText(resources.getString("admin.genero.label.nombre"));
 		lblDescripcion.setText(resources.getString("admin.genero.label.descripcion"));
@@ -116,6 +119,7 @@ public class GeneroController extends BaseController {
 	 * @param event ActionEvent evento que inicia el cierre de la ventana.
 	 */
 	private void closeDialog(ActionEvent event) {
+
 		final Node source = (Node) event.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
@@ -127,6 +131,7 @@ public class GeneroController extends BaseController {
 	 * @param genero Genero objeto a guardar
 	 */
 	public void setGenero(Genero genero) {
+
 		this.genero = genero;
 		sendEntityToForm();
 	}
@@ -137,6 +142,7 @@ public class GeneroController extends BaseController {
 	 * @return
 	 */
 	private boolean validateGenero() {
+
 		boolean ret = true;
 		lblError.setText("");
 
@@ -168,8 +174,9 @@ public class GeneroController extends BaseController {
 	 * @return boolean true si el genero se puede borrar sin problemas, o false si está vinculado a algún recurso
 	 */
 	private boolean isGeneroPurgeable() {
+
 		boolean ret = true;
-		if(genero == null || genero.getIdGenero() == null) {
+		if (genero == null || genero.getIdGenero() == null) {
 			ret = false;
 		} else {
 			ret = generoService.countResourcesByGenero(genero) == 0;
@@ -181,6 +188,7 @@ public class GeneroController extends BaseController {
 	 * Guarda el género del formulario en el formulario
 	 */
 	private void saveGenero() {
+
 		if (genero == null) {
 			genero = new Genero();
 		}
@@ -194,12 +202,13 @@ public class GeneroController extends BaseController {
 	 * Traslada los datos de la entidad al formulario.
 	 */
 	private void sendEntityToForm() {
+
 		if (genero == null) {
 			genero = new Genero();
 		}
 		txtNombre.setText(genero.getNombre());
 		txtDescripcion.setText(genero.getDescripcion());
-		
+
 		if (isGeneroPurgeable()) {
 			btnDelete.setDisable(false);
 		} else {

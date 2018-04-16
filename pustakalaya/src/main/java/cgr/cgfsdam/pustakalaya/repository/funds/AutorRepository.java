@@ -23,14 +23,15 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByNombreAllIgnoreCase(String nombre);
-	
+
 	/**
 	 * Busca autores cuyo nombre contenga la cadena de busqueda
+	 * 
 	 * @param nombre String texto a buscar en el nombre
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByNombreContainingAllIgnoreCase(String nombre);
-	
+
 	/**
 	 * Busca autores por sus apellidos exactos.
 	 * 
@@ -38,7 +39,7 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByApellidosAllIgnoreCase(String apellidos);
-	
+
 	/**
 	 * Busca autores cuyos apellidos contengan el texto dado.
 	 * 
@@ -64,7 +65,7 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 	 * @return List<Autor> autores coincidentes
 	 */
 	List<Autor> findByNombreContainingAndApellidosContainingAllIgnoreCase(String nombre, String apellidos);
-	
+
 	/**
 	 * Cuenta el número de recursos de los que el autor dado es autor o coautor.
 	 * 
@@ -72,7 +73,6 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
 	 * @return Long número de obras de las que el autor recibido es participe.
 	 */
 	@Query("SELECT count(r) FROM Recurso AS r WHERE :autor MEMBER OF r.autores")
-	Long countResourcesByAutor(@Param("autor")Autor autor);
-	
+	Long countResourcesByAutor(@Param("autor") Autor autor);
 
 }

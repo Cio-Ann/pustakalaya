@@ -215,11 +215,10 @@ public class ResourceViewController extends BaseController {
 				e.printStackTrace();
 			}
 		} else {
-			sendAlert(AlertType.ERROR,
-					resourceBundle.getString("admin.recurso.form.ejemplar.edit.empty.title"),
+			sendAlert(AlertType.ERROR, resourceBundle.getString("admin.recurso.form.ejemplar.edit.empty.title"),
 					resourceBundle.getString("admin.recurso.form.ejemplar.edit.empty.header"),
 					resourceBundle.getString("admin.recurso.form.ejemplar.edit.empty.error.msg"));
-			
+
 			log.info("No hay ningún recurso seleccionado");
 		}
 	}
