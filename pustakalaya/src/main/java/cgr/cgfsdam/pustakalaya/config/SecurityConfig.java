@@ -13,37 +13,36 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
-public class SecurityConfig extends GlobalMethodSecurityConfiguration{
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+public class SecurityConfig extends GlobalMethodSecurityConfiguration {
 
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
-	
+
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
+
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication()
-			.dataSource(dataSource)
-			.rolePrefix("ROLE_")
-			.usersByUsernameQuery(usersQuery)
-			.authoritiesByUsernameQuery(rolesQuery)
-			.passwordEncoder(passwordEncoder());
+
+		auth.jdbcAuthentication().dataSource(dataSource).rolePrefix("ROLE_").usersByUsernameQuery(usersQuery)
+				.authoritiesByUsernameQuery(rolesQuery).passwordEncoder(passwordEncoder());
 	}
-	
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
+
+	@Bean
+	public AuthenticationManager authenticationManager() throws Exception {
+
+		return super.authenticationManager();
+	}
 
 }
