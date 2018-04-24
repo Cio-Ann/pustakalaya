@@ -586,7 +586,7 @@ public class UsersController extends BaseController {
 
 						if (item != null) {
 							setText(item.getNombre() + " " + item.getApellido1()
-									+ (item.getApellido2().isEmpty() ? "" : " " + item.getApellido2()));
+									+ ( MyUtils.isEmptyString(item.getApellido2()) ? "" : " " + item.getApellido2()));
 						} else {
 							setText(null);
 						}

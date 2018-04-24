@@ -489,43 +489,6 @@ public class SearchController extends BaseController {
 			};
 		});
 
-		// colAction.setCellFactory(column -> {
-		// return new TableCell<Recurso, Boolean>() {
-		//
-		// Button btnDetalles = new Button();
-		//
-		// @Override
-		// protected void updateItem(Boolean item, boolean empty) {
-		//
-		// super.updateItem(item, empty);
-		//
-		// log.info("Actualiza celda de action -> item = " + item + "/empty = " + empty);
-		//
-		// if (item == null || empty) {
-		// setGraphic(null);
-		// setText(null);
-		// } else {
-		// Recurso currentRecurso = getTableView().getItems().get(getIndex());
-		//
-		// btnDetalles
-		// .setText(resourceBundle.getString("lector.searcView.resultados.table.action.detalles"));
-		// btnDetalles.getStyleClass().add("btnBlue");
-		// btnDetalles.getStyleClass().add("btn");
-		// btnDetalles.setStyle("-fx-min-width:0");
-		// btnDetalles.setOnAction(e -> {
-		// showResourceDetails(currentRecurso);
-		// });
-		//
-		// setGraphic(btnDetalles);
-		// setAlignment(Pos.CENTER);
-		// setText(null);
-		//
-		// }
-		//
-		// }
-		// };
-		// });
-
 		colAction.setCellFactory(column -> {
 			return new TableCell<Recurso, Boolean>() {
 
